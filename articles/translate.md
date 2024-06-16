@@ -200,6 +200,7 @@ Resources:
 
 # 実装手順
 
+
 ## 1.Lambda Functionを作成する
 Lambdaのページで「関数を作成する」をクリック
 
