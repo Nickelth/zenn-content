@@ -16,7 +16,7 @@ https://pages.awscloud.com/rs/112-TZM-766/images/Hands-On-for-Beginners_2022_Ser
 - ハンズオン用の新しいAWSアカウントを用意する
 - AdministratorAccess を持つIAMユーザー
 
-## 今回作成したのリソースのIaC
+## 今回作成したリソースのIaC
 :::details CloudFormationで生成されたコード(YAML)
 ```
 ---
