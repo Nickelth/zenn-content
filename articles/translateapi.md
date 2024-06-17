@@ -3,20 +3,20 @@ title: "【Lambda/API Gateway】翻訳Web APIの構築"
 emoji: "🔠"
 type: "tech"
 topics: ["aws"]
-published: false
+published: true
 ---
 
 https://pages.awscloud.com/rs/112-TZM-766/images/Hands-On-for-Beginners_2022_Serverless1_0819_v1.png
 
-# 目標
+## 目標
 - サーバレスアーキテクチャで翻訳Web APIを構築する
 - Amazon Translateで実装する。JSON形式で英訳を返させる
 
-# 前提条件
+## 前提条件
 - ハンズオン用の新しいAWSアカウントを用意する
 - AdministratorAccess を持つIAMユーザー
 
-# 今回作成したのリソースのIaC
+## 今回作成したのリソースのIaC
 :::details CloudFormationで生成されたコード(YAML)
 ```
 ---
@@ -198,9 +198,9 @@ Resources:
 ```
 :::
 
-# 実装手順
+## 実装手順
 
-## 1.Lambda Functionを作成する
+### 1.Lambda Functionを作成する
 Lambdaのページで「関数を作成する」をクリック
 ![](https://storage.googleapis.com/zenn-user-upload/c910a43fc21c-20240617.png)
 
@@ -209,6 +209,7 @@ Lambdaのページで「関数を作成する」をクリック
 |オプション|一から作成|
 |ランタイム|Python(最新版)|
 |アーキテクチャ|x86_64|
+
 ![](https://storage.googleapis.com/zenn-user-upload/b1b8c4580c90-20240617.png)
 
 「関数を作成する」をクリック
@@ -225,7 +226,7 @@ https://aws.amazon.com/jp/sdk-for-python/
 ![](https://storage.googleapis.com/zenn-user-upload/2fca5f47ad6d-20240617.png)
 ![](https://storage.googleapis.com/zenn-user-upload/dc8a0272110b-20240617.png)
 
-## 2.AWS TranslateとLambdaを連携させる
+### 2.AWS TranslateとLambdaを連携させる
 
 「設定」タブ>アクセス権限を開く
 IAMロールへのリンクがあるのでクリック
@@ -259,7 +260,7 @@ output_textに「こんにちは」の英訳の"Hi"が格納されている
 
 これで、LambdaからAWS Translateを呼び出すことができた
 
-## 3.API GatewayとLambdaを連携させる
+### 3.API GatewayとLambdaを連携させる
 API Gatewayへ移動し、REST API の項目で「構築」ボタンをクリック
 ![](https://storage.googleapis.com/zenn-user-upload/fc1b3a636a8d-20240617.png)
 
@@ -351,7 +352,7 @@ APIが作動していることが確認できた
 
 https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html
 
-## 4.Dynamo DBとLambdaを連携させる
+### 4.Dynamo DBとLambdaを連携させる
 
 Dynamo DB>テーブル より、「テーブルを作成」をクリック
 ![](https://storage.googleapis.com/zenn-user-upload/ee29f6bf7660-20240617.png)
@@ -364,7 +365,7 @@ Dynamo DB>テーブル より、「テーブルを作成」をクリック
 |テーブル設定|設定をカスタマイズ|
 |テーブルクラス|Dynamo DB 標準|
 
-### 読み込み/書き込みキャパシティーの設定 
+#### 読み込み/書き込みキャパシティーの設定 
 
 |項目名|設定値|
 |---|---|
