@@ -17,12 +17,18 @@ published: false
 - サーバ用PCは有線LANのみに接続され、無線LAN接続は受け付けない
 - 同一ネットワーク内の無線LANに接続している個人PCからアクセスできるようにする
 
-## マシンスペック
-東芝 第4世代 Intel Core i3
+## 使用機材
+東芝 Dynabook 第4世代 Intel Core i3
 
 ## 実装手順
 
 ### 1.Ubuntu Serverをインストール
+①<a href="https://www.ubuntulinux.jp/home" > ubuntuダウンロードページ</a>にアクセスし、「Ubuntuのダウンロード」を選択する
+![](https://storage.googleapis.com/zenn-user-upload/af8cdb5d783f-20240824.png)
+
+② 「日本語Remixイメージのダウンロード」を選択する
+
+③
 
 ### 2.ブータブルUSBの作成
 
