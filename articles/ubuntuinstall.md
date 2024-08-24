@@ -15,7 +15,8 @@ published: false
 ## 実装手順
 
 ### 1.Ubuntu Serverをインストール
-①<a href="https://www.ubuntulinux.jp/home" > ubuntuダウンロードページ</a>にアクセスし、「Ubuntuのダウンロード」を選択する
+①[ubuntuダウンロードページ][1]にアクセスし、「Ubuntuのダウンロード」を選択する
+[1]:https://www.ubuntulinux.jp/home
 ![](https://storage.googleapis.com/zenn-user-upload/375412e18ad7-20240824.png)
 
 ② 「日本語Remixイメージのダウンロード」を選択する
