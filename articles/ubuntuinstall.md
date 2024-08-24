@@ -15,7 +15,7 @@ published: false
 ## 実装手順
 
 ### 1.Ubuntu Serverをインストール
-①ubuntuダウンロードページ(https://www.ubuntulinux.jp/home)にアクセスし、「Ubuntuのダウンロード」を選択する
+①[ubuntuダウンロードページ](https://www.ubuntulinux.jp/home)にアクセスし、「Ubuntuのダウンロード」を選択する
 ![](https://storage.googleapis.com/zenn-user-upload/375412e18ad7-20240824.png)
 
 ② 「日本語Remixイメージのダウンロード」を選択する
@@ -29,7 +29,7 @@ published: false
 ④ubuntu-ja-22.04-desktop-amd64.iso(3.2GBのもの)を選択し、ダウンロード開始
 ![](https://storage.googleapis.com/zenn-user-upload/fd058b54af17-20240824.png)
 
-⑤rufusダウンロードページ(https://rufus.ie/ja/)にアクセスする
+⑤[rufusダウンロードページ](https://rufus.ie/ja/)にアクセスする
 Portableタイプのものを選択してダウンロード
 ![](https://storage.googleapis.com/zenn-user-upload/fb1b127ebd9b-20240824.png)
 
