@@ -3,7 +3,7 @@ title: "【Ubuntu】中古PCにUbuntuをインストールする"
 emoji: "⚛️"
 type: "tech"
 topics: ["Ubuntu"]
-published: false
+published: true
 ---
 
 ## 使用機材
