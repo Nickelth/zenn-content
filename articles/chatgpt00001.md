@@ -1,5 +1,5 @@
 ---
-title:  "自宅サーバの設営"
+title: "自宅サーバの設営"
 emoji: "🌸"
 type: "tech"
 topics: ["Ubuntu"]["ChatGPT"]
