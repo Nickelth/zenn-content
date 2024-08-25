@@ -13,9 +13,6 @@ https://zenn.dev/ryo_mz/articles/ubuntuinstall
 
 ### パッケージリストを更新
 ```bash
----
 sudo apt update
 
 ```
-
-:::
