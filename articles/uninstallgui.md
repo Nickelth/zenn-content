@@ -3,7 +3,7 @@ title: "【Ubuntu】GUIをアンインストールする【CLI】"
 emoji: "⚛️"
 type: "tech"
 topics: ["Ubuntu"]
-published: true
+published: false
 ---
 
 前回の続きです
