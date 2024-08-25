@@ -2,7 +2,7 @@
 title: "セキュリティ戦略"
 emoji: "⚛️"
 type: "tech"
-topics: ["WireGuard"]["xrdp"]["Remmina"]
+topics: ["WireGuard"]
 published: false
 ---
 WireGuardのVPNに接続したPCから、VPNサーバ上で動作するリモートデスクトップにアクセスするための手順を説明します。これには、まずVPNサーバにリモートデスクトップサービスをセットアップし、その後、クライアントPCからリモートデスクトップ接続を行う手順が含まれます。
