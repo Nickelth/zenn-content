@@ -40,31 +40,31 @@ Portable版だとインストール不要なのでおすすめ
 
 ①USBメモリ(4GB以上)が認識されていることを確認し、「選択ボタン」押下
  ダウンロードしたUbuntu ISOイメージを選択する
-![](https://storage.googleapis.com/zenn-user-upload/1e5508e8d081-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/b7a9800b5969-20240825.png)
 
 ②選択したら、「スタート」ボタンを押下
-![](https://storage.googleapis.com/zenn-user-upload/3151e12ff014-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/5a4c3a72d9b5-20240825.png)
 
 ③「ISOHybridイメージ」が検出されるので、推奨されている「ISOイメージモードで書き込む」を選択し、OKボタンを押す
-![](https://storage.googleapis.com/zenn-user-upload/b3da422a0824-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/b58a612df90c-20240825.png)
 
 ④Ubuntuとrufusの間でGRUBのバージョンが異なる場合、以下のメッセージが出る。
  「はい」を選択して適合するバージョンをダウンロードする
-![](https://storage.googleapis.com/zenn-user-upload/bfe420a8728b-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/968decaf2e81-20240825.png)
 
 ⑤USBデバイスのデータを完全消去する警告が出るので、OKを押す
-![](https://storage.googleapis.com/zenn-user-upload/14abb0310fa7-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/dc98e5e01faa-20240825.png)
 
 ⑥複数のパーティションを含む場合は以下の警告が出る。
  上書きしても問題ないので、OKを押す
-![](https://storage.googleapis.com/zenn-user-upload/cc698b64818f-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/681cad369aac-20240825.png)
 
 ⑦USBへの書き込みが完了すると、緑色のバーに「準備完了」と表示される
-![](https://storage.googleapis.com/zenn-user-upload/e88f70eaeadb-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/d48c3ecc98ca-20240825.png)
 「閉じる」ボタンを押してOK
 
 今回の使用容量は3.19GBだった。
-![](https://storage.googleapis.com/zenn-user-upload/287b7525f717-20240824.png)
+![](https://storage.googleapis.com/zenn-user-upload/a060a86bcfc4-20240825.png)
 
 以上①~⑦の操作でブータブルUSBが完成
 
@@ -134,6 +134,6 @@ Portable版だとインストール不要なのでおすすめ
 
 シャットダウン完了後、起動してUbuntuデスクトップが出たらセットアップ完了
 
-## 今後の展望
-- UbuntuでインストールしたGUIを削除する
-- Ubuntuで自宅サーバーをセットアップする
+## おわりに
+GUIありでしばらく使用しましたが、思ったより動作が重いのでGUIを削除しようと思います。
+その後自宅サーバーの設営に取り組もうと思います。
