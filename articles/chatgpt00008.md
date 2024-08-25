@@ -1,5 +1,5 @@
 ---
-title: "セキュリティ戦略"
+title: "【WireGuard】リモートデスクトップのセットアップと接続【自宅サーバ】"
 emoji: "⚛️"
 type: "tech"
 topics: ["WireGuard"]
