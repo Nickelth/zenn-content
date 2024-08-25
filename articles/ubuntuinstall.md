@@ -6,9 +6,6 @@ topics: ["Ubuntu"]
 published: false
 ---
 
-## 動機
-
-
 ## 使用機材
 東芝 Dynabook 第4世代 Intel Core i3
 KIOXIA USBメモリ 32GB(推奨:4GB以上)
@@ -30,7 +27,7 @@ KIOXIA USBメモリ 32GB(推奨:4GB以上)
 「株式会社アプセル」を選択するとダウンロードに23時~翌2時までかかった
 
 ④ubuntu-ja-22.04-desktop-amd64.iso(3.2GBのもの)を選択し、ダウンロード開始
-![](https://storage.googleapis.com/zenn-user-upload/d545c120352c-20240825.png)
+![](https://storage.googleapis.com/zenn-user-upload/e8df71a2f1fd-20240825.png)
 
 ⑤[rufusダウンロードページ](https://rufus.ie/ja/)にアクセスする
 Portableタイプのものを選択してダウンロード
