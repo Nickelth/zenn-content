@@ -1,6 +1,6 @@
 ---
 title: "【WireGuard】「デバイスの使用準備ができていません。」(Code 0x000010DF)の解決方法"
-emoji: "🔠"
+emoji: "🔌"
 type: "tech"
 topics: ["WireGuard"]
 published: true
