@@ -5,7 +5,6 @@ type: "tech"
 topics: ["Windows"]["PowerShell"]
 published: false
 ---
-
 ## 動機
 Microsoftが提供するPC管理ツール「[MicroSoft PC Manager](https://pcmanager.microsoft.com/ja-jp)」を使用するとPCのメモリが簡単に解放できます。
 ベータ版の頃から愛用していましたが、開発に使用しているアプリが重すぎて5分に1回はボタンを押してます
