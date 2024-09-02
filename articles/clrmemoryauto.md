@@ -1,6 +1,6 @@
 ---
 title: "【Windows】メモリ自動クリーンタスク【PowerShell】"
-emoji: "🔌"
+emoji: "🗑️"
 type: "tech"
 topics: ["Windows"]["PowerShell"]
 published: false
