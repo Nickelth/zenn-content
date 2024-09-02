@@ -1,6 +1,6 @@
 ---
 title: "【Windows】メモリ自動クリーンタスクの設定【PowerShell】"
-emoji: "🗑️"
+emoji: "🧹"
 type: "tech"
 topics: ["Windows"]["PowerShell"]
 published: false
