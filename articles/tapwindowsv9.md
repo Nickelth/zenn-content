@@ -3,7 +3,7 @@ title: "【WireGuard】「デバイスの使用準備ができていません。
 emoji: "🔠"
 type: "tech"
 topics: ["WireGuard"]
-published: false
+published: true
 ---
 ### エラー内容
 Windows10のWireGuardアプリで「有効化」ボタンを押すとエラー
