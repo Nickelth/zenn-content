@@ -5,13 +5,18 @@ type: "tech"
 topics: ["WireGuard"]
 published: true
 ---
+
 ### エラー内容
+
 Windows10のWireGuardアプリで「有効化」ボタンを押すとエラー
+
 ``` bash
+
  [TUN] [client2] Failed to setup adapter (problem code: 0x38, ntstatus: 0x0): デバイスの使用準備ができていません。 (Code 0x000010DF)
 ```
 
 ### 原因
+
 「デバイスマネージャー」内の「デバイスアダプター」に「TAP-Windows Adapter」や「WireGuard Adapter」などのVPNアダプターがインストールされていない
 
 コントロールパネルを開き、「ネットワークと共有センター」をクリック
@@ -27,6 +32,7 @@ Windows10のWireGuardアプリで「有効化」ボタンを押すとエラー
 ![](https://storage.googleapis.com/zenn-user-upload/e5b3243fa3e8-20240902.png)
 
 ### 解決方法
+
 A. WireGuardを再インストールする。このとき一緒に「WireGuard Adapter」もインストールされる
     ⇒筆者の環境ではインストールされなかった。
 
@@ -34,16 +40,22 @@ B. [OpenVPN](https://openvpn.net/community-downloads/)をインストールす�
     ⇒インストール成功
 
 ### 結果
+
 エラーが解決され、WireGuardが有効化できるようになった
 
 ### 補足
+
 WireGuardで何度も有効化繰り返すと、不要なネットワーク設定が溜まり「ネットワークと共有センター」を開く処理が重くなる場合がある
 コマンドプロンプトで以下のコマンドを入力する
+
 ``` bash
+
 netsh winsock reset
 netsh int ip reset
 ipconfig /release
 ipconfig /renew
 ipconfig /flushdns
+
 ```
+
 ネットワークがリセットされ、「ネットワークと共有センター」にアクセスできるようになる
