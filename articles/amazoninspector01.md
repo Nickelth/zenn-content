@@ -34,8 +34,12 @@ Aと同種かと思いきや**AWSのサーバーにプリインストールさ�
 :::
 
 この場合はDockerfileにコマンドを記述してデプロイ走らせます。
-
-
+``` bash: Dockerfile
+RUN npm install npm@9 cross-spawn@7.0.5 -y
+```
+::: message
+```-y```オプションを外すと更新が止まるので外さないように
+:::
 
 ### C. OSをアップデートすれば治るパターン
 Bと同じくDockerfileにコマンドを記述してからデプロイ
@@ -43,10 +47,7 @@ Bと同じくDockerfileにコマンドを記述してからデプロイ
 ``` bash: Dockerfile
 RUN apt-get update && apt-get upgrade -y
 ```
-
-::: message
-```-y```オプションを外すと更新が止まるので外さないように
-:::
+-yは外しちゃダメ
 
 Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
 
