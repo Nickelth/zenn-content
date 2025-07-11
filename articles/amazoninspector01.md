@@ -25,7 +25,9 @@ Dockerfileにコマンドを記述してからデプロイ
 
 ```RUN apt-get update && apt-get upgrade -y```
 
+::: message
 ```-y```オプションを外すと更新が止まるので外さないように
+:::
 
 Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
 
