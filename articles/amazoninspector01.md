@@ -15,15 +15,34 @@ published: false
 ### A. package.jsonいじれば治るパターン
 
 一番オーソドックスなパターン<br>
-
+![](https://storage.googleapis.com/zenn-user-upload/7dfed7ae1890-20250711.png)
 - ```npm outdated```で該当パッケージ調査
 - ```npm list```で依存関係チェック
 - 治らなければ```overrides```に追記してバージョンを強制上書き
 
-### B. OSをアップデートすれば治るパターン
-Dockerfileにコマンドを記述してからデプロイ
+### B. まぎらわしいパターン
 
-```RUN apt-get update && apt-get upgrade -y```
+執筆時点ではおそらく```cross-spawn```のみ該当<br>
+![](https://storage.googleapis.com/zenn-user-upload/e94de380756b-20250711.png)
+
+Aと同種かと思いきや**AWSのサーバーにプリインストールされているパッケージをスキャン**してそいつに対して怒っています。<br>
+どこ見とんねん
+
+::: message
+目印はパス名が```/usr/local/```になっていること<br>
+普通なら```/usr/src/```と表示される
+:::
+
+この場合はDockerfileにコマンドを記述してデプロイ走らせます。
+
+
+
+### C. OSをアップデートすれば治るパターン
+Bと同じくDockerfileにコマンドを記述してからデプロイ
+
+``` Dockerfile: bash
+RUN apt-get update && apt-get upgrade -y
+```
 
 ::: message
 ```-y```オプションを外すと更新が止まるので外さないように
@@ -31,7 +50,17 @@ Dockerfileにコマンドを記述してからデプロイ
 
 Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
 
-### C. FWが古いのでソースごと改修するパターン
+### D. そんなものはない　震えて眠れ
+  パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
+![](https://storage.googleapis.com/zenn-user-upload/a27e30e42889-20250711.png)
+
+   ......一応パターンBに```apt list --upgradable```を差し込んであげる方法がある
+
+   ```RUN apt-get update && apt list --upgradable && apt-get upgrade -y```
+
+   これで解決するといいね
+
+### E. FWが古いのでソースごと改修するパターン
   Nest.jsやNode.jsなどが絡むと一気にややこしくなる
 
   特にNest.jsバージョン10を使ってる場合は要注意<br>
@@ -46,19 +75,8 @@ Dockerfileにnpm系コマンドを書いている場合はそれよりも前に�
 
   若干ヤバい気がしますがnpmが悪いので問題なし<br>
   というかnpm公式がNest.js@11構成を推奨している
-   
 
-### D. そんなものはない　震えて眠れ
-  パターンDebian。さっさと修正パッチ出せ
-
-   ......一応パターンBに```apt list --upgradable```を差し込んであげる方法がある
-
-   ```RUN apt-get update && apt list --upgradable && apt-get upgrade -y```
-
-   これで解決するといいね
-
-
-### E. ウラワザ的回避
+### F. ウラワザ的回避
   本番環境に上がることでInspectorが怒りだすので、<br>
   ```--omit=dev```オプションを使用してパッケージを開発環境に封印する
 
