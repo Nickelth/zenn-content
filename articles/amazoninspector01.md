@@ -50,7 +50,7 @@ RUN apt-get update && apt-get upgrade -y
 
 Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
 
-### D. そんなものはない　震えて眠れ
+### D. 対策？ そんなものはない　震えて眠れ
   パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
 ![](https://storage.googleapis.com/zenn-user-upload/a27e30e42889-20250711.png)
 
