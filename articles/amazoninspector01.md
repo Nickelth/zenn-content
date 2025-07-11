@@ -49,7 +49,9 @@ RUN apt-get update && apt-get upgrade -y
 ```
 -yは外しちゃダメ
 
+::: message
 Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
+:::
 
 ### D. 対策？ そんなものはない　震えて眠れ
   パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
