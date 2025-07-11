@@ -20,6 +20,16 @@ published: false
 - ```npm list```で依存関係チェック
 - 治らなければ```overrides```に追記してバージョンを強制上書き
 
+``` json: package.json
+"dependencies": {
+  "axios": "^1.8.2"
+},
+"devDependencies":{},
+"overrides":{
+  "axios": "^1.8.2"
+}
+```
+
 ### B. まぎらわしいパターン
 
 執筆時点ではおそらく```cross-spawn```のみ該当<br>
@@ -87,6 +97,10 @@ RUN apt-get update && apt-get upgrade -y
 ### F. ウラワザ的回避
   本番環境に上がることでInspectorが怒りだすので、<br>
   ```--omit=dev```オプションを使用してパッケージを開発環境に封印する
+
+  ``` bash: Dockerfile
+  RUN npm install --legacy-peer-deps --omit=dev
+  ```
 
   こうすることでCode Buildは```dependencies```のみを見て```npm install```する (```devDependencies```は見ない)
 
