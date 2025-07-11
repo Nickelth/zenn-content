@@ -51,7 +51,8 @@ RUN apt-get update && apt-get upgrade -y
 -yは外しちゃダメ
 
 ::: message
-Dockerfileにnpm系コマンドを書いている場合はそれよりも前に書く
+```Dockerfile```に```npm```系コマンドを書いている場合はそれよりも前に書く
+```apt```系→```npm```系
 :::
 
 ### D. 対策？ そんなものはない　震えて眠れ
