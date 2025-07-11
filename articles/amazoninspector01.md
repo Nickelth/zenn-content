@@ -1,5 +1,5 @@
 ---
-title: "【Amazon Inspector】対応パターン集"
+title: "【AWS】Amazon Inspector 対応パターン集【Debian】"
 emoji: "⚠️"
 type: "tech"
 topics: ["AWS", "Docker", "Linux", "Debian", "npm", "セキュリティ"]
