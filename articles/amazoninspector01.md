@@ -43,6 +43,7 @@ RUN npm install npm@9 cross-spawn@7.0.5 -y
 :::
 
 ### C. OSをアップデートすれば治るパターン
+![](https://storage.googleapis.com/zenn-user-upload/b4a87d6e80c1-20250711.png)<br>
 Bと同じくDockerfileにコマンドを記述してからデプロイ
 
 ``` bash: Dockerfile
