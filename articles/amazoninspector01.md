@@ -93,7 +93,7 @@ RUN apt-get update && apt-get upgrade -y
   ```npm install --legacy-peer-deps```してあげると依存関係チェックを無視してくれるのでアップデートできます。
 
   若干ヤバい気がしますがnpmが悪いので問題なし<br>
-  というかnpm公式がNest.js@11構成を推奨している
+  というかnpm公式がNest.js@11構成を推奨している（後日執筆予定）
 
 ### F. ウラワザ的回避
   本番環境に上がることでInspectorが怒りだすので、<br>
