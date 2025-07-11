@@ -2,7 +2,7 @@
 title: "【Amazon Inspector】対応パターン集"
 emoji: "⚠️"
 type: "tech"
-topics: ["AWS", "Docker", "Linux", "セキュリティ"]
+topics: ["AWS", "Docker", "Linux", "Debian", "セキュリティ"]
 published: false
 ---
 
@@ -11,6 +11,7 @@ published: false
 解決パターン集を用意しましたのでご一読ください。
 
 ※本記事は個人検証環境を元に構成されています。実際の業務内容や企業の設定とは無関係です。
+※Debian前提です。Ubuntuは多分sudoつければ同様にできます。
 
 ### A. package.jsonいじれば治るパターン
 
