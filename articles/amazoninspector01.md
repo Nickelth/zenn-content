@@ -40,7 +40,7 @@ Aと同種かと思いきや**AWSのサーバーにプリインストールさ�
 ### C. OSをアップデートすれば治るパターン
 Bと同じくDockerfileにコマンドを記述してからデプロイ
 
-``` Dockerfile: bash
+``` bash: Dockerfile
 RUN apt-get update && apt-get upgrade -y
 ```
 
@@ -56,7 +56,9 @@ Dockerfileにnpm系コマンドを書いている場合はそれよりも前に�
 
    ......一応パターンBに```apt list --upgradable```を差し込んであげる方法がある
 
-   ```RUN apt-get update && apt list --upgradable && apt-get upgrade -y```
+   ``` bash: Dockerfile
+   RUN apt-get update && apt list --upgradable && apt-get upgrade -y
+   ```
 
    これで解決するといいね
 
