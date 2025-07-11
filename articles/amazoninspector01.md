@@ -2,7 +2,7 @@
 title: "【Amazon Inspector】対応パターン集"
 emoji: "⚠️"
 type: "tech"
-topics: ["AWS", "Docker", "Linux", "Debian", "セキュリティ"]
+topics: ["AWS", "Docker", "Linux", "Debian", "npm", "apt", "セキュリティ"]
 published: false
 ---
 
