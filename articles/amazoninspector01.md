@@ -64,7 +64,7 @@ RUN apt-get update && apt-get upgrade -y
 
 ::: message
 ```Dockerfile```に```npm```系コマンドを書いている場合はそれよりも前に書く
-```apt```系→```npm```系
+```apt```系→```npm```系の順番で
 :::
 
 ### D. 対策？ そんなものはない　震えて眠れ
