@@ -6,6 +6,8 @@ topics: ["Ubuntu"]
 published: true
 ---
 
+※本記事は2024年に旧アカウントで作成したものを再構成したものです。
+
 ## 使用機材
 東芝 Dynabook 第4世代 Intel Core i3
 KIOXIA USBメモリ 32GB(推奨:4GB以上)
