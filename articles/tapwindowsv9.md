@@ -6,6 +6,8 @@ topics: ["WireGuard"]
 published: true
 ---
 
+※本記事は2024年に旧アカウントで作成したものを再構成したものです。
+
 ### エラー内容
 
 Windows10のWireGuardアプリで「有効化」ボタンを押すとエラー
