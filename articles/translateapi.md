@@ -8,6 +8,8 @@ published: true
 
 https://pages.awscloud.com/rs/112-TZM-766/images/Hands-On-for-Beginners_2022_Serverless1_0819_v1.png
 
+※本記事は2024年に旧アカウントで作成したものを再構成したものです。
+
 ## 目標
 - サーバレスアーキテクチャで翻訳Web APIを構築する
 - Amazon Translateで実装する。JSON形式で英訳を返させる
