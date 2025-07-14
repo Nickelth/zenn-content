@@ -6,6 +6,8 @@ topics: ["Windows", "PowerShell"]
 published: true
 ---
 
+※本記事は2024年に旧アカウントで作成したものを再構成したものです。
+
 ## 動機
 
 Microsoftが提供するPC管理ツール「[MicroSoft PC Manager](https://pcmanager.microsoft.com/ja-jp)」を使用するとPCのメモリが簡単に解放できます。
