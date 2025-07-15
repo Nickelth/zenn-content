@@ -6,8 +6,10 @@ topics: ["AWS", "Docker", "Linux", "Debian", "npm", "セキュリティ"]
 published: true
 ---
 
-すべての「Amazon Inspectorの警告は絶対に消せ」という上司を持った方へ<br>
-大変お辛い時間を過ごされたことかと思います。<br>
+すべての「Amazon Inspectorの警告は絶対に消せ」という上司を持った方へ
+
+大変お辛い時間を過ごされたことかと思います。
+
 解決パターン集を用意しましたのでご一読ください。
 
 ::: message
