@@ -8,8 +8,8 @@ published: false
 
 ### 概要
 
-10分後の時刻を取得する処理
-::: details
+
+:::details 10分後の時刻を取得する処理
 ``` bat:batchfile
 for /f "tokens=1-2 delims=:" %%a in ("%time%") do (	
     set /a hh=%%a	
@@ -36,8 +36,8 @@ set starttime=!hh!:!mm!
 ```
 :::
 
-タスクスケジューラに新規タスクを登録する処理
-::: details
+
+:::details タスクスケジューラに新規タスクを登録する処理
 ```
 rem タスク作成ログ出力	
 set taskcmd="\"C:\EXECUTE.bat\"
