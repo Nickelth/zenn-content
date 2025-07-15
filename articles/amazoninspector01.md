@@ -3,7 +3,7 @@ title: "【AWS】Amazon Inspector 対応パターン集【Debian】"
 emoji: "⚠️"
 type: "tech"
 topics: ["AWS", "Docker", "Linux", "Debian", "npm", "セキュリティ"]
-published: false
+published: true
 ---
 
 すべての「Amazon Inspectorの警告は絶対に消せ」という上司を持った方へ<br>
@@ -17,7 +17,7 @@ published: false
 ### A. package.jsonいじれば治るパターン
 
 一番オーソドックスなパターン<br>
-![](https://storage.googleapis.com/zenn-user-upload/7dfed7ae1890-20250711.png)
+![](https://storage.googleapis.com/zenn-user-upload/30d537ea8e95-20250715.png)
 - ```npm outdated```で該当パッケージ調査
 - ```npm list```で依存関係チェック
 - 治らなければ```overrides```に追記してバージョンを強制上書き
@@ -35,7 +35,7 @@ published: false
 ### B. まぎらわしいパターン
 
 執筆時点ではおそらく```cross-spawn```のみ該当<br>
-![](https://storage.googleapis.com/zenn-user-upload/e94de380756b-20250711.png)
+![](https://storage.googleapis.com/zenn-user-upload/4072e373672e-20250715.png)
 
 Aと同種かと思いきや**AWSのサーバーにプリインストールされているパッケージをスキャン**してそいつに対して怒っています。<br>
 どこ見とんねん
@@ -55,7 +55,7 @@ RUN npm install npm@9 cross-spawn@7.0.5 -y
 :::
 
 ### C. OSをアップデートすれば治るパターン
-![](https://storage.googleapis.com/zenn-user-upload/b4a87d6e80c1-20250711.png)<br>
+![](https://storage.googleapis.com/zenn-user-upload/2edd19b09cb9-20250715.png)<br>
 Bと同じくDockerfileにコマンドを記述してからデプロイ
 
 ``` bash: Dockerfile
@@ -70,7 +70,7 @@ RUN apt-get update && apt-get upgrade -y
 
 ### D. 対策？ そんなものはない　震えて眠れ
   パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
-![](https://storage.googleapis.com/zenn-user-upload/a27e30e42889-20250711.png)
+![](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
 
    ......一応パターンBに```apt list --upgradable```を差し込んであげる方法がある
 
