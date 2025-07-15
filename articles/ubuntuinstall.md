@@ -3,7 +3,7 @@ title: "【Ubuntu】中古PCにUbuntuをインストールする"
 emoji: "⚛️"
 type: "tech"
 topics: ["Ubuntu, Linux"]
-published: true
+published: false
 ---
 
 ※本記事は2024年に旧アカウントで作成したものを再構成したものです。
