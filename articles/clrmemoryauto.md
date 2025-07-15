@@ -3,7 +3,7 @@ title: "【Windows】メモリ自動クリーンタスクの設定【PowerShell�
 emoji: "🧹"
 type: "tech"
 topics: ["Windows", "PowerShell"]
-published: true
+published: false
 ---
 
 ※本記事は2024年に旧アカウントで作成したものを再構成したものです。
