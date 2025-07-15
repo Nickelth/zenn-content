@@ -3,7 +3,7 @@ title: "【Lambda/API Gateway】翻訳Web APIの構築"
 emoji: "🔠"
 type: "tech"
 topics: ["aws"]
-published: true
+published: false
 ---
 
 https://pages.awscloud.com/rs/112-TZM-766/images/Hands-On-for-Beginners_2022_Serverless1_0819_v1.png
