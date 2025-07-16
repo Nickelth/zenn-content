@@ -64,3 +64,22 @@ if !errorlevel! equ 0 (
 1>nulにすると成功メッセージをスルーできる。
 
 :::
+
+:::details FOR文の書き方 + if文
+残念ながらJavaのstreamやforEach,拡張for文に当たるものはない。
+基本for文のみ解説する。
+
+``` bat:batchfile
+for %%f in ("C:\User\sample.csv") do (
+	copy /y %%f "C:\User\result.csv" >> %LOGFILE%
+	if !ERRORLEVEL! neq 0 (
+        echo %DATE% %TIME% ERR %DEF_NAME% "COPY 異常終了" >> %ALERT_LOG%
+    )
+)
+```
+"C:\User\sample.csv"のデータを1行ずつfor文を回して取得し、
+"C:\User\result.csv"にコピーする処理。
+%%fは変数。
+
+
+:::
