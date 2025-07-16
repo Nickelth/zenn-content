@@ -79,7 +79,7 @@ RUN apt-get update && apt-get upgrade -y
   パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
 ![](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
 
-   ......一応パターンBに```apt list --upgradable```を差し込んであげる方法がある
+   ......一応パターンCに```apt list --upgradable```を差し込んであげる方法がある
 
    ``` bash: Dockerfile
    RUN apt-get update && apt list --upgradable && apt-get upgrade -y
