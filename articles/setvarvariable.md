@@ -3,7 +3,7 @@ title: "なぜ set var = value は危険なのか──Windowsバッチ変数代
 emoji: "⌨"
 type: "tech"
 topics: ["cmd", "cli", "Windows"]
-published: false
+published: true
 ---
 
 ## 1. はじめに
@@ -97,7 +97,7 @@ set "logfile=%~dp0log\import.log"
 特に `path` や `file name` など、空白やバックスラッシュを含む値を扱う際は、クォートの有無によって動作が変わるため注意が必要となる。
 
 ## 7. おわりに
-`set var = value` という書き方は、単純に見えてバッチファイルにおける数々の問題の温床となる。
+`set var = value`や`set var="hello world"` という書き方は、単純に見えてバッチファイルにおける数々の問題の温床となる。
 より安全かつ正確なスクリプトを書くためには、`set "var=value"` の形式を採用するべきである。
 多少記述が煩雑に見えるかもしれないが、長期的な保守性と予測可能な動作を得る上では、十分に妥当な選択肢といえる。
 
