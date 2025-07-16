@@ -80,6 +80,18 @@ for %%f in ("C:\User\sample.csv") do (
 "C:\User\sample.csv"のデータを1行ずつfor文を回して取得し、
 "C:\User\result.csv"にコピーする処理。
 %%fは変数。
+:::
 
+::: 変数名の定義と呼び出し
+``` bat:batchfile
+@echo off
+setlocal enabledelayedexpansion
 
+set "PATH=C:\User\Project"
+mkdir %PATH% "DIR_TASK"
+if !ERRORLEVEL! neq 0 (
+    echo %DATE% %TIME% ERR %DEF_NAME% "MKDIR 異常終了" >> %ALERT_LOG%
+)
+
+```
 :::
