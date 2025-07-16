@@ -38,7 +38,7 @@ set starttime=!hh!:!mm!
 
 
 :::details タスクスケジューラに新規タスクを登録する処理
-```
+``` bat:batchfile
 rem タスク作成ログ出力	
 set taskcmd="\"C:\EXECUTE.bat\"
 schtasks /create ^
@@ -48,4 +48,19 @@ schtasks /create ^
 /st !starttime! ^
 /f
 ```
+:::
+
+:::details コマンド実行時にエラーメッセージがでる場合はスルーする
+``` bat:batchfile
+schtasks /query /tn !taskname! 2>nul
+if !errorlevel! equ 0 (
+    schtasks /delete !taskname! /f
+)
+```
+1行目で!taskname!に一致するタスク名をクエリする。
+タスクが存在しなければエラーメッセージがターミナルに表示されるが、
+2>nulを末尾につけることでエラーメッセージをスルーできる。
+
+1>nulにすると成功メッセージをスルーできる。
+
 :::
