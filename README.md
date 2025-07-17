@@ -31,6 +31,27 @@
 | 4月  | 受験記・合格メモ         | 本番試験、勝つ                    |
 
 
+| 月  | AI系タスク                     |
+| 8月 | PyTorch基礎〜CNN構築|
+|     | 本1冊読む：「ゼロから作るDeep Learning」系（あるいはPyTorch入門）|
+|     | 画像データ使って分類タスク（MNIST→CIFAR-10→独自画像）をこなす|
+|     | 自分のマシン or AWSでGPU使った学習をする（←ここ大事）|
+| 9月 | 実案件との橋渡し：自社で保守してるモデルの構造を解析|
+|     |モデルのレイヤー構成、入力形式、後処理まで把握|
+|     |「ブラックボックスにしない」のが目的|
+| 10月 |fine-tuningの実験|
+|     |学習・推論用コンテナを構築（DockerfileにGPUサポート追加、PyTorch環境など）|
+|     |docker-composeでAPI + 推論 + DB構成を簡単に動かせる構成を作る|
+| 11月 |Transfer Learningの練習。ResNet50でもEfficientNetでもいい|
+|     |自分の画像データで精度出せるところまでやる|
+|     |CodeBuild or GitHub Actions使って「モデル更新→ビルド→本番反映」流れの設計|
+|     |buildspec.yamlから卒業して、CDK/Terraformで自動構築を検討し始める|
+| 12月 |「AWSでAI動かせます」は履歴書殺しワード|
+|     |Notebookインスタンス、推論エンドポイント、AutoMLも触って「できる風味」出す|
+| 1月 |脆弱性スキャン（Trivyとか）をCIに組み込む|
+|    |Amazon Inspector、GuardDutyのアラート理解＆対応設計|
+
+
 💡 今から育てるべきスキル（ガチャ素材）
 - モデル設計やパラメータチューニング ✖学習済みモデル使うだけ
 - PyTorch or TensorFlow：フレームワーク使ってオリジナルモデルをちょっとでも触る。
