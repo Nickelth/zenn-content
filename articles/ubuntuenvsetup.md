@@ -10,7 +10,7 @@ published: false
 ※WSL2,有線LAN接続が前提
 
 ### 1.	仮想環境(WSL2)の有効化
-:::details
+
 #### WSLを有効化する
 
 Windows+R⇒「control」を入力して「Enter」⇒コントロールパネルが開く
@@ -49,7 +49,6 @@ wsl --version
 ``` powershell
 wsl --set-default-version 2
 ```
-:::
 
 ### 2.	Windows標準のLinux仮想環境上にUbuntu 24.04.1をインストールする。
 「スタート」→「Microsoft Store」で「Ubuntu 24.04」を検索
