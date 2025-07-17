@@ -1,5 +1,5 @@
 ---
-title: "【Ubuntu】シェル実行環境構築例【Apache2】"
+title: "【Ubuntu】Python実行環境構築例【Apache2】"
 emoji: "🐧"
 type: "tech"
 topics: ["ubuntu", "wsl", "apache", "postgres", "python"]
