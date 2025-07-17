@@ -139,7 +139,7 @@ sudo systemctl restart apache2
 IPアドレスについては、起動ごとに変わるため`hostname -I`で確認する。
 >    http://<WSLのIPアドレス>/													
 >    https://<WSLのIPアドレス>/
-※ HTTPSアクセス時には証明書の警告が表示されますが、開発環境のため許可して問題ありません。			
+※ HTTPSアクセス時には証明書の警告が表示されるが、開発環境のため許可して問題なし			
 ![](https://storage.googleapis.com/zenn-user-upload/8b7f922dcd23-20250717.png)
 「It works!」が出ればOK
 
@@ -170,10 +170,21 @@ su - postgres
 createdb testdb -O postgres
 ```
 
-\q  でDBから抜ける
+`\q`でDBから抜ける
 
-exit rootに戻る
-
+`exit` rootに戻る
 
 ### 6.	Python のインストール
+``` bash
+sudo apt install -y python3 python3-pip python3-venv python3-dev build-essential libpq-dev
+# 仮想環境env作成（プロジェクトごとに）
+python3 -m venv env
+source env/bin/activate
+```
 
+### 7. おわりに
+Python + Postgres + Apache2 の開発環境をUbuntu(WSL)上に作成できた。
+
+この環境をベースにアプリ開発を実施する予定。
+
+お好みでVSCode連携をしてもいいかもしれない
