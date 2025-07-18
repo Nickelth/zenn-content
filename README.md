@@ -8,6 +8,7 @@
 | ✅ `.env付きのWSL2構成例（Python/DB/Apache）| ★★☆☆☆ | ★★★★☆ | 7/19 | 7/17リリース。.envファイル付きにする|
 | ✅ Javaレガシー帳票出力アプリをPythonにリメイクしてみた | ★★★☆☆ | ★★★★☆ | 7/19 | 実務のJava構築をモダナイズ。Python+PostgreSQL+Flask+JSON+Jinja2+PDF |
 | ✅ PythonアプリとAuth0を連携 | ★★★★★ | ★★★★★ | 7/21 | ↑にAuth0認証を付ける。 |
+| ✅ PythonアプリをGithub Actionsでデプロイ | ★★★★★ | ★★★★★ | 7/26 | GitHub Actions + Dockerfile + docker-compose |
 | ✅「Nest.js v11アップデートで地雷を踏んだ話」| ★★★★★ | ★★★★★ | 7/26 | バージョンアップ失敗ネタはZenn鉄板。人間味＋技術力両方出る。|
 | ✅ npm@10以降はcross-spawnを殺す：npmが履修すべき公共の福祉3原則 | ★★★☆☆ | ★★★☆☆ | 7/26 | npmに対する最後通牒。 |
 | ✅【IaC→Terraform移植】翻訳API| ★★★★☆ | ★★★★☆ | 8/2 | Linux環境構築＋PHP憎まれ愛のやつ。業務から学んだ雰囲気出す。|
