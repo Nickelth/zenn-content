@@ -11,7 +11,7 @@
 | ✅ npm@10以降はcross-spawnを殺す：npmが履修すべき公共の福祉3原則 | ★★★☆☆ | ★★★☆☆ | 7/26 | npmに対する最後通牒。 |
 | ✅【IaC→Terraform移植】翻訳API| ★★★★☆ | ★★★★☆ | 8/2 | Linux環境構築＋PHP憎まれ愛のやつ。業務から学んだ雰囲気出す。|
 | ✅【IaC→Terraform移植】スケーラブルWebサイト| ★★★★☆ | ★★★★☆ | 8/9 | Linux環境構築＋PHP憎まれ愛のやつ。業務から学んだ雰囲気出す。|
-| ✅ Python+PostgreSQL+Flask+JSON+Jinja2+PDF帳票出力ダミー実装| ★★★☆☆ | ★★★★☆ | 8/11 | 実務の“再現性”があって説得力抜群。Python + PostgreSQL + XML|
+| ✅ Javaレガシー帳票出力アプリをPythonにリメイクしてみた | ★★★☆☆ | ★★★★☆ | 8/11 | 実務のJava構築をモダナイズ。Python+PostgreSQL+Flask+JSON+Jinja2+PDF |
 | ✅ `buildspec.yaml` + `Dockerfile` サンプル（Node.jsアプリ想定） | ★★★★★ | ★★★★☆ | 8/13 | 「CodeBuild使ってました」が現物で証明できる。構成力も出せる。|
 | ✅ CodePipeline構成図＋簡易README| ★★★★☆ | ★★★☆☆ | 8/23 | 実際の構成は見せられないから、ダミーで“図解説明”すると強い。Draw\.ioでもOK。 |
 | ✅「PHPを触っていた私がWSL2で目覚めた話」| ★☆☆☆☆ | ★★★★☆ | 8/30 | Linux環境構築＋PHP憎まれ愛のやつ。業務から学んだ雰囲気出す。|
