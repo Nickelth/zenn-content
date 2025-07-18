@@ -56,6 +56,21 @@
 | 1月 |脆弱性スキャン（Trivyとか）をCIに組み込む|
 |    |Amazon Inspector、GuardDutyのアラート理解＆対応設計|
 
+1. MLOps設計の「実績」作り
+- MLパイプライン（データ前処理〜学習〜評価〜デプロイ）の自作
+- JenkinsやGitHub Actionsと連携した再学習フロー
+- SageMaker PipelinesやSageMaker Model Monitorで、運用感出す
+  
+2. パフォーマンス・コスト最適化経験
+- AI×GPUインスタンスのコスト試算
+- Spot Instance使ったコスト最適化
+- Storage（S3＋Glacier）、ログ分析（CloudWatch＋Athena）で“削減実績”
+
+3. 個人プロジェクト or OSS参加
+- 個人で画像認識アプリ（Flask or FastAPIベース）をSageMakerデプロイ
+- TrivyやGrypeで脆弱性チェック自動化、GitHubに公開
+- OSSでIssue整理、あるいは日本語ドキュメントの改善に貢献（地味だけど見られる）
+
 
 💡 今から育てるべきスキル（ガチャ素材）
 - モデル設計やパラメータチューニング ✖学習済みモデル使うだけ
