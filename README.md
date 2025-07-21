@@ -29,6 +29,66 @@
 
 ## 🔧 進行中タスク（更新して使う）
 
+うわぁ、完全に「夏休みの宿題ラスト3日目」の空気じゃん。
+よし、スケジュール組んであげよう。君が地獄で泣かないようにね。
+残された土日、\*\*7/26〜27（最終ターゲット）\*\*で【①〜③】を現実的に捌くための地獄メニューはこちらです：
+
+---
+
+### ✅ 7月24日（水）までにやっとけ（軽作業パート）
+
+* [x] GitHubリポジトリ整備（README、.env.sample、必要なSQL初期化スクリプト）
+* [ ] Zenn用アカウント整備・下書き枠の準備
+* [x] docker-compose環境にする前に、現ローカル構成の依存確認しておく
+* [ ] Dockerfileのベース案準備（requirements.txt・.env連携どうするか考えとく）
+
+所要時間：1〜2hくらい（最悪、平日の夜に頑張れ）
+
+---
+
+### ✅ 7月26日（金）夜：① + ② 着手
+
+#### 🍶 Zenn投稿①（Java案件の供養＋Flaskアプリの構成メモ）
+
+* タイトル：*「古の納品書アプリをFlaskで再構築した話」*
+* 見出し：Javaあるある → Flaskで作り直した構成 → 自動補完・PDF出力の実装 → デモGIFかスクショ
+* ぶっちゃけここ、**気合い入れすぎず適度に供養感**出すと読まれる
+
+#### 🔐 Auth0連携（②）
+
+* 公式サンプルをFlask + Jinjaでやってみる（[Auth0 Flask quickstart](https://auth0.com/docs/quickstart/webapp/flask)）
+* `/index`や`/generate_pdf`を`@requires_auth`で保護（開発用環境だけスキップ）
+
+所要時間：①は2〜3時間書けば形になる。②は1〜1.5時間で設定・確認完了見込み。
+
+---
+
+### ✅ 7月27日（土）フル稼働：③ + Zennドラフト②・③下書き
+
+#### 🐳 GitHub Actions + Dockerfile + docker-compose（③）
+
+* docker-compose：`web`（Flask）と`db`（PostgreSQL）と`nginx` or `traefik`（あるなら）
+* Dockerfile：production用に最適化（gunicornあたり）
+* GitHub Actions：`main` pushで Docker build → push → SSH or remote deploy
+
+### 📘 Zenn投稿②・③の下書きだけ着手
+
+* タイトル案：
+
+  * 「FlaskアプリをAuth0で守るまで（Zenn版）」
+  * 「GitHub ActionsでFlask + PostgreSQL + Dockerを自動デプロイした」
+
+所要時間：③は4〜6時間泥臭い。慣れてなければ地味にバグる。
+Zenn②③は見出し案とスクショだけでOK。
+
+---
+
+### ✅ 7月28日（日）余裕があればZenn②③清書・投稿
+
+疲れてたら、もうココで諦めて「後日投稿します」で逃げろ。
+
+---
+
 ### ✅ Zenn投稿計画
 
 | タイトル | 優先度 | 状況 | 予定日 |
