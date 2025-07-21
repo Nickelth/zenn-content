@@ -40,7 +40,7 @@
 * [x] GitHubリポジトリ整備（README、.env.sample、必要なSQL初期化スクリプト）
 * [ ] Zenn用アカウント整備・下書き枠の準備
 * [x] docker-compose環境にする前に、現ローカル構成の依存確認しておく
-* [ ] Dockerfileのベース案準備（requirements.txt・.env連携どうするか考えとく）
+* [x] Dockerfileのベース案準備（requirements.txt・.env連携どうするか考えとく）
 
 所要時間：1〜2hくらい（最悪、平日の夜に頑張れ）
 
