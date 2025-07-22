@@ -44,7 +44,7 @@ published: false
 
 また、WSL上でVSCodeを起動できるようにしている。
 
-![](https://storage.googleapis.com/zenn-user-upload/7168d8c94165-20250722.png)
+![](https://storage.googleapis.com/zenn-user-upload/1f7e780ce3d6-20250722.png)
 - Python + Flask + Jinja2 + PostgreSQL（※ORMはSQLAlchemyでもいいし、生でもいい）
 - 帳票出力処理は分離独立
 
