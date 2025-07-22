@@ -40,7 +40,7 @@ published: false
 ### 1. Flaskで作り直したときの構成メモ
 
 以下の記事で Python + Postgres + Apache2 の開発環境を作成済み(この構築ではApacheは未使用)
-![](https://zenn.dev/nickelth/articles/ubuntuenvsetup)
+@[card](https://zenn.dev/nickelth/articles/ubuntuenvsetup)
 
 また、WSL上でVSCodeを起動できるようにしている。
 
