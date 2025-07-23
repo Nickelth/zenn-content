@@ -1,13 +1,15 @@
 ---
-title: "【Ubuntu】シェル実行環境構築例【Apache2】"
+title: "【Ubuntu】Python実行環境構築例【Apache2】"
 emoji: "🐧"
 type: "tech"
 topics: ["ubuntu", "wsl", "apache", "postgres", "python"]
 published: true
 ---
 
-## .env付きのWSL2構成例（Python/DB/Apache）
-※WSL2,有線LAN接続が前提
+<!--## .env付きのWSL2構成例（Python/DB/Apache）-->
+## WSL2構成例（Python/DB/Apache）
+※有線LAN接続が前提
+※実際の業務とは無関係な個人検証をもとにした内容です。
 
 ### 1.	仮想環境(WSL2)の有効化
 
