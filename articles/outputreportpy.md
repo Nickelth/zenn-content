@@ -33,9 +33,9 @@ published: false
 
 また、WSL上でVSCodeを起動できるようにしている。
 
-![](https://storage.googleapis.com/zenn-user-upload/1f7e780ce3d6-20250722.png)
-- Python + Flask + Jinja2 + PostgreSQL（※ORMはSQLAlchemyでもいいし、生でもいい）
-- 帳票出力処理は分離独立
+![](https://storage.googleapis.com/zenn-user-upload/7a496e42cdd7-20250724.png)
+- アプリ側は　Python + Flask + Jinja2 + PostgreSQL（※ORMはSQLAlchemyでもいいし、生でもいい）
+- 帳票生成ロジックは　入力HTML → Flask（処理&テンプレート）→ HTML（Jinja2） → weasyprint → PDF
 
 ``` markdown:ディレクトリ構成
 .
@@ -64,8 +64,6 @@ published: false
 
 - 入力補助（オートコンプリート）の際、バックエンドからキーと値の`JSON`形式で返却
   - 保守性・拡張性が高い形式であり、Flaskの`jsonify()`とも好相性。
-
-- 帳票生成ロジックは　入力HTML → Flask（処理&テンプレート）→ HTML（Jinja2） → weasyprint → PDF
 
 - 保守性のための画面部と帳票部の分離構造を実現
 
