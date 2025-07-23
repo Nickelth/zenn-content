@@ -3,7 +3,7 @@ title: "Javaレガシー帳票出力アプリをPythonにリメイクした話"
 emoji: "📄"
 type: "tech"
 topics: ["flask", "postgres", "python", "json"]
-published: false
+published: true
 ---
 
 ## Flask帳票出力アプリ
