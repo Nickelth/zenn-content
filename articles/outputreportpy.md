@@ -80,8 +80,8 @@ published: false
 
 ### 3. 入力画面＋PDF出力結果
 
-![帳票出力画面.gif](https://storage.googleapis.com/zenn-user-upload/1bf9c0eca050-20250724.gif)
-![invoice.png](https://storage.googleapis.com/zenn-user-upload/e0d08375a742-20250724.png)
+![帳票出力画面.gif](![](https://storage.googleapis.com/zenn-user-upload/9d9814f572f3-20250724.gif))
+![納品書.png](https://storage.googleapis.com/zenn-user-upload/e0d08375a742-20250724.png)
 
 
 ---
