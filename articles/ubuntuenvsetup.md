@@ -1,15 +1,17 @@
 ---
-title: "【Ubuntu】Python実行環境構築例【Apache2】"
-emoji: "🐧"
+title: "UbuntuにPython+Apache環境を構築 → Nginxも試してみた話"
+emoji: "🌀"
 type: "tech"
-topics: ["ubuntu", "wsl", "apache", "postgres", "python"]
+topics: ["ubuntu", "wsl", "apache", "postgres", "python", "nginx"]
 published: true
 ---
 
-<!--## .env付きのWSL2構成例（Python/DB/Apache）-->
-## WSL2構成例（Python/DB/Apache）
+## WSL2構成例（Python/PostgreSQL/Nginx/Apache）
 ※有線LAN接続が前提
 ※実際の業務とは無関係な個人検証をもとにした内容です。
+※実務で遭遇したのはApacheですが、Nginx推奨です。
+
+- GitHub ActionでのCI/CD連携用にNginx手順追記(7/26)
 
 ### 1.	仮想環境(WSL2)の有効化
 
@@ -108,9 +110,11 @@ sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved.service
 ```
 
+### 4. Nginxインストール
 
 
-### 4.	Apacheインストール
+
+#### 4.1	Apacheをインストールする場合
 ``` bash
 sudo apt upgrade
 sudo apt -y install apache2
@@ -179,9 +183,9 @@ createdb testdb -O postgres
 ### 6.	Python のインストール
 ``` bash
 sudo apt install -y python3 python3-pip python3-venv python3-dev build-essential libpq-dev
-# 仮想環境env作成（プロジェクトごとに）
-python3 -m venv env
-source env/bin/activate
+# 仮想環境venv作成（プロジェクトごとに）
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 ### 7. おわりに
