@@ -81,9 +81,9 @@ Zenn②③は見出し案とスクショだけでOK。
 
 | タイトル | 優先度 | 状況 | 予定日 |
 |----------|--------|------|--------|
-| Javaレガシー帳票出力アプリをPythonにリメイクしてみた | ★★★★☆ | 完了 | 7/21 |
-| PythonアプリとAuth0を連携 | ★★★★★ | 実装中 | 7/26 |
-| GitHub Actions + Dockerfile + docker-composeでデプロイ | ★★★★★ | 仕込み中 | 7/27 |
+| Javaレガシー帳票出力アプリをPythonにリメイクしてみた | ★★★★☆ | 残GIF | 7/23 |
+| GitHub Actions + Dockerfile + docker-composeでデプロイ | ★★★★★ | 仕込み中 | 7/26 |
+| PythonアプリとAuth0を連携 | ★★★★★ | 実装中 | 7/27 |
 | TerraformでAPI構築 | ★★★★☆ | お盆予定 | 8/2 |
 | TerraformでWeb構築 | ★★★★☆ | お盆予定 | 8/9 |
 | Nest.js地雷話 | ★★★★★ | ドラフト中 | 8/10 |
