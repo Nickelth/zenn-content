@@ -80,8 +80,9 @@ published: false
 
 ### 3. 入力画面＋PDF出力結果
 
-* 入力画面＋PDF出力結果のスクショ or GIF
-* UIの見た目を語らず「どうデータを流してどう責務を分けたか」を説明
+![帳票出力画面.gif](https://storage.googleapis.com/zenn-user-upload/1bf9c0eca050-20250724.gif)
+![invoice.png](https://storage.googleapis.com/zenn-user-upload/e0d08375a742-20250724.png)
+
 
 ---
 
