@@ -105,16 +105,53 @@ sudo apt update
 
 Ubuntu再起動時のresolv.confの初期化を防ぐため、以下のコマンドを入力
 ``` bash
-sudo chattr +i /etc/resolv.conf　
+sudo chattr +i /etc/resolv.conf
 sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved.service
 ```
 
 ### 4. Nginxインストール
+`Apache2`をインストールしている場合は削除する
+```bash
+sudo systemctl stop apache2
+sudo apt purge -y apache2 apache2-utils apache2-bin apache2.2-common
+sudo apt autoremove -y
+sudo rm -rf /etc/apache2
+```
+
+`Nginx`をインストール
+```bash
+sudo apt update
+sudo apt install nginx
+```
+
+`Nginx`の起動・ステータス確認
+```bash
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+```
+
+ファイアウォールの設定（任意）
+```bash
+sudo ufw allow 'Nginx Full'
+sudo ufw status
+```
+
+
 
 
 
 #### 4.1	Apacheをインストールする場合
+`Nginx`をインストールしている場合は削除する
+```bash
+sudo systemctl stop nginx
+sudo apt purge -y nginx nginx-common
+sudo apt autoremove -y
+sudo rm -rf /etc/nginx
+```
+
+
 ``` bash
 sudo apt upgrade
 sudo apt -y install apache2
