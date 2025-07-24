@@ -68,8 +68,6 @@ sudo passwd root
 ```
 ![](https://storage.googleapis.com/zenn-user-upload/e75b7943cf43-20250717.png)
 
-
-
 ### 3.	wsl.conf&resolv.confの設定
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
 ``` conf
@@ -138,8 +136,29 @@ sudo ufw allow 'Nginx Full'
 sudo ufw status
 ```
 
+サイト構成の例(`Flask+uWSGI`の場合。各アプリの構成によって異なる)
+```nginx:/etc/nginx/sites-available/myapp
+server {
+    listen 80;
+    server_name yourdomain.com;
 
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/youruser/myapp/myapp.sock;
+    }
 
+    location /static {
+        alias /home/youruser/myapp/static;
+    }
+}
+```
+
+シンボリックリンクで有効化
+```bash
+sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
 
 
 #### 4.1	Apacheをインストールする場合
