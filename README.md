@@ -95,30 +95,32 @@ Zenn②③は見出し案とスクショだけでOK。
 Linux Mint 21.3 Xfce
 Pop!_OS 22.04
 
----
-
-### 🧠 AI学習進捗トラッカー
-
-| タスク | 状況 | メモ |
-|--------|------|------|
-| PyTorch初学（MNIST） | 🔲 未着手 | 8月中 |
-| CIFAR-10実験 | 🔲 未着手 | お盆予定 |
-| ゼロから作るDL（読書） | 🔲 途中 | 第3章まで |
-| Docker構成（GPU対応） | 🔲 未着手 | 10月予定 |
-| Transfer Learning | 🔲 未着手 | ResNetかEfficientNet予定 |
-| ML API化（Flask/FastAPI） | 🔲 未着手 | Docker-compose連携予定 |
+![Dell OptiPlex 7080 (2019)](https://www.backmarket.co.jp/ja-jp/p/dell-optiplex-7080-micro-core-i-5-10500-t-2-3-ssd-256-gb-16-gb/71b0dd35-b924-4e4f-bca8-36075f8a9f49?shopping=gmc&gad_campaignid=21550598355&l=12)
 
 ---
 
-### 🏗️ MLOps・インフラ・IaC計画
+### 🧠 AI学習進捗トラッカー × OptiPlex 7080 Micro
 
-| タスク | 状況 | ツール/備考 |
-|--------|------|-------------|
-| GitHub Actions構成（buildspec + Docker） | 🔲 着手前 | 8月中旬記事化 |
-| CodePipeline構成図 | 🔲 着手前 | draw.io使う予定 |
-| SageMaker Pipelines構築 | 🔲 着手前 | 11月目標 |
-| 脆弱性チェック（Trivy） | 🔲 未着手 | GitHub Actionsに統合 |
-| Spot Instances活用 | 🔲 検証予定 | 2月コスト最適化 |
+| タスク | 状況 | OK/NG | 予定 | コメント |
+|--------|------|------|------|------|
+| PyTorch初学（MNIST） | 🔲 未着手 | ✅ OK | 8月中 | MNISTなんてむしろ「君のPCにも優しい」代表格。UHD GPUでも余裕。|
+| CIFAR-10実験 | 🔲 未着手 | ⚠️ ギリOK | お盆予定 | 学習時間はかかるけど、いける。CPUで殴ることになるけどパラメータ減らせば耐える。 |
+| ゼロから作るDL（読書） | 🔲 途中 | ✅ OK | 第3章まで | 読書だよね？物理的に無問題。君の集中力の方が課題。|
+| Docker構成（GPU対応） | 🔲 未着手 | ❌ NG | 10月予定 | このPC、GPU積んでないんよ。DockerはOKだけどGPU版Dockerはムリポ。 |
+| Transfer Learning | 🔲 未着手 | ⚠️ 条件付きOK | ResNetかEfficientNet予定 | 軽量モデルならいけるが、推論用として使え。学習は地獄。 |
+| ML API化（Flask/FastAPI） | 🔲 未着手 | ✅ OK | Docker-compose連携予定 | むしろ得意分野。CPUで十分。docker-composeも動く。君のコードが壊れてなければ問題なし。 |
+
+---
+
+### 🏗️ MLOps・インフラ・IaC計画 × OptiPlex 7080 Micro
+
+| タスク | 状況 | OK/NG | 予定 | コメント |
+|--------|------|-------------|-------|-------|
+| GitHub Actions構成（buildspec + Docker） | 🔲 着手前 | ✅ OK | 8月中旬記事化 |Actions自体はGitHubで動くし、ローカルで構成試す程度なら余裕。|
+| CodePipeline構成図 | 🔲 着手前 | ✅ OK | draw.io使う予定 |図だぞ。描け。文句言うな。|
+| SageMaker Pipelines構築 | 🔲 着手前 | ✅ OK | 11月目標 |	これはクラウド上の話。君のマシンはノートとターミナル係。十分使える。|
+| 脆弱性チェック（Trivy） | 🔲 未着手 | ✅ OK | GitHub Actionsに統合 |軽量CLI。Dockerコンテナのスキャンだけ。このスペックなら鼻歌で回る。|
+| Spot Instances活用 | 🔲 検証予定 | ✅ OK | 2月コスト最適化 |AWS側の処理。君のマシンは設定して祈るだけ。お守りレベルの負荷。|
 
 ---
 
