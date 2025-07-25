@@ -88,9 +88,9 @@ Zenn②③は見出し案とスクショだけでOK。
 ---
 
 #### 中古PC候補 3~6万
-中古 Ryzen5 16GB SSD 50000円以下 Tiny SFF Ubuntu対応
-中古 HP EliteDesk 800 G4 core i5 Docker WSL
-中古 ThinkPad X280 メモリ16GB Docker対応
+- 中古 Ryzen5 16GB SSD 50000円以下 Tiny SFF Ubuntu対応
+- 中古 HP EliteDesk 800 G4 core i5 Docker WSL
+- 中古 ThinkPad X280 メモリ16GB Docker対応
 
 Linux Mint 21.3 Xfce
 Pop!_OS 22.04
