@@ -75,9 +75,11 @@ Zenn②③は見出し案とスクショだけでOK。
 
 | タイトル | 優先度 | 状況 | 予定日 |
 |----------|--------|------|--------|
-| Linux上で動画→GIF変換を最適化した話：Adobeからffmpegへ | ★★★★☆ | 仕込み中 | 7/24 |
+| Linux上で動画→GIF変換を最適化した話：Adobeからffmpegへ | ★★★★☆ | 完成 | 7/25 |
+| psycopg2やめてSQLAlchemy導入 | ★★★★☆ | 未着手 | 7/25 |
+| Gunicorn + Nginx で本番環境構築してFlaskアプリを全世界に公開 | ★★★★☆ | 未着手 | 7/26 |
 | GitHub Actions + Dockerfile + docker-composeでデプロイ | ★★★★★ | 仕込み中 | 7/26 |
-| PythonアプリとAuth0を連携 | ★★★★★ | 実装中 | 7/27 |
+| PythonアプリとAuth0を連携 | ★★★★★ | 実装中 | 8/2 |
 | TerraformでAPI構築 | ★★★★☆ | お盆予定 | 8/2 |
 | TerraformでWeb構築 | ★★★★☆ | お盆予定 | 8/9 |
 | Nest.js地雷話 | ★★★★★ | ドラフト中 | 8/10 |
@@ -85,12 +87,13 @@ Zenn②③は見出し案とスクショだけでOK。
 
 ---
 
-#### Python帳票出力アプリ
-- このツールは帳票出力に特化していて、実運用では社内PC使用前提です。
-- モバイル対応は必要性を感じた段階で着手できるよう、Bootstrapベースにしています。
--  「目的：帳票出力精度＋自動補完＋DB連携」
--  バックエンド・インフラ・AI職志望
--  "簡易的な社内ツール"というポジションづけ
+#### 中古PC候補 3~6万
+中古 Ryzen5 16GB SSD 50000円以下 Tiny SFF Ubuntu対応
+中古 HP EliteDesk 800 G4 core i5 Docker WSL
+中古 ThinkPad X280 メモリ16GB Docker対応
+
+Linux Mint 21.3 Xfce
+Pop!_OS 22.04
 
 ---
 
