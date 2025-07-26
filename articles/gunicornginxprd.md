@@ -107,10 +107,6 @@ sudo systemctl stop systemd-resolved.service
 
 #### 2.1 必要パッケージのインストールと起動
 
-``` bash:Nginxインストール(任意)
-sudo apt update
-sudo apt install -y nginx
-```
 
 ```bash:Flaskアプリ起動
 # 例：app.py に create_app() がある場合
@@ -128,16 +124,76 @@ sudo systemctl enable nginx
 sudo systemctl status nginx
 ```
 
+#### 2.2 VPS構築して動作確認可能にする
+
+ここでは、VPS（仮想専用サーバー）上に Flask アプリを配置し、  
+Gunicorn + Nginx を使って IP アドレスで直接アクセスできる状態を構築する。
+
+---
+
+##### ■ 事前準備
+
+- VPSを1台用意（例：ConoHa / さくらVPS / Lightsail / etc.）
+- Ubuntu 20.04 or 22.04がインストールされている前提
+- SSH接続が可能であること
+- FlaskアプリがGitHubなどで管理されていること
+
+---
+
+##### ■ アプリ配置と依存パッケージのインストール
+
+```bash
+# Flaskアプリのクローン（またはSCPなどで転送）
+git clone https://github.com/Nickelth/Papyrus.git
+cd your-flask-app
+
+# 仮想環境を作成して依存関係をインストール
+sudo apt install python3-venv
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```bash:Gunicornでアプリを起動
+# Gunicornを仮想環境内にインストール（未インストールの場合）
+pip install gunicorn
+
+# FlaskアプリをGunicornで起動
+gunicorn -w 4 -b 127.0.0.1:8000 app:app
+```
+
+``` bash:Nginxインストール
+sudo apt update
+sudo apt install -y nginx
+```
+
 `ufw`（Uncomplicated Firewall）は、Ubuntuに標準で用意されているシンプルなファイアウォール管理ツール。
 以下のコマンドで、Nginxの通信を許可する：
-```bash:ファイアウォール設定(任意)
+```bash:ファイアウォール設定
 sudo ufw allow 'Nginx Full'
 sudo ufw status
 ```
-※ ただし、ufw 自体が有効でない場合や、別のファイアウォールが使われている場合は不要。
-確認は sudo ufw status で行える。
 
-#### 2.2 Nginx設定ファイル
+```bash:ポート番号指定で開ける場合
+sudo ufw allow 80/tcp
+sudo ufw status
+```
+
+```bash:VPSのグローバルIPアドレス確認
+hostname -I
+```
+
+```plaintext
+http://YOUR.VPS.IP.ADDRESS/
+```
+
+:::message alert
+- アプリを常時公開する必要はない。必要な期間だけポートを開ける。
+- 公開期間が終わったら `sudo ufw deny 80` や `sudo systemctl stop nginx` などで閉じる。
+- 公開用に限定パスワードを設けたり、Basic認証をつけるのも手。
+:::
+
+#### 2.3 Nginx設定ファイル
 
 ```nginx
 # /etc/nginx/sites-available/papyrus（ファイル名は任意）
@@ -170,8 +226,6 @@ Nginxでは `/etc/nginx/sites-available/` に構成ファイルを置き、
 
 このコマンドで、作成した設定ファイル `papyrus` を Nginx に読み込ませるようにする。
 
-
-
 全て終了後、動作確認
 ```bash
 curl http://localhost
@@ -202,7 +256,7 @@ gunicorn -w 4 -b 127.0.0.1:8000 app:app
 
 * `-w 4`：4つのワーカープロセスで処理（CPUコア数に応じて調整）
 * `-b 127.0.0.1:8000`：ローカルホスト上で8000番ポートをバインド
-  　→ Nginxからアクセス可能になる
+    → Nginxからアクセス可能になる
 
 ※ `app:app` の左側はファイル名（拡張子なし）、右側はFlaskアプリのインスタンス名。
 
