@@ -95,7 +95,7 @@ Zenn②③は見出し案とスクショだけでOK。
 Linux Mint 21.3 Xfce
 Pop!_OS 22.04
 
-![Dell OptiPlex 7080 (2019)](https://www.backmarket.co.jp/ja-jp/p/dell-optiplex-7080-micro-core-i-5-10500-t-2-3-ssd-256-gb-16-gb/71b0dd35-b924-4e4f-bca8-36075f8a9f49?shopping=gmc&gad_campaignid=21550598355&l=12)
+![Dell OptiPlex 7070 (2019)](https://www.yrl-qualit.com/shopdetail/000000014019/?gad_campaignid=21249344383)
 
 ---
 
@@ -104,10 +104,10 @@ Pop!_OS 22.04
 | タスク | 状況 | OK/NG | 予定 | コメント |
 |--------|------|------|------|------|
 | PyTorch初学（MNIST） | 🔲 未着手 | ✅ OK | 8月中 | MNISTなんてむしろ「君のPCにも優しい」代表格。UHD GPUでも余裕。|
-| CIFAR-10実験 | 🔲 未着手 | ⚠️ ギリOK | お盆予定 | 学習時間はかかるけど、いける。CPUで殴ることになるけどパラメータ減らせば耐える。 |
+| CIFAR-10実験 | 🔲 未着手 | ✅ OK | お盆予定 | CPUだけでも耐える。RAMもある。 |
 | ゼロから作るDL（読書） | 🔲 途中 | ✅ OK | 第3章まで | 読書だよね？物理的に無問題。君の集中力の方が課題。|
 | Docker構成（GPU対応） | 🔲 未着手 | ❌ NG | 10月予定 | このPC、GPU積んでないんよ。DockerはOKだけどGPU版Dockerはムリポ。 |
-| Transfer Learning | 🔲 未着手 | ⚠️ 条件付きOK | ResNetかEfficientNet予定 | 軽量モデルならいけるが、推論用として使え。学習は地獄。 |
+| Transfer Learning | 🔲 未着手 | ✅ OK | ResNetかEfficientNet予定 | 推論用として十分。学習も耐える。 |
 | ML API化（Flask/FastAPI） | 🔲 未着手 | ✅ OK | Docker-compose連携予定 | むしろ得意分野。CPUで十分。docker-composeも動く。君のコードが壊れてなければ問題なし。 |
 
 ---
