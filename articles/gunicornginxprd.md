@@ -68,7 +68,6 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 ---
 
 ### 1.	wsl.conf&resolv.confの設定
-`generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
 ```bash
 sudo nano /etc/wsl.conf
 ```
@@ -88,7 +87,8 @@ Ctrl+Xで離脱
 ```bash
 sudo nano /etc/resolv.conf
 ```
-``` conf:resolv.conf
+`generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
+``` conf:/etc/resolv.conf
 [network]
 generateResolvConf = false
 
@@ -130,14 +130,36 @@ sudo systemctl stop systemd-resolved.service
 ### 2. Flaskアプリ起動(Gunicorn前提)
 
 #### 2.1 必要パッケージのインストールと起動
+```bash
+# パッケージリスト更新
+sudo apt update
 
+# Nginxのインストール
+sudo apt install -y nginx
 
+# Python仮想環境を有効にした状態でGunicornをインストール
+pip install gunicorn
+```
+
+Flaskアプリが `app.py` にあり、グローバルに `app = Flask(__name__)` が定義されている場合の起動方法：
+
+```bash
+gunicorn -w 4 -b 127.0.0.1:8000 app:app
+```
+
+Flaskアプリが create_app() という関数で返されるファクトリーパターンを採用している場合は、
+wsgi.py など別ファイルでアプリを生成して Gunicorn から読み込ませる必要がある：
+
+```python:wsgi.py
+from app import create_app
+app = create_app()
+```
 ```bash:Flaskアプリ起動
-# 例：app.py に create_app() がある場合
-gunicorn -w 6 -b 127.0.0.1:8000 app:app
+gunicorn -w 4 -b 127.0.0.1:8000 app:app
 ```
 :::message
-`w 6` → ワーカー数（CPUコア数に合わせる）
+`-w 4` → ワーカー数。基本の目安は `(2 × CPUコア数) + 1` だが、軽量なアプリなら 4〜6 でも十分。  
+過剰に増やすとメモリを圧迫するので、実行環境に応じて調整する。
 `b` → バインド先（Nginxからアクセスできるよう127.0.0.1推奨）
 :::
 
