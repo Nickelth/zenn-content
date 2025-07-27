@@ -1,6 +1,6 @@
 ---
 title: "FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
-emoji: "☯"
+emoji: "🦄"
 type: "tech"
 topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
 published: false
@@ -59,9 +59,9 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 簡単に言えば：
 
-- Nginx：入り口の受付。リクエストを受けてGunicornに渡す。
-- Gunicorn：中の処理係。Flaskアプリに仕事を渡して、結果をNginxに返す。
-- Flaskアプリ：実際に中身の処理をする人
+- Nginx：ラーメン店の受付。リクエストを受けてGunicornに渡す。
+- Gunicorn：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
+- Flaskアプリ：実際にラーメンを作る人
 
 この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
 
@@ -69,7 +69,26 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 ### 1.	wsl.conf&resolv.confの設定
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf
+```bash
+sudo nano /etc/wsl.conf
+```
+`wsl.conf`の`[boot]`を`systemd=true`にする
+    `systemctl`の利用、サービス自動起動などのため
+```conf:/etc/wsl.conf
+[boot]
+systemd=true
+
+[user]
+default=username
+```
+Ctrl+Oで保存
+Enter
+Ctrl+Xで離脱
+
+```bash
+sudo nano /etc/resolv.conf
+```
+``` conf:resolv.conf
 [network]
 generateResolvConf = false
 
@@ -301,4 +320,5 @@ pkill gunicorn
 
 
 以上で、Gunicorn による Flask アプリの起動および動作確認が完了。
-次は systemd を使ってサービス化してもよい。
+次回はGithub Actions + DockerでCI/CDを構築する。
+systemd を使ってサービス化してもよい。

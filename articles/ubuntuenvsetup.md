@@ -70,7 +70,26 @@ sudo passwd root
 
 ### 3.	wsl.conf&resolv.confの設定
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf
+```bash
+sudo nano /etc/wsl.conf
+```
+`wsl.conf`の`[boot]`を`systemd=true`にする
+    `systemctl`の利用、サービス自動起動などのため
+```conf:/etc/wsl.conf
+[boot]
+systemd=true
+
+[user]
+default=username
+```
+Ctrl+Oで保存
+Enter
+Ctrl+Xで離脱
+
+```bash
+sudo nano /etc/resolv.conf
+```
+``` conf:resolv.conf
 [network]
 generateResolvConf = false
 
