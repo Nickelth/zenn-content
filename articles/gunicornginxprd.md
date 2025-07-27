@@ -1,6 +1,6 @@
 ---
 title: "FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
-emoji: "☯"
+emoji: "🦄"
 type: "tech"
 topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
 published: false
@@ -301,4 +301,5 @@ pkill gunicorn
 
 
 以上で、Gunicorn による Flask アプリの起動および動作確認が完了。
-次は systemd を使ってサービス化してもよい。
+次回はGithub Actions + DockerでCI/CDを構築する。
+systemd を使ってサービス化してもよい。
