@@ -78,22 +78,25 @@ Zenn②③は見出し案とスクショだけでOK。
 | Linux上で動画→GIF変換を最適化した話：Adobeからffmpegへ | ★★★★☆ | 完成 | 7/25 |
 | psycopg2やめてSQLAlchemy導入 | ★★★★☆ | 未着手 | 7/25 |
 | Gunicorn + Nginx で本番環境構築してFlaskアプリを全世界に公開 | ★★★★☆ | 未着手 | 7/26 |
-| GitHub Actions + Dockerfile + docker-composeでデプロイ | ★★★★★ | 仕込み中 | 7/26 |
+| GitHub Actions + Dockerfile + docker-composeでデプロイ | ★★★★★ | 仕込み中 | 8/2 |
 | PythonアプリとAuth0を連携 | ★★★★★ | 実装中 | 8/2 |
-| TerraformでAPI構築 | ★★★★☆ | お盆予定 | 8/2 |
-| TerraformでWeb構築 | ★★★★☆ | お盆予定 | 8/9 |
-| Nest.js地雷話 | ★★★★★ | ドラフト中 | 8/10 |
+| 中古PC組み立て | ★★★★★ | 仕込み中 | 8/9 |
+| TerraformでAPI構築 | ★★★★☆ | お盆予定 | 9/6 |
+| TerraformでWeb構築 | ★★★★☆ | お盆予定 | 9/17 |
+| Nest.js地雷話 | ★★★★★ | ドラフト中 | 10/4|
 | “Pythonできる風”のZenn記事を書いていたら、本当にできるようになった件 | ★☆☆☆☆ | 着手前 | - |
 
 ---
 
 #### 中古PC候補 3~6万
+- DELL Optiplex 7070 SFF  ¥28,600(税込)
+- Crucial P3 Plus ¥8,580(税込)
+- Linux Mint 21.3 Xfce
+
 - 中古 Ryzen5 16GB SSD 50000円以下 Tiny SFF Ubuntu対応
 - 中古 HP EliteDesk 800 G4 core i5 Docker WSL
 - 中古 ThinkPad X280 メモリ16GB Docker対応
 
-Linux Mint 21.3 Xfce
-Pop!_OS 22.04
 
 ![Dell OptiPlex 7080 (2019)](https://www.backmarket.co.jp/ja-jp/p/dell-optiplex-7080-micro-core-i-5-10500-t-2-3-ssd-256-gb-16-gb/71b0dd35-b924-4e4f-bca8-36075f8a9f49?shopping=gmc&gad_campaignid=21550598355&l=12)
 
@@ -101,14 +104,18 @@ Pop!_OS 22.04
 
 ### 🧠 AI学習進捗トラッカー × OptiPlex 7080 Micro
 
-| タスク | 状況 | OK/NG | 予定 | コメント |
-|--------|------|------|------|------|
-| PyTorch初学（MNIST） | 🔲 未着手 | ✅ OK | 8月中 | MNISTなんてむしろ「君のPCにも優しい」代表格。UHD GPUでも余裕。|
-| CIFAR-10実験 | 🔲 未着手 | ⚠️ ギリOK | お盆予定 | 学習時間はかかるけど、いける。CPUで殴ることになるけどパラメータ減らせば耐える。 |
-| ゼロから作るDL（読書） | 🔲 途中 | ✅ OK | 第3章まで | 読書だよね？物理的に無問題。君の集中力の方が課題。|
-| Docker構成（GPU対応） | 🔲 未着手 | ❌ NG | 10月予定 | このPC、GPU積んでないんよ。DockerはOKだけどGPU版Dockerはムリポ。 |
-| Transfer Learning | 🔲 未着手 | ⚠️ 条件付きOK | ResNetかEfficientNet予定 | 軽量モデルならいけるが、推論用として使え。学習は地獄。 |
-| ML API化（Flask/FastAPI） | 🔲 未着手 | ✅ OK | Docker-compose連携予定 | むしろ得意分野。CPUで十分。docker-composeも動く。君のコードが壊れてなければ問題なし。 |
+| タスク                    | 評価      | コメント                                  |
+| ---------------------- | ------- | ------------------------------------- |
+| PyTorch初学（MNIST） | ✅ 余裕    | MNISTなんてむしろ「君のPCにも優しい」代表格。UHD GPUでも余裕。|
+| ゼロから作るDL（読書） | ✅ OK | 第3章まで       |
+| ML API化（Flask/FastAPI） |✅ OK | Docker-compose連携予定。CPUで十分。君のコードが壊れてなければ問題なし。 |
+| PyTorch / TensorFlow動作 | ✅ 余裕    | CPUでも軽量モデル＆推論なら動く。学習は我慢の修行コース。        |
+| JupyterLab + VSCode    | ✅ 普通    | ローカル開発環境としては快適。                       |
+| Docker + MLflow        | ✅（やや重）  | 多少の遅さはあるけど動く。SSDとRAMが効いてくる部分。         |
+| SageMaker連携            | ✅ AWS任せ | SageMakerでGPUぶん回すなら問題なし。お前のクレカが耐えれば。  |
+| CIFAR-10学習（CPU）        | ❌ 地獄    | CPUだけで学習するのは**やる気 vs ファン回転音のチキンレース**。 |
+| Transfer Learning（CPU） | ⚠️ 訓練コース | 学習はAWSに丸投げするのが人道的。ローカルはデバッグ用に割り切れ。    |
+| Docker構成（GPU対応） | ❌ NG | このPC、GPU積んでないんよ。DockerはOKだけどGPU版Dockerはムリポ。 |
 
 ---
 
