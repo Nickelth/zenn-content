@@ -73,6 +73,7 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 sudo nano /etc/wsl.conf
 ```
 `wsl.conf`の`[boot]`を`systemd=true`にする
+    `systemctl`の利用、サービス自動起動などのため
 ```conf:/etc/wsl.conf
 [boot]
 systemd=true
