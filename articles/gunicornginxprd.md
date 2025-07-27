@@ -69,7 +69,25 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 ### 1.	wsl.conf&resolv.confの設定
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf
+```bash
+sudo nano /etc/wsl.conf
+```
+`wsl.conf`の`[boot]`を`systemd=true`にする
+```conf:/etc/wsl.conf
+[boot]
+systemd=true
+
+[user]
+default=username
+```
+Ctrl+Oで保存
+Enter
+Ctrl+Xで離脱
+
+```bash
+sudo nano /etc/resolv.conf
+```
+``` conf:resolv.conf
 [network]
 generateResolvConf = false
 
