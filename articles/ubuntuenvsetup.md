@@ -146,6 +146,16 @@ IPアドレスについては、起動ごとに変わるため`hostname -I`で�
 「It works!」が出ればOK
 
 
+#### Apache2アンインストール方法
+後続PJとの相性を鑑み、Apache2を削除(7/27)
+```bash
+sudo systemctl stop apache2
+sudo apt purge -y apache2 apache2-utils apache2-bin apache2.2-common
+sudo apt autoremove -y
+sudo rm -rf /etc/apache2
+```
+
+
 ### 5.	PostgreSQLのインストール
 ``` bash
 sudo apt -y install postgresql
@@ -185,8 +195,10 @@ source env/bin/activate
 ```
 
 ### 7. おわりに
-Python + Postgres + Apache2 の開発環境をUbuntu(WSL)上に作成できた。
+Python + Postgres の開発環境をUbuntu(WSL)上に作成できた。
 
-この環境をベースにアプリ開発を実施する予定。
+~この環境をベースにアプリ開発を実施する予定。~
+アプリ開発記事を公開。
+@[card](https://zenn.dev/nickelth/articles/outputreportpy)
 
 お好みでVSCode連携をしてもいいかもしれない

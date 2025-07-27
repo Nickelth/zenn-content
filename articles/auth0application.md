@@ -1,8 +1,8 @@
 ---
-title: "Auth0連携ミニアプリの構築"
+title: "PythonアプリとAuth0を連携してみた話"
 emoji: "⭐"
 type: "tech"
-topics: ["Auth0", "Node.js", "Vue.js"]
+topics: ["Auth0", "Python", "Flask"]
 published: false
 ---
 
