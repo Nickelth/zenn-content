@@ -69,7 +69,6 @@ sudo passwd root
 
 
 ### 3.	wsl.conf&resolv.confの設定
-`generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
 ```bash
 sudo nano /etc/wsl.conf
 ```
@@ -89,7 +88,8 @@ Ctrl+Xで離脱
 ```bash
 sudo nano /etc/resolv.conf
 ```
-``` conf:resolv.conf
+`generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
+``` conf:/etc/resolv.conf
 [network]
 generateResolvConf = false
 
