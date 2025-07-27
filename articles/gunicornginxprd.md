@@ -1,5 +1,5 @@
 ---
-title: "Gunicorn + Nginxで本番環境を作成し、Flaskアプリを全世界に公開"
+title: "FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
 emoji: "☯"
 type: "tech"
 topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
@@ -27,6 +27,10 @@ published: false
 - Linux内でVSCodeが開く
 - Apacheをインストールしていない
 - 有線LANにつながっている
+- VPSを1台用意（例：ConoHa / さくらVPS / Lightsail / etc.）
+    - Ubuntu 20.04 or 22.04がインストールされている前提
+    - SSH接続が可能であること
+- FlaskアプリがGitHubなどで管理されていること
 
 #### アプリ構成図
 
@@ -61,6 +65,7 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
 
+---
 
 ### 1.	wsl.conf&resolv.confの設定
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
@@ -110,10 +115,10 @@ sudo systemctl stop systemd-resolved.service
 
 ```bash:Flaskアプリ起動
 # 例：app.py に create_app() がある場合
-gunicorn -w 4 -b 127.0.0.1:8000 app:app
+gunicorn -w 6 -b 127.0.0.1:8000 app:app
 ```
 :::message
-`w 4` → ワーカー数（CPUコア数に合わせる）
+`w 6` → ワーカー数（CPUコア数に合わせる）
 `b` → バインド先（Nginxからアクセスできるよう127.0.0.1推奨）
 :::
 
@@ -128,17 +133,6 @@ sudo systemctl status nginx
 
 ここでは、VPS（仮想専用サーバー）上に Flask アプリを配置し、  
 Gunicorn + Nginx を使って IP アドレスで直接アクセスできる状態を構築する。
-
----
-
-##### ■ 事前準備
-
-- VPSを1台用意（例：ConoHa / さくらVPS / Lightsail / etc.）
-- Ubuntu 20.04 or 22.04がインストールされている前提
-- SSH接続が可能であること
-- FlaskアプリがGitHubなどで管理されていること
-
----
 
 ##### ■ アプリ配置と依存パッケージのインストール
 
