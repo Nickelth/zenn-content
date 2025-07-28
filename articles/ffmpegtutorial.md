@@ -3,14 +3,14 @@ title: "Adobeで動画→GIF変換したら画像が小さすぎたのでLinux�
 emoji: "🎬"
 type: "tech"
 topics: ["linux", "cli", "bash"]
-published: false
+published: true
 ---
 
 ## ffmpegコマンドについて解説
 
 ### 0.はじめに
 
-先日Flaskアプリについての記事を執筆した際、Adobeのフリーツールでmp4をgifに変換する作業を行った。
+先日Flaskアプリについての記事を執筆した際、Adobeのフリーツールで`mp4`を`gif`に変換する作業を行った。
 @[card](https://zenn.dev/nickelth/articles/outputreportpy)
 
 満足いく変換ができず複数回試したところで制限が来てしまい、使用できなくなった。
@@ -18,10 +18,10 @@ published: false
 
 その後、`ffmpeg`コマンドの存在を知り利用。うまくgif変換ができた。
 
-### 1. ffmpegのインストール
-
-以下記事で作成したLinuxベースの開発環境でffmpegを活用した。
-@[card](https://zenn.dev/nickelth/articles/ubuntuenvsetup)
+### 1. ffmpegコマンド使用方法
+```bash
+sudo apt install ffmpeg -y
+```
 
 Zennに今すぐ載せる用(変換したい動画の名前を`input.mp4`にする)
 ```bash:高画質版
@@ -36,8 +36,7 @@ ffmpeg -i input.mp4 -vf "fps=15,scale=800:-1:flags=lanczos" output.gif
 ```
 `scale`で画面縦幅(px)を調整できる。縦横比維持で横幅は自動調整される。
 
-### 2.PDF→PNGに変換するコマンド
-PDFをPNGに変換するコマンドも存在する
+### 2.補足:PDF関係の変換コマンド
 
 ```bash
 # pdfをpngに変換する
@@ -52,6 +51,8 @@ convert input.png output.pdf
 # すべてのjpgを1枚のpdfに変換する
 convert *.jpg output.pdf
 ```
+
+`convert`を`PDF→PNG`に使用することもできるが、処理速度やページ指定などの便利機能の面で`pdfppm`に軍配が上がる。
 
 ### 3. おわりに
 オフライン環境で変換ツールが使用できる`Linux`はまだまだ奥が深いと感じた。オンラインにアップロードしないのでセキュリティにも優しい。PDFが絡むものは使用頻度が高いので家族にもお勧めしたい。
