@@ -1,8 +1,8 @@
 ---
-title: "Linux上で動画→GIF変換を最適化した話：Adobeからffmpegへ"
+title: "Adobeで動画→GIF変換したら画像が小さすぎたのでLinuxでやる"
 emoji: "🎬"
 type: "tech"
-topics: ["linux", "wsl", "ubuntu", "debian"]
+topics: ["linux", "cli", "bash"]
 published: false
 ---
 
@@ -23,11 +23,6 @@ published: false
 以下記事で作成したLinuxベースの開発環境でffmpegを活用した。
 @[card](https://zenn.dev/nickelth/articles/ubuntuenvsetup)
 
-
-- クラウド上での処理も考慮して軽量なGIFを生成
-
-- CI/CDパイプラインに組み込む際の注意点（って書くとプロっぽい）
-
 Zennに今すぐ載せる用(変換したい動画の名前を`input.mp4`にする)
 ```bash:高画質版
 ffmpeg -i input.mp4 -vf "fps=15,scale=800:-1:flags=lanczos,palettegen" -y palette.png
@@ -36,15 +31,31 @@ ffmpeg -i input.mp4 -i palette.png -filter_complex "fps=15,scale=800:-1:flags=la
 `mp4→png→gif`というように2段階工程(パレット生成＆適用方式)にすることで高画質を実現している。
 `flags=lanczos,palettegen`のフラグを立てて高画質を担保している(らしい)
 
-
 ```bash:軽量版
 ffmpeg -i input.mp4 -vf "fps=15,scale=800:-1:flags=lanczos" output.gif
 ```
 `scale`で画面縦幅(px)を調整できる。縦横比維持で横幅は自動調整される。
 
-### 2. おわりに
-オフライン環境で変換ツールが使用できる`Linux`はまだまだ奥が深いと感じた。Adobeにアップロードしないのでセキュリティにも優しい。他の変換ツール(pdf→pngなど)があれば自宅サーバ建ててオフライン変換というアイデアも実現できそう
+### 2.PDF→PNGに変換するコマンド
+PDFをPNGに変換するコマンドも存在する
 
-### 3.参考文献
+```bash
+# pdfをpngに変換する
+pdfppm -png input.pdf output
+
+# pdfの3~5ページ目をJPEGに変換する
+pdftoppm -jpeg -f 3 -l 5 input.pdf output
+
+# PNGをPDFに変換する
+convert input.png output.pdf
+
+# すべてのjpgを1枚のpdfに変換する
+convert *.jpg output.pdf
+```
+
+### 3. おわりに
+オフライン環境で変換ツールが使用できる`Linux`はまだまだ奥が深いと感じた。オンラインにアップロードしないのでセキュリティにも優しい。PDFが絡むものは使用頻度が高いので家族にもお勧めしたい。
+
+### 4.参考文献
 @[card](https://namileriblog.com/mac/ffmpeg)
 @[card](https://qiita.com/saka212/items/fae883a4030857f41c1c)
