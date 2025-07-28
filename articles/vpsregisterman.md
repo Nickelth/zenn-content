@@ -1,38 +1,39 @@
 ---
-title: "ConoHa VPSを契約し、VPSにSSH接続して設定する"
+title: "ConoHa VPSを契約したらそもそもSSH接続できなくて泣いた"
 emoji: "☁"
 type: "tech"
 topics: ["Ubuntu", "cli", "bash", "ssh"]
 published: false
 ---
 
-### VPSサーバーにアプリを公開する
+## VPSはちゃんと課金しましょう
 
-#### 0. はじめに
+### 0. はじめに
 
 Flaskアプリで本番環境を構築中にVPSの設置が必要になった。
 記事の構成要素が増加したため、その部分だけ独立して記事を執筆する。
-@[card](https://zenn.dev/nickelth/articles/outputreportpy)
-@[card](https://zenn.dev/nickelth/articles/gunicornginxprd)
 
 
-また、今回は従属課金プランのものを使用するため、サーバー停止・再起動の方法も併せて記述する。
 
-VPSはConoHAを使用する
-
-間違えて「WING」という全く別のものを契約してしまったが、うまく削除できたのでそちらの方法も併せて紹介する。
-
-
-#### 1. VPSの申し込み
-![](![](https://storage.googleapis.com/zenn-user-upload/e1a701a3b638-20250727.png))
-*ConoHa VPSはUIが日本語で分かりやすくおすすめ*
-
-@[card](https://www.conoha.jp/vps/)
-
-
-#### 2.プラン選択
-![](https://storage.googleapis.com/zenn-user-upload/034ca6447ab7-20250727.png)
+![](https://storage.googleapis.com/zenn-user-upload/e1a701a3b638-20250727.png)
 ![](https://storage.googleapis.com/zenn-user-upload/9d45585892e0-20250727.png)
+「毎時1.9円」「シャットダウン中は課金されない」「UIが日本語」という魅力的な内容だったため契約して本番環境にしようとした結果
+
+- 「ConoHa」で検索した結果、VPSではなく「WING」という全く別のものを契約してしまった
+- VPSを契約後SSH接続しようとしたがなぜかPingすら通らない
+- VPS側のターミナルはブラウザ版なので文字入力直接コピペできなくて使いづらすぎる
+- そのターミナルで調べた結果Pingは受け取っているが謎の設定で破棄されていることが判明
+
+おそらく低価格を維持するためセキュリティを強固にして人件費を削減しているのかと勘ぐってみたり
+いずれにしろ日曜日が無駄にされたので他社に乗り換え
+
+
+### 1. VPSの申し込み
+
+
+
+### 2.プラン選択
+![](https://storage.googleapis.com/zenn-user-upload/034ca6447ab7-20250727.png)
 *最安プランでも性能が破格*
 今回の用途はポートフォリオ用に一時公開する程度なので、従属課金制のものが望ましい。
 イメージタイプ：Ubuntu24.04
@@ -48,7 +49,7 @@ rootパスワードとネームタグを設定
 ポップアップが出るので「はい」を押すとシャットダウンが開始される。
 
 
-#### 3. VPS操作
+### 3. VPS操作
 
 現状のrootパスワードのみ設定されている状態だとブルートフォース攻撃で突破されるので、SSH鍵を設定する。
 
@@ -127,5 +128,9 @@ VPSの再起動時はGUIで操作する必要がある。
 おつかれさまでした。
 
 
-#### 4. おわりに
+### 4. おわりに
 引き続き`Github Actions + Docker`でのCI/CD環境を構築を実施する予定。
+
+Flaskアプリシリーズ
+@[card](https://zenn.dev/nickelth/articles/auth0application)
+@[card](https://zenn.dev/nickelth/articles/outputreportpy)
