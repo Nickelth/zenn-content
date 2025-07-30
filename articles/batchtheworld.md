@@ -1,5 +1,5 @@
 ---
-title: "個人的バッチ言語のアイデア帳"
+title: "バッチファイルのクソ仕様にやられたので備忘録まとめ"
 emoji: "⌨"
 type: "tech"
 topics: ["cmd", "windows", "cli"]
@@ -8,6 +8,7 @@ published: false
 
 ### 0. はじめに
 業務で普段使いするバッチプログラムをまとめて書いてみた。
+`AND`と`OR`と`break`と`continue`できないので不満が多い言語
 
 #### 10分後の時刻を取得する処理
 現在時刻を分に直し、10分足して剰余演算する処理
@@ -80,3 +81,10 @@ for %%f in ("C:\User\sample.csv") do (
 `"C:\User\sample.csv"`のデータを1行ずつ`for`文を回して取得し、
 `"C:\User\result.csv"`にコピーする処理。
 `%%f`は変数。
+
+#### おわり
+
+```bat
+cipher /w:C:\
+```
+ゴミ箱の中身を`00`, `ff`, 乱数で上書き
