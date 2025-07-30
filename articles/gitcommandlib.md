@@ -20,7 +20,7 @@ published: false
 git switch -c new_branch
 
 # 追跡・プッシュ
-git push -u new_branch
+git push -u origin new_branch
 ```
 `-u:`「このローカルブランチは `origin/new_branch` を追いかけます」という意味
 これ以降いちいち`git push origin dev`とか打たなくても
