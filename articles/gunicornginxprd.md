@@ -1,6 +1,6 @@
 ---
-title: "Gunicorn + Nginxで本番環境を作成し、Flaskアプリを全世界に公開"
-emoji: "☯"
+title: "FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
+emoji: "🦄"
 type: "tech"
 topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
 published: false
@@ -27,6 +27,10 @@ published: false
 - Linux内でVSCodeが開く
 - Apacheをインストールしていない
 - 有線LANにつながっている
+- VPSを1台用意（例：ConoHa / さくらVPS / Lightsail / etc.）
+    - Ubuntu 20.04 or 22.04がインストールされている前提
+    - SSH接続が可能であること
+- FlaskアプリがGitHubなどで管理されていること
 
 #### アプリ構成図
 
@@ -55,16 +59,36 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 簡単に言えば：
 
-- Nginx：入り口の受付。リクエストを受けてGunicornに渡す。
-- Gunicorn：中の処理係。Flaskアプリに仕事を渡して、結果をNginxに返す。
-- Flaskアプリ：実際に中身の処理をする人
+- Nginx：ラーメン店の受付。リクエストを受けてGunicornに渡す。
+- Gunicorn：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
+- Flaskアプリ：実際にラーメンを作る人
 
 この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
 
+---
 
 ### 1.	wsl.conf&resolv.confの設定
+```bash
+sudo nano /etc/wsl.conf
+```
+`wsl.conf`の`[boot]`を`systemd=true`にする
+    `systemctl`の利用、サービス自動起動などのため
+```conf:/etc/wsl.conf
+[boot]
+systemd=true
+
+[user]
+default=username
+```
+Ctrl+Oで保存
+Enter
+Ctrl+Xで離脱
+
+```bash
+sudo nano /etc/resolv.conf
+```
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf
+``` conf:/etc/resolv.conf
 [network]
 generateResolvConf = false
 
@@ -106,18 +130,36 @@ sudo systemctl stop systemd-resolved.service
 ### 2. Flaskアプリ起動(Gunicorn前提)
 
 #### 2.1 必要パッケージのインストールと起動
-
-``` bash:Nginxインストール(任意)
+```bash
+# パッケージリスト更新
 sudo apt update
+
+# Nginxのインストール
 sudo apt install -y nginx
+
+# Python仮想環境を有効にした状態でGunicornをインストール
+pip install gunicorn
 ```
 
+Flaskアプリが `app.py` にあり、グローバルに `app = Flask(__name__)` が定義されている場合の起動方法：
+
+```bash
+gunicorn -w 4 -b 127.0.0.1:8000 app:app
+```
+
+Flaskアプリが create_app() という関数で返されるファクトリーパターンを採用している場合は、
+wsgi.py など別ファイルでアプリを生成して Gunicorn から読み込ませる必要がある：
+
+```python:wsgi.py
+from app import create_app
+app = create_app()
+```
 ```bash:Flaskアプリ起動
-# 例：app.py に create_app() がある場合
 gunicorn -w 4 -b 127.0.0.1:8000 app:app
 ```
 :::message
-`w 4` → ワーカー数（CPUコア数に合わせる）
+`-w 4` → ワーカー数。基本の目安は `(2 × CPUコア数) + 1` だが、軽量なアプリなら 4〜6 でも十分。  
+過剰に増やすとメモリを圧迫するので、実行環境に応じて調整する。
 `b` → バインド先（Nginxからアクセスできるよう127.0.0.1推奨）
 :::
 
@@ -128,16 +170,65 @@ sudo systemctl enable nginx
 sudo systemctl status nginx
 ```
 
+#### 2.2 VPS構築して動作確認可能にする
+
+ここでは、VPS（仮想専用サーバー）上に Flask アプリを配置し、  
+Gunicorn + Nginx を使って IP アドレスで直接アクセスできる状態を構築する。
+
+##### ■ アプリ配置と依存パッケージのインストール
+
+```bash
+# Flaskアプリのクローン（またはSCPなどで転送）
+git clone https://github.com/Nickelth/Papyrus.git
+cd your-flask-app
+
+# 仮想環境を作成して依存関係をインストール
+sudo apt install python3-venv
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```bash:Gunicornでアプリを起動
+# Gunicornを仮想環境内にインストール（未インストールの場合）
+pip install gunicorn
+
+# FlaskアプリをGunicornで起動
+gunicorn -w 4 -b 127.0.0.1:8000 app:app
+```
+
+``` bash:Nginxインストール
+sudo apt update
+sudo apt install -y nginx
+```
+
 `ufw`（Uncomplicated Firewall）は、Ubuntuに標準で用意されているシンプルなファイアウォール管理ツール。
 以下のコマンドで、Nginxの通信を許可する：
-```bash:ファイアウォール設定(任意)
+```bash:ファイアウォール設定
 sudo ufw allow 'Nginx Full'
 sudo ufw status
 ```
-※ ただし、ufw 自体が有効でない場合や、別のファイアウォールが使われている場合は不要。
-確認は sudo ufw status で行える。
 
-#### 2.2 Nginx設定ファイル
+```bash:ポート番号指定で開ける場合
+sudo ufw allow 80/tcp
+sudo ufw status
+```
+
+```bash:VPSのグローバルIPアドレス確認
+hostname -I
+```
+
+```plaintext
+http://YOUR.VPS.IP.ADDRESS/
+```
+
+:::message alert
+- アプリを常時公開する必要はない。必要な期間だけポートを開ける。
+- 公開期間が終わったら `sudo ufw deny 80` や `sudo systemctl stop nginx` などで閉じる。
+- 公開用に限定パスワードを設けたり、Basic認証をつけるのも手。
+:::
+
+#### 2.3 Nginx設定ファイル
 
 ```nginx
 # /etc/nginx/sites-available/papyrus（ファイル名は任意）
@@ -170,8 +261,6 @@ Nginxでは `/etc/nginx/sites-available/` に構成ファイルを置き、
 
 このコマンドで、作成した設定ファイル `papyrus` を Nginx に読み込ませるようにする。
 
-
-
 全て終了後、動作確認
 ```bash
 curl http://localhost
@@ -202,7 +291,7 @@ gunicorn -w 4 -b 127.0.0.1:8000 app:app
 
 * `-w 4`：4つのワーカープロセスで処理（CPUコア数に応じて調整）
 * `-b 127.0.0.1:8000`：ローカルホスト上で8000番ポートをバインド
-  　→ Nginxからアクセス可能になる
+    → Nginxからアクセス可能になる
 
 ※ `app:app` の左側はファイル名（拡張子なし）、右側はFlaskアプリのインスタンス名。
 
@@ -253,4 +342,5 @@ pkill gunicorn
 
 
 以上で、Gunicorn による Flask アプリの起動および動作確認が完了。
-次は systemd を使ってサービス化してもよい。
+次回はGithub Actions + DockerでCI/CDを構築する。
+systemd を使ってサービス化してもよい。

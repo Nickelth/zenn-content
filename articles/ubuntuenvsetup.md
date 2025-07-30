@@ -1,17 +1,15 @@
 ---
-title: "UbuntuにPython+Apache環境を構築 → Nginxも試してみた話"
-emoji: "🌀"
+title: "【Ubuntu】Python実行環境構築例【Apache2】"
+emoji: "🐧"
 type: "tech"
-topics: ["ubuntu", "wsl", "apache", "postgres", "python", "nginx"]
+topics: ["ubuntu", "wsl", "apache", "postgres", "python"]
 published: true
 ---
 
-## WSL2構成例（Python/PostgreSQL/Nginx/Apache）
+<!--## .env付きのWSL2構成例（Python/DB/Apache）-->
+## WSL2構成例（Python/DB/Apache）
 ※有線LAN接続が前提
 ※実際の業務とは無関係な個人検証をもとにした内容です。
-※実務で遭遇したのはApacheですが、Nginx推奨です。
-
-- GitHub ActionでのCI/CD連携用にNginx手順追記(7/26)
 
 ### 1.	仮想環境(WSL2)の有効化
 
@@ -68,9 +66,30 @@ sudo passwd root
 ```
 ![](https://storage.googleapis.com/zenn-user-upload/e75b7943cf43-20250717.png)
 
+
+
 ### 3.	wsl.conf&resolv.confの設定
+```bash
+sudo nano /etc/wsl.conf
+```
+`wsl.conf`の`[boot]`を`systemd=true`にする
+    `systemctl`の利用、サービス自動起動などのため
+```conf:/etc/wsl.conf
+[boot]
+systemd=true
+
+[user]
+default=username
+```
+Ctrl+Oで保存
+Enter
+Ctrl+Xで離脱
+
+```bash
+sudo nano /etc/resolv.conf
+```
 `generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf
+``` conf:/etc/resolv.conf
 [network]
 generateResolvConf = false
 
@@ -103,74 +122,14 @@ sudo apt update
 
 Ubuntu再起動時のresolv.confの初期化を防ぐため、以下のコマンドを入力
 ``` bash
-sudo chattr +i /etc/resolv.conf
+sudo chattr +i /etc/resolv.conf　
 sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved.service
 ```
 
-### 4. Nginxインストール
-`Apache2`をインストールしている場合は削除する
-```bash
-sudo systemctl stop apache2
-sudo apt purge -y apache2 apache2-utils apache2-bin apache2.2-common
-sudo apt autoremove -y
-sudo rm -rf /etc/apache2
-```
-
-`Nginx`をインストール
-```bash
-sudo apt update
-sudo apt install nginx
-```
-
-`Nginx`の起動・ステータス確認
-```bash
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo systemctl status nginx
-```
-
-ファイアウォールの設定（任意）
-```bash
-sudo ufw allow 'Nginx Full'
-sudo ufw status
-```
-
-サイト構成の例(`Flask+uWSGI`の場合。各アプリの構成によって異なる)
-```nginx:/etc/nginx/sites-available/myapp
-server {
-    listen 80;
-    server_name yourdomain.com;
-
-    location / {
-        include uwsgi_params;
-        uwsgi_pass unix:/home/youruser/myapp/myapp.sock;
-    }
-
-    location /static {
-        alias /home/youruser/myapp/static;
-    }
-}
-```
-
-シンボリックリンクで有効化
-```bash
-sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
 
 
-#### 4.1	Apacheをインストールする場合
-`Nginx`をインストールしている場合は削除する
-```bash
-sudo systemctl stop nginx
-sudo apt purge -y nginx nginx-common
-sudo apt autoremove -y
-sudo rm -rf /etc/nginx
-```
-
-
+### 4.	Apacheインストール
 ``` bash
 sudo apt upgrade
 sudo apt -y install apache2
@@ -206,6 +165,16 @@ IPアドレスについては、起動ごとに変わるため`hostname -I`で�
 「It works!」が出ればOK
 
 
+#### Apache2アンインストール方法
+後続PJとの相性を鑑み、Apache2を削除(7/27)
+```bash
+sudo systemctl stop apache2
+sudo apt purge -y apache2 apache2-utils apache2-bin apache2.2-common
+sudo apt autoremove -y
+sudo rm -rf /etc/apache2
+```
+
+
 ### 5.	PostgreSQLのインストール
 ``` bash
 sudo apt -y install postgresql
@@ -239,13 +208,13 @@ createdb testdb -O postgres
 ### 6.	Python のインストール
 ``` bash
 sudo apt install -y python3 python3-pip python3-venv python3-dev build-essential libpq-dev
-# 仮想環境venv作成（プロジェクトごとに）
-python3 -m venv venv
-source venv/bin/activate
+# 仮想環境env作成（プロジェクトごとに）
+python3 -m venv env
+source env/bin/activate
 ```
 
 ### 7. おわりに
-Python + Postgres + Apache2 の開発環境をUbuntu(WSL)上に作成できた。
+Python + Postgres の開発環境をUbuntu(WSL)上に作成できた。
 
 ~この環境をベースにアプリ開発を実施する予定。~
 アプリ開発記事を公開。
