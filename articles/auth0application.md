@@ -3,7 +3,7 @@ title: "FlaskアプリにAuth0つけようとしたらapp.pyがぶっ壊れた�
 emoji: "⭐"
 type: "tech"
 topics: ["Auth0", "Python", "Flask"]
-published: false
+published: true
 ---
 
 >Flaskは1ファイルで済むって言ったやつ出てこい
@@ -109,12 +109,12 @@ def create_app():
 ```
 
 #### ポイント
-`load_dotenv()`は`app = Flask(__name__)`よりも**前で実行**
-- `.env`ファイルの情報が抜けると`create_app()`でエラー
+- `load_dotenv()`は`app = Flask(__name__)`よりも**前で実行**
+    - `.env`ファイルの情報が抜けると`create_app()`でエラー
 
-`app = Flask(__name__)`だと`templates\`のファイルを読み込んでくれないので、中に*`temlate_foler`*を設定して明示的にディレクトリ指定する。
+- `app = Flask(__name__)`だと`templates\`のファイルを読み込んでくれないので、中に`temlate_foler`を設定して明示的にディレクトリ指定する。
 
-`create_app()`内で読み込むルーティング関数は、必要なものすべてそろっているか確認する。
+- `create_app()`内で読み込むルーティング関数は、必要なものすべてそろっているか確認する。
 
 ### 3. Auth0導入
 
@@ -146,10 +146,12 @@ http://localhost:5000/logout
 
 ```
 
+そして...Auth0と連携成功
 ![](https://storage.googleapis.com/zenn-user-upload/3a379312c7f3-20250730.png)
 
 
 ![](https://storage.googleapis.com/zenn-user-upload/270816d67e11-20250729.png)
+*Googleアカウントと連携していると警告が出る(本番up禁止!)*
 
 ターミナルで`python3 -c 'import secrets; print(secrets.token_urlsafe(32))'`を実行し、その結果を`.env`の`FLASK_SECRET_KEY=`に貼りつけ
 
