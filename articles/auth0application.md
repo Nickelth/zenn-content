@@ -135,7 +135,7 @@ Auth0にログインする。アカウントがなければ作る。
 ![](https://storage.googleapis.com/zenn-user-upload/d1e36c993fb8-20250728.png)
 
 「設定」>「アプリケーションのURI」欄に入力
-![](https://storage.googleapis.com/zenn-user-upload/3b0f7df4f37a-20250729.png)
+![](https://storage.googleapis.com/zenn-user-upload/5734ab0c2e3d-20250730.png)
 
 ```plaintext:Configuration URI
 # 許可するコールバックURL
@@ -146,7 +146,7 @@ http://localhost:5000/logout
 
 ```
 
-![](https://storage.googleapis.com/zenn-user-upload/0bcf927fb6dc-20250729.png)
+![](https://storage.googleapis.com/zenn-user-upload/3a379312c7f3-20250730.png)
 
 
 ![](https://storage.googleapis.com/zenn-user-upload/270816d67e11-20250729.png)
