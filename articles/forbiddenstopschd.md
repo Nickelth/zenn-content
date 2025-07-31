@@ -3,7 +3,7 @@ title: "タスクスケジューラ全体を停止することは禁止されて
 emoji: "⏰"
 type: "tech"
 topics: ["powershell", "windows", "cli"]
-published: false
+published: true
 ---
 
 ## 停止ダメ。ゼッタイ。
@@ -44,15 +44,6 @@ Microsoft の公式ガイドや技術ブログでは、サービスを停止・�
 > このサービスを使用すると、ユーザーはこのコンピューター上で自動化されたタスクを構成およびスケジュールできます。また、このサービスは複数の Windows のシステムにとって重要なタスクをホストしています。このサービスを停止または無効にすると、これらのタスクは予定された時刻に実行されず、このサービスに明示的に依存している他のサービスは起動できなくなります。
 @[card](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server)
 
-> in the background of a modern Windows machine, dig through the Task Scheduler, it’s an eye-opener! To remove these, don’t do what I did and simply disable the Task Scheduler service – that’s a surefire way to kill a Windows 10 desktop.
-> 実行中のスケジュールされたタスクを削除したい場合でも、タスクスケジューラサービスを単純に無効化するのは絶対にやめるべきだ。そうすると Windows 10 デスクトップが使い物にならなくなる
-@[card](https://www.htg.co.uk/blog/windows-10-part-4-telemetry#:~:text=in%20the%20background%20of%20a,kill%20a%20Windows%2010%20desktop)
-
-> システム管理のためにタスクを使用しているため、このサービスは必要です。デフォルトの"自動"のままにします。
-> そもそも管理ツール(services.msc)ではメニューがグレイアウト化されていて停止したり無効化したりできないようです。
-@[card](https://tooljp.com/Windows10/doc/Service/Task_Scheduler.html)
-
-
 ### 2. 回避策：バックアップ → 無効化 → 再有効化（PowerShell）
 
 タスクスケジューラは止められないので中のタスクを1個ずつ無効化する作戦。
@@ -87,8 +78,8 @@ C:\
     └── csv
 ```
 
-#### ソースコード仕様
-##### Stop_SchdTasks.ps1
+### 3. ソースコードレシピ
+#### Stop_SchdTasks.ps1
 - `C:\YOUR_PATH\log\Stop_SchdTasks\`配下に実行ログを出力
 - 停止前に実行タスクの一覧をバックアップし、`\xml\`に出力
     - 実行タスク一覧は`XML`で出力後、`CSV`に変換され`\csv\`に出力される。
@@ -138,7 +129,7 @@ catch {
 }
 ```
 
-##### Restart_SchdTasks.ps1
+#### Restart_SchdTasks.ps1
 - `C:\YOUR_PATH\log\Stop_SchdTasks\`配下に実行ログを出力
 - 処理開始時、タスクスケジューラのすべてのタスクを有効化
 - その後、バックアップされた無効化されているタスク一覧XMLを元にタスクを無効化し、停止前の状態を再現
@@ -177,17 +168,6 @@ catch {
     Add-content -Path $logFilePath -Value $errorMessage
 }
 ```
-
-### 3. よくある罠
-
-- 「全般」での入力事項
-    - **「最上位の特権で実行する」にチェックを入れる**
-:::message
-チェックしないとタスクの有効/無効化、Cドライブ以下のディレクトリ操作ができなくなる
-:::
-- 「操作」での入力事項
-    - プログラム/スクリプト(P): `powershell.exe`
-    - 引数の追加(オプション)(A): `-ExecutionPolicy Bypass -File "C:\YOUR_PATH\Stop_SchdTasks.ps1"`
 
 ### 4. おわり
 タスクスケジューラは「止められない」という事実を知っておくだけでも、トラブルシューティングやメンテナンス時の判断に差が出る。
