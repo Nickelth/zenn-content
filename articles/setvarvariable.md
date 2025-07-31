@@ -101,3 +101,5 @@ set "logfile=%~dp0log\import.log"
 より安全かつ正確なスクリプトを書くためには、`set "var=value"` の形式を採用するべきである。
 多少記述が煩雑に見えるかもしれないが、長期的な保守性と予測可能な動作を得る上では、十分に妥当な選択肢といえる。
 
+#### 8. Windowsバッチの記事
+@[card](https://zenn.dev/nickelth/articles/batchtheworld)
