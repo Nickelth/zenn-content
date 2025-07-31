@@ -94,3 +94,6 @@ for /f "usebackq tokens=*" %%f in ("C:\User\sample.csv") do (
 cipher /w:C:\
 ```
 ドライブ上の未使用領域（削除済みファイルの断片が残る可能性のある領域）を、00→FF→ランダムの順で3回上書き
+
+#### Windowsバッチの記事
+@[card](https://zenn.dev/nickelth/articles/setvarvariable)
