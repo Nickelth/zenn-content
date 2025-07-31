@@ -55,6 +55,9 @@ schtasks /create /tn "MyTask" ^
 
 #### コマンド実行時にエラーメッセージがでる場合はスルーする
 ``` bat:batchfile
+@echo off
+setlocal enabledelayedexpansion
+
 schtasks /query /tn !taskname! 2>nul
 if !errorlevel! equ 0 (
     schtasks /delete !taskname! /f
@@ -71,8 +74,11 @@ if !errorlevel! equ 0 (
 基本for文のみ解説する。
 
 ``` bat:batchfile
-for %%f in ("C:\User\sample.csv") do (
-	copy /y %%f "C:\User\result.csv" >> %LOGFILE%
+@echo off
+setlocal enabledelayedexpansion
+
+for /f "usebackq tokens=*" %%f in ("C:\User\sample.csv") do (
+	echo /y %%f >> "C:\User\result.csv"
 	if !ERRORLEVEL! neq 0 (
         echo %DATE% %TIME% ERR %DEF_NAME% "COPY 異常終了" >> %ALERT_LOG%
     )
@@ -87,4 +93,4 @@ for %%f in ("C:\User\sample.csv") do (
 ```bat
 cipher /w:C:\
 ```
-ゴミ箱の中身を`00`, `ff`, 乱数で上書き
+ドライブ上の未使用領域（削除済みファイルの断片が残る可能性のある領域）を、00→FF→ランダムの順で3回上書き
