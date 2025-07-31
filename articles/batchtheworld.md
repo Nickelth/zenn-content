@@ -3,7 +3,7 @@ title: "バッチファイルのクソ仕様にやられたので備忘録まと
 emoji: "⌨"
 type: "tech"
 topics: ["cmd", "windows", "cli"]
-published: false
+published: true
 ---
 
 ### 0. はじめに
