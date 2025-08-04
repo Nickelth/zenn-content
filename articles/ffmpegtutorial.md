@@ -11,7 +11,7 @@ published: true
 ### 0.はじめに
 
 先日Flaskアプリについての記事を執筆した際、Adobeのフリーツールで`mp4`を`gif`に変換する作業を行った。
-@[card](https://zenn.dev/nickelth/articles/outputreportpy)
+@[card](https://zenn.dev/nickelth/articles/reportapppart01flask)
 
 満足いく変換ができず複数回試したところで制限が来てしまい、使用できなくなった。
 履歴やCookie削除を行い、もう１度試したが利用できなかった。

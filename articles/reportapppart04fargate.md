@@ -1,5 +1,5 @@
 ---
-title: "FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
+title: "【#4】FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
 emoji: "🦄"
 type: "tech"
 topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
@@ -10,122 +10,17 @@ published: false
 
 ### 0. はじめに
 
-先日、Flaskアプリを作成した。  
-@[card](https://zenn.dev/nickelth/articles/outputreportpy)
-
-業務上、デプロイ手段をGitHub Actionsへ変更する案が持ち上がった。  
-その前段階として、本アプリを用いて構成を確認する必要があった。  
-その過程で、**Gunicorn + Nginx** による本番環境の構築が必要となり、検討・実装を行った。
 
 #### 使用技術の選定理由
 
-- **Nginx**: 静的ファイルの配信やリバースプロキシとしての役割を担う。負荷分散やセキュリティ強化にも貢献する。
-- **Gunicorn**: PythonのWSGIサーバーとして、Flaskアプリを効率よく動作させるために選定。
+
 
 #### 前提
-- Debian系Linux環境(WSL可)
-- Linux内でVSCodeが開く
-- Apacheをインストールしていない
-- 有線LANにつながっている
-- VPSを1台用意（例：ConoHa / さくらVPS / Lightsail / etc.）
-    - Ubuntu 20.04 or 22.04がインストールされている前提
-    - SSH接続が可能であること
-- FlaskアプリがGitHubなどで管理されていること
+
 
 #### アプリ構成図
 
-```plaintext
-Client (ブラウザ)
-    ↓
-Nginx (Reverse Proxy)
-    ↓
-Gunicorn (WSGIサーバー)
-    ↓
-Flask App
-    ↓
-SQLAlchemy
-    ↓
-PostgreSQL（などのDB）
-```
 
-#### WSGIサーバー（Gunicorn）について
-
-Flaskは開発用サーバーを内蔵しているが、本番運用には適していない。  
-そこで登場するのが **WSGI（Web Server Gateway Interface）** というPythonの標準インターフェース。  
-WSGIは「Webサーバー（Nginxなど）」と「Pythonアプリケーション（Flaskなど）」の**橋渡し役**を担う。
-
-GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGIサーバー**である。  
-複数のワーカー（プロセス）を立ち上げ、リクエストを並列処理できるため、スケーラビリティと安定性が向上する。
-
-簡単に言えば：
-
-- Nginx：ラーメン店の受付。リクエストを受けてGunicornに渡す。
-- Gunicorn：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
-- Flaskアプリ：実際にラーメンを作る人
-
-この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
-
----
-
-### 1.	wsl.conf&resolv.confの設定
-```bash
-sudo nano /etc/wsl.conf
-```
-`wsl.conf`の`[boot]`を`systemd=true`にする
-    `systemctl`の利用、サービス自動起動などのため
-```conf:/etc/wsl.conf
-[boot]
-systemd=true
-
-[user]
-default=username
-```
-Ctrl+Oで保存
-Enter
-Ctrl+Xで離脱
-
-```bash
-sudo nano /etc/resolv.conf
-```
-`generateResolvConf = false`でUbuntu再起動時のDNS再生成を防止
-``` conf:/etc/resolv.conf
-[network]
-generateResolvConf = false
-
-[boot]
-systemd = true
-```
-Ctrl+Oで保存
-Enter
-Ctrl+Xで離脱
-
-PowerShell側からWSLを再起動
-``` powershell
-wsl --shutdown
-```
-※シャットダウン後、Ubuntuに接続すると自動起動する。
-
-`ps aux`（実行中の全プロセスの一覧表示）を実行し、`/sbin/init` が含まれているかを確認。
-これは systemd が起動プロセスとして動作しているかの目安になる。
-![](https://storage.googleapis.com/zenn-user-upload/ce56f0db93cb-20250717.png)
-
-コマンドプロンプトで `ipconfig /all` を実行し、使用中のネットワークアダプターの「DNS サーバー」欄にある IP アドレスを確認。
-``` plaintext
-DNS サーバー . . . . . . . . . . . : 192.168.1.1
-```
-
-Ubuntuを立ち上げ、以下のコマンドで疎通確認(ping先は実際のDNSサーバーのIPアドレスに合わせる)
-``` bash
-ping 192.168.1.1
-sudo apt update
-```
-
-Ubuntu再起動時のresolv.confの初期化を防ぐため、以下のコマンドを入力
-``` bash
-sudo chattr +i /etc/resolv.conf
-sudo systemctl disable systemd-resolved.service
-sudo systemctl stop systemd-resolved.service
-```
 
 ### 2. Flaskアプリ起動(Gunicorn前提)
 
