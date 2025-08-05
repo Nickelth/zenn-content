@@ -60,7 +60,11 @@ Fcitxツールを開く
 ```bash
 fcitx-configtool
 ```
-![](https://storage.googleapis.com/zenn-user-upload/57ee53c15490-20250805.png)
+日本語を選択
+![日本語を選択](https://storage.googleapis.com/zenn-user-upload/f8e8a21518ca-20250805.png)
+
+「入力メソッドのオン/オフ」が「ZenkakuHankaku」になっていることを確認
+![入力メソッドのオン/オフ](https://storage.googleapis.com/zenn-user-upload/57ee53c15490-20250805.png)
 
 
 ### 3. conkyでCPU・メモリの状態をリアルタイム表示
