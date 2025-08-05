@@ -62,5 +62,5 @@ Linux監視カメラのアイデアがあるので、動画の保存先として
 ゴムやワッシャーがうんぬん（めんどい）
 
 ### 4. 中古PCシリーズ
-@[card](https://zenn.dev/nickelth/articles/optilexsetup01)
-@[card](https://zenn.dev/nickelth/articles/optilexsetup02mint)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup01)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup02mint)

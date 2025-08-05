@@ -23,7 +23,7 @@ published: false
 
 |パーツ|価格|備考|
 |---|---|---|
-|Optilex 7070|¥28,600|9世代Intel Corei7, 電源プラグが欧州, SSDなし|
+|Optiplex 7070|¥28,600|9世代Intel Corei7, 電源プラグが欧州, SSDなし|
 |Crucial 1TB SSD NVMe4|¥6,900|ポイント使用後|
 |BENFEI DP(オス)-HDMI(メス)変換器|¥1,200|アクティブじゃないと画面が映らない|
 |電源プラグ|¥5,000|日本規格|
@@ -37,5 +37,5 @@ published: false
 ### 3.
 
 ### 4. 中古PCシリーズ
-@[card](https://zenn.dev/nickelth/articles/optilexsetup02mint)
-@[card](https://zenn.dev/nickelth/articles/optilexsetup03rmhdd)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup02mint)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup03rmhdd)
