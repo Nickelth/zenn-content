@@ -1,5 +1,5 @@
 ---
-title: "Javaレガシー帳票出力アプリをPythonにリメイクした話"
+title: "【#1】Javaレガシー帳票出力アプリをPythonにリメイクした話"
 emoji: "📄"
 type: "tech"
 topics: ["flask", "postgres", "python", "json"]
@@ -89,4 +89,4 @@ published: true
 今回は1画面のみの実装であるが、「保守しやすさ」「分かりやすい責務分離」を意識してバックエンド構築ができた。PDF帳票のようなシンプルな機能でも、裏側の処理整理と役割分離は実務で重要になる。CI/CDやクラウド連携も視野に見据えて、「見た目より構造で勝負する」設計姿勢を残しておきたい。
 
 ### 次章 - app.py分割 & Auth0連携
-@[card](https://zenn.dev/nickelth/articles/auth0application)
+@[card](https://zenn.dev/nickelth/articles/reportapp02auth0)

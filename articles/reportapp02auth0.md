@@ -1,5 +1,5 @@
 ---
-title: "FlaskアプリにAuth0つけようとしたらapp.pyがぶっ壊れた話"
+title: "【#2】FlaskアプリにAuth0つけようとしたらapp.pyがぶっ壊れた話"
 emoji: "⭐"
 type: "tech"
 topics: ["Auth0", "Python", "Flask"]
@@ -12,6 +12,7 @@ published: true
 本番環境に公開するためにAuth0入れてみたけどapp.pyが肥大化して詰んだ。
 当初はAuth0をapp.pyに直接投入していたが、ルーティングぐちゃぐちゃになってページが開けなくなったので泣く泣く分割。
 ハマった知見とかも共有しときます。
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)
 
 ### 1. フル装備app.pyの地獄
 
