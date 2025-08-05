@@ -50,7 +50,7 @@ ls -l /dev/disk/by-uuid/
 
 #### 方法3. dmesgで見る
 起動時のストレージ関連ログを確認できる。コアな自分に酔いたいとき用。
-```
+```bash
 dmesg | grep -i 'nvme\|ssd\|sda'
 ```
 
