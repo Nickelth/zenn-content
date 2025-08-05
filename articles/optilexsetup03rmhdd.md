@@ -6,7 +6,7 @@ topics: ["Linux", "bash", "cli"]
 published: false
 ---
 
-## HDD取り外し手順
+## Crucial SSD 1TB はいいぞ
 
 ### 0. はじめに
 紆余曲折あって中古PCにSSD装填、LinuxMintの起動に成功した。
