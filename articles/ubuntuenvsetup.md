@@ -218,4 +218,4 @@ Python + Postgres の開発環境をUbuntu(WSL)上に作成できた。
 
 ~~この環境をベースにアプリ開発を実施する予定。~~
 アプリ開発記事を公開。
-@[card](https://zenn.dev/nickelth/articles/reportapppart01flask)
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)

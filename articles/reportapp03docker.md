@@ -249,5 +249,5 @@ pkill gunicorn
 
 
 Flaskアプリシリーズ
-@[card](https://zenn.dev/nickelth/articles/reportapppart02auth0)
-@[card](https://zenn.dev/nickelth/articles/reportapppart01flask)
+@[card](https://zenn.dev/nickelth/articles/reportapp02auth0)
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)
