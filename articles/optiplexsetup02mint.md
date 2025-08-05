@@ -120,5 +120,5 @@ Hi ユーザー名! You've successfully authenticated...
 ```
 
 ### 5. 中古PCシリーズ
-@[card](https://zenn.dev/nickelth/articles/optilexsetup01)
-@[card](https://zenn.dev/nickelth/articles/optilexsetup03rmhdd)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup01)
+@[card](https://zenn.dev/nickelth/articles/optiplexsetup03rmhdd)
