@@ -1,6 +1,6 @@
 ---
 title: "爆音HDDを取り外して中古PCを精神的蘇生"
-emoji: "😵‍💫"
+emoji: "😌"
 type: "tech"
 topics: ["Linux", "bash", "cli"]
 published: false
