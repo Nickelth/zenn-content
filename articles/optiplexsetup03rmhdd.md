@@ -27,11 +27,19 @@ lsblk -o NAME,ROTA,SIZE,MOUNTPOINT,MODEL
 ```
 
 ```plaintext
-NAME   ROTA SIZE MOUNTPOINT MODEL
-sda       1 1.8T            ST2000DM008 ← SeagateのHDD（回転してる）
-nvme0n1   0 500G /          CT500P3SSD8 ← CrucialのSSD（ROTA=0、ルートにマウント）
+NAME        ROTA    SIZE MOUNTPOINT            MODEL
+sda            1  931.5G                       ST1000DM010-2EP102
+├─sda1         1    150M                       
+├─sda2         1    128M                       
+├─sda3         1  930.3G                       
+└─sda4         1 1001.7M                       
+sr0            1   1024M                       HL-DT-ST DVD+/-RW GU90N
+nvme0n1        0  931.5G                       CT1000P3PSSD8
+├─nvme0n1p1    0    512M /boot/efi             
+└─nvme0n1p2    0    931G /     
 ```
-`lsblk`でルート（`/`）が`ROTA=0`なら、もうHDDはガヤです。
+`nvme0n1p2`がルート（`/`）にマウントしているのでSSD起動で確定。
+sdaはどこにもマウントされていないのでうるさいだけの物置
 
 #### 方法2. df -h + ls -l /dev/disk/by-uuid/
 
@@ -41,7 +49,7 @@ df -h /
 ```
 ```plaintext
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/nvme0n1p2  500G   10G  460G   3% /
+/dev/nvme0n1p2  916G   13G  856G   2% /
 ```
 
 ```bash
