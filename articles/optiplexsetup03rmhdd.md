@@ -3,7 +3,7 @@ title: "爆音HDDを取り外して中古PCを精神的蘇生"
 emoji: "😵‍💫"
 type: "tech"
 topics: ["Linux", "bash", "cli"]
-published: false
+published: true
 ---
 
 ## HDD取り外し手順
