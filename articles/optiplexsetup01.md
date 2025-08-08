@@ -3,7 +3,7 @@ title: "中古PCを舐めプしてたらネジ1本に作業を止められた件
 emoji: "🔩"
 type: "tech"
 topics: ["Linux"]
-published: false
+published: true
 ---
 
 ※当記事を閲覧して被った損害に関しては一切の責任は負いかねます。
