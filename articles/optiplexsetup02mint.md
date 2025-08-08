@@ -5,8 +5,7 @@ type: "tech"
 topics: ["Linux", "bash", "cli"]
 published: false
 ---
-
-## 
+## Linuxセットアップコマンド
 
 ### 0. はじめに
 先日中古PCのハードウェア面でのセットアップを実施した。
@@ -46,7 +45,21 @@ sudo powertop --auto-tune
 sudo reboot
 ```
 
-### 2. キーボードを日本語化する
+### 2. 画面比を1920x1980(FullHD)にする
+再起動時も引き継ぐ設定にするために、`.xprofile`に書き込む。
+
+```bash
+nano ~/.xprofile
+```
+```plaintext
+xrandr --newmode "1920x1080_60.00" 173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+xrandr --addmode DP-1 "1920x1080_60.00"
+xrandr --output DP-1 --mode "1920x1080_60.00"
+```
+`Ctrl+O` → `Enter` → `Ctrl+X` で保存・終了
+その後再起動
+
+### 3. キーボードを日本語化する
 
 ```bash
 sudo apt install fcitx-mozc mozc-utils-gui -y
@@ -67,9 +80,7 @@ fcitx-configtool
 ![入力メソッドのオン/オフ](https://storage.googleapis.com/zenn-user-upload/57ee53c15490-20250805.png)
 
 
-### 3. conkyでCPU・メモリの状態をリアルタイム表示
-
-### 4. その他のコマンド
+### 4. conkyでCPU・メモリの状態をリアルタイム表示
 
 #### ユーザ追加
 ```bash
