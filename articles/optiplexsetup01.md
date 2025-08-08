@@ -6,6 +6,8 @@ topics: ["Linux"]
 published: false
 ---
 
+※当記事を閲覧して被った損害に関しては一切の責任は負いかねます。
+
 ## 中古購入前に気を付けるべきポイント
 
 ### 0. はじめに
@@ -33,6 +35,30 @@ published: false
 しかも動作時がなんかうるさい
 
 ### 2. 画像付きセットアップ手順
+
+背面に青色のレバーがあるのでスライド
+
+開けた状態
+![](https://storage.googleapis.com/zenn-user-upload/263730c2bd46-20250808.jpg)
+
+HDDのロックを解除する
+![](https://storage.googleapis.com/zenn-user-upload/72238ced4ce9-20250808.png)
+
+慎重に外す。プラグが戻せるなら外したほうがいい
+![](https://storage.googleapis.com/zenn-user-upload/186a7f3a5674-20250808.jpg)
+
+SSD挿込口が見えている状態
+![](https://storage.googleapis.com/zenn-user-upload/98e7bd3bb161-20250808.jpg)
+
+SSDを挿す。斜め45度に挿してカチッと音がするまで押し込む
+
+M.2ネジと元々合ったネジでSSDを挟むようにしてM.2ネジを挿す
+![](https://storage.googleapis.com/zenn-user-upload/0bd15f3835ea-20250808.jpg)
+
+SSDを挿し終わったのでPCを組み立て戻す
+
+#### 参考にした動画
+@[card](https://youtu.be/zcmY4Bcja1Y?si=OSNkqTr3yqYFZV-m)
 
 ### 3. 感想：爆音の原因について
 ハードウェア知識が全くない状態で中古PCデビュー。
