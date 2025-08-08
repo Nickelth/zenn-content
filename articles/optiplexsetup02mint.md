@@ -80,7 +80,7 @@ fcitx-configtool
 ![入力メソッドのオン/オフ](https://storage.googleapis.com/zenn-user-upload/57ee53c15490-20250805.png)
 
 
-### 4. conkyでCPU・メモリの状態をリアルタイム表示
+### 4. ユーザー系の操作コマンド
 
 #### ユーザ追加
 ```bash
