@@ -146,10 +146,42 @@ volumes:
 ```bash
 pip freeze > requirements.txt
 ```
-
+仮想環境`venv`を閉じたあと
+`Ubuntu24.04`の場合は`docker-compose-plugin`が`apt install`できないので、代わりに
 ```bash 
 sudo apt update
 sudo apt install -y docker.io docker-compose-plugin
+```
+
+`Ubuntu 24.04 Noble`など、標準APTで docker-compose-plugin が見つからない場合は、以下の公式手順へ
+```bash:docker-compose-pluginの公式インストール手順
+# 2. 公式Dockerリポジトリを追加してインストール
+sudo apt remove docker docker-engine docker.io containerd runc -y
+sudo apt install -y ca-certificates curl gnupg
+
+# GPGキー登録
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# リポジトリ追加（自動でUbuntuバージョンを取得して設定）
+. /etc/os-release
+echo \
+  "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  ${UBUNTU_CODENAME} stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+インストール完了後
+```bash:動作確認/権限グループ追加
+docker --version
+docker compose version
 sudo usermod -aG docker $USER
 ```
 `usermod -aG`でグループに追加後、
