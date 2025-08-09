@@ -46,8 +46,10 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 `ENV DEBIAN_FRONTEND=noninteractive`
 - 「`apt`が途中で`[Y/n]`を聞いてくる地獄」を回避できる。
+
 `PYTHONDONTWRITEBYTECODE=1`
 - Dockerコンテナ内ではほぼ不要な`.pyc`(`__pycache__` ディレクトリにできる)を作らなくなる
+
 `PYTHONUNBUFFERED=1`
 - `Python`の標準出力・標準エラーを即時出力する⇒遅延なしでログが見れてデバッグしやすい
 ```Dockerfile:Dockerfile
@@ -145,6 +147,21 @@ volumes:
 pip freeze > requirements.txt
 ```
 
+```bash 
+sudo apt update
+sudo apt install -y docker.io docker-compose-plugin
+sudo usermod -aG docker $USER
+```
+`usermod -aG`でグループに追加後、
+- SSH環境：exit → 再接続が一番安全
+- 開発PC＋VSCode：VSCodeを再起動（Docker拡張も含めて権限が反映される）
+- すぐ試したいとき：`newgrp docker`コマンドで一時的に反映
+```bash 
+docker --version
+docker compose version
+```
+> `gunicorn` や `flask` をホストにインストールする必要はない（コンテナ内で動く）。
+
 ```bash:起動コマンド
 # 開発
 docker compose --env-file .env.dev up --build
@@ -190,7 +207,7 @@ GUNICORN_TIMEOUT=60
 GUNICORN_MAX_REQUESTS=200
 GUNICORN_MAX_REQUESTS_JITTER=50
 ```
-:::messsage alert
+:::message alert
 `.env` は `.gitignore`と`.dockerignore`に追加してリポジトリには含めないようにし、代わりにサンプル値を入れた `.env.sample`をGithubに公開する。
 :::
 
@@ -217,23 +234,7 @@ GUNICORN_MAX_REQUESTS_JITTER=50
 ここでは、Flaskアプリケーションを Gunicorn 経由で起動し、  
 アプリが正しく起動・応答するかどうかを確認する。
 
-#### 3.1 起動前の準備
-
-:::message
-前提：Flaskアプリが `run.py` にあり、`create_app()` または `app` インスタンスが定義されていること
-:::
-
-```bash 
-sudo apt update
-sudo apt install -y docker.io docker-compose-plugin
-sudo usermod -aG docker $USER
-# ログインし直す or newgrp docker
-docker --version
-docker compose version
-```
-> `gunicorn` や `flask` をホストにインストールする必要はない（コンテナ内で動く）。
-
-#### 3.2 Gunicorn 起動コマンド
+#### 3.1 Gunicorn 起動コマンド
 
 ```bash
 # 例：開発環境
@@ -245,13 +246,13 @@ Gunicornの起動パラメータは `docker-compose.yml` の `command:` もし�
 
 ---
 
-#### 3.3 メモリ / スレッド数の調整
+#### 3.2 メモリ / スレッド数の調整
 
 |構成|カスタム|
 |---|---|
 |小規模構成（Fargate 0.25〜0.5 vCPU / 512MB〜1GB）|`workers=1〜2`、`threads=2〜4`|
-|PDF生成が軽い（既存ファイル返す / S3配信）|`workers=1〜2`、`threads=2〜4`|
-|PDF生成が重い（wkhtmltopdf 等で変換）|CPU型、`workers=2〜3`・`threads=1〜2`[^1]|
+|PDF生成が軽い（`weasyprint`で変換 / 既存ファイル返す / S3配信）|`workers=1〜2`、`threads=2〜4`|
+|PDF生成が重い（`wkhtmltopdf`等で変換）|CPU型、`workers=2〜3`・`threads=1〜2`[^1]|
 
 [^1]:長時間処理ならジョブキューやLambda化も検討
 
