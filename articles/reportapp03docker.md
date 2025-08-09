@@ -50,7 +50,7 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 - Dockerコンテナ内ではほぼ不要な`.pyc`(`__pycache__` ディレクトリにできる)を作らなくなる
 `PYTHONUNBUFFERED=1`
 - `Python`の標準出力・標準エラーを即時出力する⇒遅延なしでログが見れてデバッグしやすい
-```Dockerfile
+```Dockerfile:Dockerfile
 FROM python:3.11-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -142,7 +142,6 @@ volumes:
 ホストのグローバル`Python`から`freeze`するとゴミが混ざるので注意。
 :::
 ```bash
-# 
 pip freeze > requirements.txt
 ```
 
@@ -163,7 +162,7 @@ docker compose --env-file .env.prd up --build
 `Flask`アプリや`Docker Compose`では、接続情報や起動時の設定値を.env`ファイルにまとめることで、ソースコードや構成ファイルにパスワード等を直書きせずに管理できる。
 
 `.env`記載内容のサンプル
-```.env.sample
+```.env.sample:.env.sample
 # DB接続情報
 DB_NAME=db_name
 DB_USER=db_user
@@ -205,12 +204,12 @@ GUNICORN_MAX_REQUESTS_JITTER=50
 **DB_HOST=db**に変更する
 ローカルで動かすとき、これまでは`DB_HOST=localhost`でよかったが、
 
-**localhost は「そのコンテナ自身」**を指す
-→ webコンテナから見たlocalhost:5432は、webコンテナの中の5432番ポート
-→ 当然Postgresなんて動いてないから接続エラー
+**localhostは「そのコンテナ自身」**を指す
+→ webコンテナから見た`localhost:5432`は、webコンテナの中の5432番ポート
+→ 当然`Postgres`なんて動いてないから接続エラー
 
-db というサービス名を指定すると、Composeが内部DNSで解決してくれる
-→ db → PostgresコンテナのIP
+`db`というサービス名を指定すると、`Compose`が内部DNSで解決してくれる
+→ `db` → `Postgres`コンテナのIP
 :::
 
 ### 3. Gunicornで起動
@@ -242,7 +241,7 @@ docker compose --env-file .env.dev up --build
 # 以降はコードやDockerfileを変えてなければ --build は省略可
 ```
 
-Gunicornの起動パラメータは `docker-compose.yml` の `command:` もしくは `.env` で制御（詳しくは 3.6 メモリ/スレッド数の調整）。
+Gunicornの起動パラメータは `docker-compose.yml` の `command:` もしくは `.env` で制御（詳しくは 3.3 メモリ/スレッド数の調整）。
 
 ---
 
@@ -253,17 +252,9 @@ Gunicornの起動パラメータは `docker-compose.yml` の `command:` もし�
 |小規模構成（Fargate 0.25〜0.5 vCPU / 512MB〜1GB）|`workers=1〜2`、`threads=2〜4`|
 |PDF生成が軽い（既存ファイル返す / S3配信）|`workers=1〜2`、`threads=2〜4`|
 |PDF生成が重い（wkhtmltopdf 等で変換）|CPU型、`workers=2〜3`・`threads=1〜2`[^1]|
+
 [^1]:長時間処理ならジョブキューやLambda化も検討
 
-**本番運用での安定性向上オプション例**  
-
-```bash
---timeout 60 # 長処理対策
---max-requests 200 # メモリリーク対策
---max-requests-jitter 50
---keep-alive 5
---preload # 初期化コスト削減
-```
 
 **.envファイルの例（Gunicorn部分）**
 ```env
@@ -273,6 +264,7 @@ GUNICORN_TIMEOUT=60
 GUNICORN_MAX_REQUESTS=200
 GUNICORN_MAX_REQUESTS_JITTER=50
 ```
+> 2-2 の `docker-compose.yml` の `command:` 部分で `.env` から読み込んで適用
 
 ### 4. おわりに
 これで、FlaskアプリをDocker Compose + Gunicornで起動できるようになった。  
