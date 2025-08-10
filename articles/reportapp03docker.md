@@ -1,9 +1,9 @@
 ---
 title: "【#3】Docker+GunicornでFlaskアプリ本番環境構築"
-emoji: "🦄"
+emoji: "🐳"
 type: "tech"
 topics: ["flask", "docker", "gunicorn"]
-published: false
+published: true
 ---
 
 ## 本番環境の構築
@@ -226,10 +226,14 @@ docker compose --env-file .env.dev build --no-cache --progress=plain
 docker compose --env-file .env.prd build --no-cache --progress=plain
 ```
 
+失敗する場合は一度`docker compose down`でDockerを落としてからログを調査→Docker再起動
+
 :::message
 `docker compose`コマンドは、ソース変更を反映させたい場合は`--build`オプションをつける。そうでない場合や`.env`の値だけ変えた場合、本番デプロイ時(CI/CD内)はつける必要はない。
 :::
+
 アクセス → `http://localhost:5000`
+- .envファイル、Auth0のコールバックURL、ブラウザでアクセスするURLがすべて`localhost:5000`に統一する。
 
 #### 2-4. 環境変数（.env）について
 
