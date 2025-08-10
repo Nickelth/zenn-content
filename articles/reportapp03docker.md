@@ -52,7 +52,8 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 
 `PYTHONUNBUFFERED=1`
 - `Python`の標準出力・標準エラーを即時出力する⇒遅延なしでログが見れてデバッグしやすい
-```Dockerfile:Dockerfile
+:::details Dockerfile
+```Dockerfile
 # ベースイメージ
 FROM python:3.11-slim
 
@@ -106,10 +107,12 @@ EXPOSE 5000
 
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
 ```
+:::
 
 #### 2-2. docker-compose.yml
 
-```yaml:docker-compose.yml
+:::details docker-compose.yml
+```yaml
 services:
   web:
     build: .
@@ -164,6 +167,7 @@ services:
 volumes:
   postgres_data:
 ```
+:::
 
 `Error: address already in use` が出た場合、ホストで既に同じポートが使われている。別ポートに割り当てるか、使用中のプロセスを停止する。
 
@@ -239,7 +243,7 @@ docker compose --env-file .env.prd build --no-cache --progress=plain
 
 `Flask`アプリや`Docker Compose`では、接続情報や起動時の設定値を.env`ファイルにまとめることで、ソースコードや構成ファイルにパスワード等を直書きせずに管理できる。
 
-`.env`記載内容のサンプル
+:::details `.env`記載内容のサンプル
 ```.env.sample:.env.sample
 # DB接続情報
 DB_NAME=db_name
@@ -268,6 +272,8 @@ GUNICORN_TIMEOUT=60
 GUNICORN_MAX_REQUESTS=200
 GUNICORN_MAX_REQUESTS_JITTER=50
 ```
+:::
+
 :::message alert
 `.env` は `.gitignore`と`.dockerignore`に追加してリポジトリには含めないようにし、代わりにサンプル値を入れた `.env.sample`をGithubに公開する。
 :::
