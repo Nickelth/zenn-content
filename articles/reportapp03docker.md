@@ -1,9 +1,9 @@
 ---
 title: "【#3】Docker+GunicornでFlaskアプリ本番環境構築"
-emoji: "🦄"
+emoji: "🐳"
 type: "tech"
 topics: ["flask", "docker", "gunicorn"]
-published: false
+published: true
 ---
 
 ## 本番環境の構築
@@ -53,83 +53,110 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 `PYTHONUNBUFFERED=1`
 - `Python`の標準出力・標準エラーを即時出力する⇒遅延なしでログが見れてデバッグしやすい
 ```Dockerfile:Dockerfile
+# ベースイメージ
 FROM python:3.11-slim
 
+# 環境変数で非対話インストール指定
 ENV DEBIAN_FRONTEND=noninteractive \
+    # ゴミファイル生成防止
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    # 遅延なしデバッグ
+    PYTHONUNBUFFERED=1\
+    LANG=ja_JP.UTF-8 \
+    LC_ALL=ja_JP.UTF-8
 
 WORKDIR /app
 
-# 必須ライブラリのインストール --weasyprint対策
-RUN apt-get update && apt-get install -y \
+# WeasyPrint/Pillow/cffi が必要とするネイティブ依存を入れる
+# ※ libgdk-pixbuf のパッケージ名は `libgdk-pixbuf-2.0-0`（ハイフンあり）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # コンパイル系
     build-essential \
+    python3-dev \
+    pkg-config \
+    # WeasyPrint ランタイム
+    libcairo2 \
     libpango-1.0-0 \
     libpangocairo-1.0-0 \
-    libcairo2 \
-    libgdk-pixbuf2.0-0 \
+    libgdk-pixbuf-2.0-0 \
     libffi-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    # Pillow画像系（多くはwheelで入るけど保険）
+    libjpeg62-turbo \
+    libopenjp2-7 \
+    zlib1g \
+    # 日本語フォント
+    fonts-noto-cjk \
+    fonts-dejavu-core \
+    # ロケール周り（必要なら）
+    locales \
+ && sed -i '/ja_JP.UTF-8/s/^# //g' /etc/locale.gen \
+ && locale-gen \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-# requirements.txt を先にコピーして依存関係だけ解決（キャッシュ活用）
+# 依存を先に入れてレイヤキャッシュを効かせる
 COPY requirements.txt .
+RUN pip install --upgrade pip setuptools wheel \
+ && pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
-
+# アプリ本体
 COPY . .
 
 EXPOSE 5000
 
-# Gunicornで起動（Flaskアプリは run.py → app って前提）
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
 ```
 
 #### 2-2. docker-compose.yml
 
 ```yaml:docker-compose.yml
-version: "3.9"
-
 services:
   web:
     build: .
     ports:
       - "5000:5000"
-    env_file:
-      - .env
     environment:
       # アプリ側で使う追加ENV（必要なら）
-      - FLASK_ENV=${FLASK_ENV:-development}
-      - GUNICORN_WORKERS=${GUNICORN_WORKERS:-2}
-      - GUNICORN_THREADS=${GUNICORN_THREADS:-4}
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AUTH0_CALLBACK_URL: ${AUTH0_CALLBACK_URL}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      FLASK_ENV: ${FLASK_ENV:-development}
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS:-2}
+      GUNICORN_THREADS: ${GUNICORN_THREADS:-4}
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - .:/app
-  command: >
-    gunicorn -b 0.0.0.0:5000 run:app
-    -w ${GUNICORN_WORKERS:-2}
-    --threads ${GUNICORN_THREADS:-2}
-    --timeout ${GUNICORN_TIMEOUT:-60}
-    --max-requests ${GUNICORN_MAX_REQUESTS:-200}
-    --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50}
+    command: >
+      gunicorn -b 0.0.0.0:5000 run:app
+      -w ${GUNICORN_WORKERS:-2}
+      --threads ${GUNICORN_THREADS:-2}
+      --timeout ${GUNICORN_TIMEOUT:-60}
+      --max-requests ${GUNICORN_MAX_REQUESTS:-200}
+      --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50}
 
   db:
     image: postgres:16
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+    # ホストでは15432でアクセス、コンテナ内では5432
     ports:
-      - "5432:5432"
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 3s
       retries: 10
@@ -137,6 +164,8 @@ services:
 volumes:
   postgres_data:
 ```
+
+`Error: address already in use` が出た場合、ホストで既に同じポートが使われている。別ポートに割り当てるか、使用中のプロセスを停止する。
 
 #### 2-3. その他
 :::message
@@ -147,7 +176,6 @@ volumes:
 pip freeze > requirements.txt
 ```
 仮想環境`venv`を閉じたあと
-`Ubuntu24.04`の場合は`docker-compose-plugin`が`apt install`できないので、代わりに
 ```bash 
 sudo apt update
 sudo apt install -y docker.io docker-compose-plugin
@@ -188,23 +216,24 @@ sudo usermod -aG docker $USER
 - SSH環境：exit → 再接続が一番安全
 - 開発PC＋VSCode：VSCodeを再起動（Docker拡張も含めて権限が反映される）
 - すぐ試したいとき：`newgrp docker`コマンドで一時的に反映
-```bash 
-docker --version
-docker compose version
-```
+
 > `gunicorn` や `flask` をホストにインストールする必要はない（コンテナ内で動く）。
 
 ```bash:起動コマンド
 # 開発
-docker compose --env-file .env.dev up --build
-# 本番相当
-docker compose --env-file .env.prd up --build
+docker compose --env-file .env.dev build --no-cache --progress=plain
+# 本番環境
+docker compose --env-file .env.prd build --no-cache --progress=plain
 ```
+
+失敗する場合は一度`docker compose down`でDockerを落としてからログを調査→Docker再起動
 
 :::message
 `docker compose`コマンドは、ソース変更を反映させたい場合は`--build`オプションをつける。そうでない場合や`.env`の値だけ変えた場合、本番デプロイ時(CI/CD内)はつける必要はない。
 :::
+
 アクセス → `http://localhost:5000`
+- .envファイル、Auth0のコールバックURL、ブラウザでアクセスするURLがすべて`localhost:5000`に統一する。
 
 #### 2-4. 環境変数（.env）について
 
