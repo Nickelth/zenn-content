@@ -318,6 +318,28 @@ ECR作成完了
       "image": "public.ecr.aws/docker/library/nginx:alpine",
       "essential": true,
       "portMappings": [{ "containerPort": 5000, "protocol": "tcp" }],
+      "environment": [
+        { "name": "AUTH0_DOMAIN",       "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_DOMAIN" },
+        { "name": "AUTH0_CLIENT_ID",    "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CLIENT_ID" },
+        { "name": "AUTH0_CALLBACK_URL", "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CALLBACK_URL" },
+        { "name": "GUNICORN_WORKERS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_WORKERS" },
+        { "name": "GUNICORN_THREADS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_THREADS" },
+        { "name": "GUNICORN_TIMEOUT",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_TIMEOUT" },
+        { "name": "GUNICORN_MAX_REQUESTS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_MAX_REQUESTS" },
+        { "name": "GUNICORN_MAX_REQUESTS_JITTER",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_MAX_REQUESTS_JITTER" }
+      ],
+      "secrets": [
+        { "name": "AUTH0_CLIENT_SECRET", "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CLIENT_SECRET" },
+        { "name": "DATABASE_URL",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DATABASE_URL" },
+        { "name": "DB_NAME",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_NAME" },
+        { "name": "DB_USER",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_USER" },
+        { "name": "DB_PASSWORD",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_PASSWORD" },
+        { "name": "DB_HOST",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_HOST" },
+        { "name": "POSTGRES_USER",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_USER" },
+        { "name": "POSTGRES_PASSWORD",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_PASSWORD" },
+        { "name": "POSTGRES_DB",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_DB" },
+        { "name": "FLASK_SECRET_KEY",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/FLASK_SECRET_KEY" }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -372,10 +394,26 @@ Auth0の設定、及び`.env`ファイルの`AUTH0_CALLBACK_URL`を変更して�
 |許可するWebオリジン|`http://<PublicIP>:5000`
 |`AUTH0_CALLBACK_URL`|`http://<PublicIP>:5000/callback`|
 
+### 5. SSM/Secrets で本番環境変数を登録する
+
+AWS Secret Managerの
+
+```bash
+# 非機密
+aws ssm put-parameter --region <REGION_ID> --name /papyrus/prd/AUTH0_DOMAIN \
+  --type String --value your-tenant.us.auth0.com --overwrite
+
+# 変動するコールバックURL（とりあえず仮。起動後に更新して再デプロイ）
+aws ssm put-parameter --region <REGION_ID> --name /papyrus/prd/AUTH0_CALLBACK_URL \
+  --type String --value http://0.0.0.0:5000/callback --overwrite
+
+# 機密
+aws ssm put-parameter --region <REGION_ID> --name /papyrus/prd/AUTH0_CLIENT_SECRET \
+  --type SecureString --value 'xxxx' --overwrite
+```
 
 
-
-### 5. GitHubでの操作
+### 6. GitHubでの操作
 
 「該当リポジトリ」＞「Setting」＞「Actions」をクリック
 
