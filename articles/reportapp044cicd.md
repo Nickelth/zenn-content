@@ -10,6 +10,24 @@ published: false
 
 ### 0. はじめに
 
+1. **GitHub Actions設定**（ECR push + ECS更新までワンストップ）
+
+   * OIDCロール作成（信頼ポリシーに`sub`/`aud`）
+   * 権限ポリシーにECRとECS更新（`ecs:RegisterTaskDefinition`、`ecs:UpdateService`、`iam:PassRole`）追加
+   * `ecr-push.yml`に続いて、`ecs-deploy.yml`も作る
+   * ワークフローが動くと：
+
+     1. Docker Build
+     2. ECR push
+     3. ECSタスク定義更新
+     4. サービス反映
+
+2. **テスト & 証拠動画**
+
+   * `workflow_dispatch`で実行して、ECSのタスクが自動で更新される様子を画面収録
+   * 「コードpush → 本番更新」の流れを丸ごと見せられる
+
+
 > Q. 開発環境で使用していた.envの環境変数をSSM/Secretsに登録しておけば、GithubのVariablesへの登録は不要になりますか？
 A. なりません。
 SSM/Secrets は「実行時のアプリ用」、GitHub Variables/Secrets は「CI/CD が回るための設定 と ビルド時に必要なもの」。用途が違うので、どちらか片方だけで済むわけではない。欲張りセットってやつ。
@@ -48,14 +66,16 @@ SSM/Secrets は「実行時のアプリ用」、GitHub Variables/Secrets は「C
 ```plaintext
 AWS_ACCOUNT_ID
 
-AWS_REGION（例: ap-northeast-1）
+AWS_REGION（us-west）
 
 ECR_REPOSITORY（例: papyrus）
 
 AWS_IAM_ROLE_ARN（GitHub OIDCを信頼するIAMロールのARN）
 ```
 
-### 3. ecr-push.yml
+### 3. 実行用yamlの整備
+
+#### ecr-push.yml
 
 :::default ecr-push.ymlのサンプル
 ```yml:ecr-push.yml
@@ -155,7 +175,7 @@ jobs:
 ```
 :::
 
-### 4. ecs-deploy.yml
+#### ecs-deploy.yml
 
 :::default ecs-deploy.ymlのサンプル
 ```yaml:ecs-deploy.yml
@@ -227,7 +247,7 @@ jobs:
 ```
 :::
 
-### 5. ecs-scale.yml
+#### ecs-scale.yml
 
 :::default ecs-scale.ymlのサンプル
 ```yaml:ecs-scale.yaml
@@ -269,35 +289,17 @@ jobs:
 ```
 :::
 
-#### ECR pushの実行
-![デプロイの様子](https://storage.googleapis.com/zenn-user-upload/390ad72355d2-20250814.png)
-GitHubのActionsタブ → ワークフロー “Build & Push to ECR” を開く
+### 4. ECR pushの実行
 
-Run workflow（workflow_dispatch）で実行
+![pushの様子](https://storage.googleapis.com/zenn-user-upload/390ad72355d2-20250814.png)
+*mainブランチにpushすると自動実行する。*
 
-ブランチ：main
+![push成功](https://storage.googleapis.com/zenn-user-upload/092a225b93c8-20250814.png)
+*push成功*
 
-入力不要（そのまま走らせる）
 
-成功の目印（ログで確認）
 
-Login Succeeded（ECRログイン）
-
-pushed: <registry>/<repo>:latest
-
-pushed: ...:<branch> or ...:<sha>
-
-最後に Image digest -> sha256:...
-
-ECRコンソール → 対象リポジトリ
-
-Tags に latest と sha が並ぶのを確認
-
-マニフェストが multi-arch（linux/amd64 と linux/arm64）になってると最高
-
-注意: もし denied: requested access to the resource is denied が出たらリポ名ミス。vars.ECR_REPOSITORY と ECR の実名が一致してるか見直し。no basic auth credentials は OIDCロール/信頼ポリシーが怪しい。
-
-#### デプロイ & 節約
+### 5. デプロイ & 節約の実行
 Actions → Deploy to ECS Fargate
 
 image_tag=latest
@@ -310,13 +312,12 @@ Actions → ECS Scale Service
 
 count=0（すぐ止める。請求ブレーキ）
 
-![デプロイ成功](https://storage.googleapis.com/zenn-user-upload/092a225b93c8-20250814.png)
-
-
-
-
-
-
-
 ### 6. ロールバック & 運用Tips
+
+
+
+
+
+
+
 

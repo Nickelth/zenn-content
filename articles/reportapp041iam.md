@@ -23,11 +23,26 @@ Flaskアプリをネット上に公開し、アクセスできることを目標
 
 IAM設定が異様に長いので、この記事ではIAMの設定のみを対象に解説する。
 
+#### 設定するIAMロール2種類について
+
+**ECRPowerUser**
+|key|value|
+|---|---|
+|ポリシー|
+|用途|
+
+**ecsTaskExecutionRole**
+|key|value|
+|---|---|
+|ポリシー|`AmazonECSTaskExecutionRolePolicy`|
+|用途|
+
 ### 1. IAM最小権限ユーザの作成
 
 
 
-### 2.  ECSTaskExecutionロールの作成
+
+### 2. ECSTaskExecutionロールの作成
 
 1. IAM → ロール → ロールを作成
 
