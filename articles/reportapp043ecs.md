@@ -69,26 +69,16 @@ published: false
       "essential": true,
       "portMappings": [{ "containerPort": 5000, "protocol": "tcp" }],
       "environment": [
-        { "name": "AUTH0_DOMAIN",       "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_DOMAIN" },
-        { "name": "AUTH0_CLIENT_ID",    "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CLIENT_ID" },
-        { "name": "AUTH0_CALLBACK_URL", "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CALLBACK_URL" },
-        { "name": "GUNICORN_WORKERS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_WORKERS" },
-        { "name": "GUNICORN_THREADS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_THREADS" },
-        { "name": "GUNICORN_TIMEOUT",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_TIMEOUT" },
-        { "name": "GUNICORN_MAX_REQUESTS",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_MAX_REQUESTS" },
-        { "name": "GUNICORN_MAX_REQUESTS_JITTER",        "value": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/GUNICORN_MAX_REQUESTS_JITTER" }
+        { "name": "AUTH0_DOMAIN",       "value": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_DOMAIN" },
+        { "name": "AUTH0_CLIENT_ID",    "value": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_CLIENT_ID" },
+        { "name": "AUTH0_CALLBACK_URL", "value": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_CALLBACK_URL" }
       ],
       "secrets": [
-        { "name": "AUTH0_CLIENT_SECRET", "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/AUTH0_CLIENT_SECRET" },
-        { "name": "DATABASE_URL",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DATABASE_URL" },
-        { "name": "DB_NAME",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_NAME" },
-        { "name": "DB_USER",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_USER" },
-        { "name": "DB_PASSWORD",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_PASSWORD" },
-        { "name": "DB_HOST",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/DB_HOST" },
-        { "name": "POSTGRES_USER",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_USER" },
-        { "name": "POSTGRES_PASSWORD",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_PASSWORD" },
-        { "name": "POSTGRES_DB",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/POSTGRES_DB" },
-        { "name": "FLASK_SECRET_KEY",        "valueFrom": "arn:aws:ssm:us-west-2:438336773404:parameter/papyrus/prd/FLASK_SECRET_KEY" }
+        { "name": "AUTH0_CLIENT_SECRET", "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_CLIENT_SECRET" },
+        { "name": "POSTGRES_USER",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_USER" },
+        { "name": "POSTGRES_PASSWORD",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_PASSWORD" },
+        { "name": "POSTGRES_DB",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_DB" },
+        { "name": "FLASK_SECRET_KEY",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/FLASK_SECRET_KEY" }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
