@@ -77,7 +77,7 @@ AWS_IAM_ROLE_ARN（GitHub OIDCを信頼するIAMロールのARN）
 
 #### ecr-push.yml
 
-:::default ecr-push.ymlのサンプル
+:::details ecr-push.ymlのサンプル
 ```yml:ecr-push.yml
 # .github/workflows/ecr-push.yml
 # Build Docker image and push to Amazon ECR on push to main and tags
@@ -177,7 +177,7 @@ jobs:
 
 #### ecs-deploy.yml
 
-:::default ecs-deploy.ymlのサンプル
+:::details ecs-deploy.ymlのサンプル
 ```yaml:ecs-deploy.yml
 name: Deploy to ECS Fargate
 
@@ -249,7 +249,7 @@ jobs:
 
 #### ecs-scale.yml
 
-:::default ecs-scale.ymlのサンプル
+:::details ecs-scale.ymlのサンプル
 ```yaml:ecs-scale.yaml
 name: ECS Scale Service
 
