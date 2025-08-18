@@ -1,26 +1,59 @@
 ---
-title: "【#4】FlaskアプリをGunicorn + Nginxで本番公開するまでの全手順"
+title: "【負け】ConoHaVPSで本番環境立てようとしたら失敗して日曜日が溶けた話"
 emoji: "🦄"
 type: "tech"
-topics: ["Ubuntu", "linux", "nginx", "github", "Gunicorn"]
+topics: ["cli", "linux"]
 published: false
 ---
 
-## 本番環境の作成（Gunicorn + Nginx）
+## 
 
 ### 0. はじめに
 
+Flaskアプリを公開するために本番環境が必要になった。
+当初はVPSで実現する予定だったが、AWSで実施することにした。
+価格相応のトラブルが出たことと、実務経験を活かしたいことが理由。
 
-#### 使用技術の選定理由
+Flaskアプリで本番環境を構築中にVPSの設置が必要になった。
+記事の構成要素が増加したため、その部分だけ独立して記事を執筆する。
+
+#### VPSでの失敗談
+
+![](https://storage.googleapis.com/zenn-user-upload/e1a701a3b638-20250727.png)
+![](https://storage.googleapis.com/zenn-user-upload/9d45585892e0-20250727.png)
+「毎時1.9円」「シャットダウン中は課金されない」「UIが日本語」という魅力的な内容だったため契約して本番環境にしようとした結果
+
+- 「ConoHa」で検索した結果、VPSではなく「WING」という全く別のものを契約してしまった
+- VPSを契約後SSH接続しようとしたがなぜかPingすら通らない
+- VPS側のターミナルはブラウザ版なので文字入力直接コピペできなくて使いづらすぎる
+- そのターミナルで調べた結果Pingは受け取っているが謎の設定で破棄されていることが判明
+
+おそらく低価格を維持するためセキュリティを強固にして人件費を削減しているのかと勘ぐってみたり
+いずれにしろ日曜日が無駄にされたのでAWSに乗り換え
 
 
+### 1. 選定理由
+- **Docker**::
+- **Gunicorn**: PythonのWSGIサーバーとして、Flaskアプリを効率よく動作させるために選定。
 
-#### 前提
+#### WSGIサーバー（Gunicorn）について
 
+Flaskは開発用サーバーを内蔵しているが、本番運用には適していない。  
+そこで登場するのが **WSGI（Web Server Gateway Interface）** というPythonの標準インターフェース。  
+WSGIは「Webサーバー（Nginxなど）」と「Pythonアプリケーション（Flaskなど）」の**橋渡し役**を担う。
 
-#### アプリ構成図
+GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGIサーバー**である。  
+複数のワーカー（プロセス）を立ち上げ、リクエストを並列処理できるため、スケーラビリティと安定性が向上する。
 
+簡単に言えば：
 
+- Nginx：ラーメン店の受付。リクエストを受けてGunicornに渡す。
+- Gunicorn：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
+- Flaskアプリ：実際にラーメンを作る人
+
+この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
+
+---
 
 ### 2. Flaskアプリ起動(Gunicorn前提)
 
@@ -59,12 +92,6 @@ gunicorn -w 4 -b 127.0.0.1:8000 app:app
 :::
 
 
-```bash:Nginxの起動・ステータス確認
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo systemctl status nginx
-```
-
 #### 2.2 VPS構築して動作確認可能にする
 
 ここでは、VPS（仮想専用サーバー）上に Flask アプリを配置し、  
@@ -92,30 +119,8 @@ pip install gunicorn
 gunicorn -w 4 -b 127.0.0.1:8000 app:app
 ```
 
-``` bash:Nginxインストール
-sudo apt update
-sudo apt install -y nginx
-```
 
-`ufw`（Uncomplicated Firewall）は、Ubuntuに標準で用意されているシンプルなファイアウォール管理ツール。
-以下のコマンドで、Nginxの通信を許可する：
-```bash:ファイアウォール設定
-sudo ufw allow 'Nginx Full'
-sudo ufw status
-```
 
-```bash:ポート番号指定で開ける場合
-sudo ufw allow 80/tcp
-sudo ufw status
-```
-
-```bash:VPSのグローバルIPアドレス確認
-hostname -I
-```
-
-```plaintext
-http://YOUR.VPS.IP.ADDRESS/
-```
 
 :::message alert
 - アプリを常時公開する必要はない。必要な期間だけポートを開ける。
@@ -236,6 +241,13 @@ pkill gunicorn
 ```
 
 
-以上で、Gunicorn による Flask アプリの起動および動作確認が完了。
-次回はGithub Actions + DockerでCI/CDを構築する。
-systemd を使ってサービス化してもよい。
+
+
+
+
+### 4. おわりに
+
+
+Flaskアプリシリーズ
+@[card](https://zenn.dev/nickelth/articles/reportapp02auth0)
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)
