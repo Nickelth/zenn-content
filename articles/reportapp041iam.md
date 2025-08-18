@@ -1,12 +1,12 @@
 ---
-title: "【#4 1/4】アプリ本番環境公開に向けてAWS IAMを設定する。"
-emoji: "🔐"
+title: "【#4 1/4】アプリ本番環境公開に向けてAWS IAMを設定する"
+emoji: "🛡️"
 type: "tech"
 topics: ["iam", "aws"]
 published: false
 ---
 
-## AWS基盤を準備する（IAM / Logs / SSM・Secrets / ECR）
+## AWS基盤を準備する（IAM編）
 
 ### 0. はじめに
 
@@ -28,6 +28,7 @@ IAM設定が異様に長いので、この記事ではIAMの設定のみを対�
 
 
 ### 2.  ECSTaskExecutionロールの作成
+
 1. IAM → ロール → ロールを作成
 
 2. 信頼されたエンティティの種類：AWS のサービス
@@ -43,18 +44,19 @@ IAM設定が異様に長いので、この記事ではIAMの設定のみを対�
 5. GitHubのOIDCロールの iam:PassRole の Resource にこのARNを必ず入れる（忘れるとまた怒られる）
 
 ### 3. IAM ID プロバイダを作成
+
 IAM＞アクセス管理＞ID プロバイダを選択
 
 「プロバイダを追加」をクリック
 
 2. プロバイダータイプ → OpenID Connect
 
-3. プロバイダーURL →
+3. プロバイダーURL には以下を入力
 ```plaintext
 https://token.actions.githubusercontent.com
 ```
 
-4. 対象者 (Audience) →
+4. 対象者 (Audience) には以下を入力
 ```plaintext
 sts.amazonaws.com
 ```
@@ -81,6 +83,7 @@ sts.amazonaws.com
 4. 「ロールを作成」をクリックし、IAM ロール作成完了
 
 ### 5. 作成したIAMロールの信頼ポリシーを編集
+
 IAMのポリシーエディタは **「信頼ポリシー」と「アクセス許可ポリシー」を別々に登録する」** 仕組みなので、両方編集する。
 
 1. IAM → ロール → 該当ロール → 信頼関係（Trust relationships）タブ → 信頼ポリシーの編集
@@ -122,20 +125,8 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 ```
 :::
 
-```json:Condition部分の一例
-      "Condition": {
-          "StringEquals": {
-              "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-        },
-        "StringLike": {
-          "token.actions.githubusercontent.com:sub": [
-            "repo:Nickelth/Papyrus:ref:refs/heads/main"
-          ]
-        }
-      }
-```
+### 6. 作成したIAMロールのアクセスポリシーを編集する。
 
-3. アクセスポリシーを編集する。
 先ほど作成したロールから、「許可」タブ→「許可を追加」トグル→「インラインポリシーを作成」を選択
 ![インラインポリシーを作成](https://storage.googleapis.com/zenn-user-upload/4b3a8c9f065d-20250812.png)
 `<>`の部分(`<REGION>`, `<ACCOUNT_ID>`, `<ECR_REPOSITORY>`, `<CLUSTER>`, `<SERVICE>`, `<TASK_FAMILY>`)は置き換え
@@ -230,4 +221,4 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 
 ![ポリシーをアタッチ](https://storage.googleapis.com/zenn-user-upload/819c4a6676f1-20250812.png)
 
-### 6. チェックリスト（ここまでの出来上がり）
+### 7. チェックリスト（ここまでの出来上がり）
