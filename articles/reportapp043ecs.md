@@ -26,7 +26,7 @@ published: false
 - 暗号化: KMSキー未指定 （Fargateの一時ストレージはデフォでAWS管理キーで暗号化。KMSカスタムは不要・コスト増）
 ![クラスターを作成する](https://storage.googleapis.com/zenn-user-upload/acde573a7c37-20250813.png)
 
-:::default クラスター作成に失敗する場合
+:::details クラスター作成に失敗する場合
 ** リソース ECSClusterは CREATE_FAILED状態です **
 ![リソース ECSClusterは CREATE_FAILED状態です](https://storage.googleapis.com/zenn-user-upload/9fbe920f901b-20250813.png)
 
@@ -43,6 +43,7 @@ published: false
 
 2. 以下のJSONをタスク定義のエディターに入力。
 `<>`の変数は各自置き換える。
+
 |変数名|値|
 |---|---|
 |`<TASK_FAMILY>`|好きにつけてOK(英数字,ハイフン,アンダースコア)|

@@ -85,6 +85,7 @@ sts.amazonaws.com
 1. IAM＞ロール＞ロールを作成
 
 2. 「信頼されたエンティティを選択」画面で以下の項目を入力
+
 |key|value|
 |---|---|
 |信頼されたエンティティタイプ|ウェブアイデンティティ|
@@ -145,6 +146,7 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 先ほど作成したロールから、「許可」タブ→「許可を追加」トグル→「インラインポリシーを作成」を選択
 ![インラインポリシーを作成](https://storage.googleapis.com/zenn-user-upload/4b3a8c9f065d-20250812.png)
 `<>`の部分(`<REGION>`, `<ACCOUNT_ID>`, `<ECR_REPOSITORY>`, `<CLUSTER>`, `<SERVICE>`, `<TASK_FAMILY>`)は置き換え
+
 |変数名|コピペ元|
 |---|---|
 |<CLUSTER>|ECS → クラスター → 対象クラスターの名前|
