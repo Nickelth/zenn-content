@@ -112,7 +112,7 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 - メインブランチだけ許可するなら `ref:refs/heads/main`
 - タグも許可するなら `ref:refs/tags/*` を追加
 
-:::default 信頼ポリシーのJSON
+:::details 信頼ポリシーのJSON
 ```json
 {
   "Version": "2012-10-17",
@@ -152,7 +152,7 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 |<TASK_FAMILY>|ECS → タスク定義 → 対象のファミリー名（:1みたいなリビジョン番号は不要）|
 |<TASK_EXECUTION_ROLE_ARN> / <TASK_ROLE_ARN>|ECS → タスク定義 → 対象リビジョンを開き、JSONタブの`executionRoleArn`（実行ロール）と `taskRoleArn`（アプリ用ロール）をそのままコピペ。|
 
-:::default アクセス権限のJSON
+:::details アクセス権限のJSON
 ```json
 {
   "Version": "2012-10-17",
