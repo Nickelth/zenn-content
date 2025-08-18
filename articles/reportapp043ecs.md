@@ -52,7 +52,7 @@ published: false
 `environment`と`secrets`に`.env`ファイルで使用した環境変数を定義する。
 
 
-:::default taskdef.json
+:::details taskdef.json
 ```json
 {
   "family": "<TASK_FAMILY>",
