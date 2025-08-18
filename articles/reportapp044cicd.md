@@ -1,5 +1,5 @@
 ---
-title: "【#4 3/3】GitHubActionsとECS/Fargateを連携、CI/CD環境を構築する"
+title: "【#4 4/4】GitHubActionsとECS/Fargateを連携、CI/CD環境を構築する"
 emoji: "🔐"
 type: "tech"
 topics: ["ecs", "aws"]
