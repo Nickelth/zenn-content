@@ -47,7 +47,26 @@ aws ssm put-parameter --region <REGION_ID> --name /papyrus/prd/AUTH0_CALLBACK_UR
 # 機密
 aws ssm put-parameter --region <REGION_ID> --name /papyrus/prd/AUTH0_CLIENT_SECRET \
   --type SecureString --value 'xxxx' --overwrite
-  ```
+```
+
+#### aws ssm コマンドのレスポンスの意味
+```json
+{
+  "Version": 1,
+  "Tier": "Standard"
+}
+```
+Version: そのパラメータのバージョン番号。初回は1、値を更新するたびに+1される。
+Tier: そのパラメータの階層（Standard / Advanced / Intelligent-Tiering）。Standardなら課金なし。
+
+
+AWS System Managerのダッシュボード > 「パラメータストア」をクリック
+![AWS System Manager ダッシュボード](https://storage.googleapis.com/zenn-user-upload/a1a9be9a6438-20250819.png)
+
+先ほど作成したパラメータとその型があっていることを確認する。
+![AWS System Manager パラメータストア](https://storage.googleapis.com/zenn-user-upload/624de395033a-20250819.png)
+
+
 
 ### 3. ECR作成 & 手動Push
 
@@ -74,3 +93,8 @@ Auth0の設定、及び`.env`ファイルの`AUTH0_CALLBACK_URL`を変更して�
 |`AUTH0_CALLBACK_URL`|`http://<PublicIP>:5000/callback`|
 
 ### 5. チェックリスト（ここまでの出来上がり）
+
+
+
+### 出典
+@[card](https://docs.aws.amazon.com/cli/latest/reference/ssm/put-parameter.html)

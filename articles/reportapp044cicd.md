@@ -29,6 +29,7 @@ published: false
 
 
 > Q. 開発環境で使用していた.envの環境変数をSSM/Secretsに登録しておけば、GithubのVariablesへの登録は不要になりますか？
+
 A. なりません。
 SSM/Secrets は「実行時のアプリ用」、GitHub Variables/Secrets は「CI/CD が回るための設定 と ビルド時に必要なもの」。用途が違うので、どちらか片方だけで済むわけではない。欲張りセットってやつ。
 

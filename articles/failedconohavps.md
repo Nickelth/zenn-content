@@ -31,215 +31,60 @@ Flaskアプリで本番環境を構築中にVPSの設置が必要になった。
 おそらく低価格を維持するためセキュリティを強固にして人件費を削減しているのかと勘ぐってみたり
 いずれにしろ日曜日が無駄にされたのでAWSに乗り換え
 
+### 1. 
 
-### 1. 選定理由
-- **Docker**::
-- **Gunicorn**: PythonのWSGIサーバーとして、Flaskアプリを効率よく動作させるために選定。
+![](https://storage.googleapis.com/zenn-user-upload/ee2d5819bc12-20250818.png)
 
-#### WSGIサーバー（Gunicorn）について
 
-Flaskは開発用サーバーを内蔵しているが、本番運用には適していない。  
-そこで登場するのが **WSGI（Web Server Gateway Interface）** というPythonの標準インターフェース。  
-WSGIは「Webサーバー（Nginxなど）」と「Pythonアプリケーション（Flaskなど）」の**橋渡し役**を担う。
+![](https://storage.googleapis.com/zenn-user-upload/93b8c26916ac-20250818.png)
 
-GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGIサーバー**である。  
-複数のワーカー（プロセス）を立ち上げ、リクエストを並列処理できるため、スケーラビリティと安定性が向上する。
 
-簡単に言えば：
 
-- Nginx：ラーメン店の受付。リクエストを受けてGunicornに渡す。
-- Gunicorn：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
-- Flaskアプリ：実際にラーメンを作る人
+![](https://storage.googleapis.com/zenn-user-upload/ade100c010b4-20250818.png)
 
-この構成により、Flaskアプリを本番環境で**安全かつ効率的に**動かすことが可能となる。
 
----
-
-### 2. Flaskアプリ起動(Gunicorn前提)
-
-#### 2.1 必要パッケージのインストールと起動
-```bash
-# パッケージリスト更新
-sudo apt update
-
-# Nginxのインストール
-sudo apt install -y nginx
-
-# Python仮想環境を有効にした状態でGunicornをインストール
-pip install gunicorn
+```plaintext
+$ tail -f /var/log/auth.log
+2025-07-27T19:17:01.160148+09:00 Ryot CRON[84257]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2025-07-27T19:17:01.163098+09:00 Ryot CRON[84257]: pam_unix(cron:session): session closed for user root
+2025-07-27T19:25:02.051274+09:00 Ryot CRON[85775]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2025-07-27T19:25:02.054427+09:00 Ryot CRON[85775]: pam_unix(cron:session): session closed for user root
+2025-07-27T19:35:01.690864+09:00 Ryot CRON[87678]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2025-07-27T19:35:01.693114+09:00 Ryot CRON[87678]: pam_unix(cron:session): session closed for user root
+2025-07-27T19:45:01.300438+09:00 Ryot CRON[89584]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2025-07-27T19:45:01.302297+09:00 Ryot CRON[89584]: pam_unix(cron:session): session closed for user root
+2025-07-27T19:55:01.049070+09:00 Ryot CRON[91506]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2025-07-27T19:55:01.051815+09:00 Ryot CRON[91506]: pam_unix(cron:session): session closed for user root
 ```
 
-Flaskアプリが `app.py` にあり、グローバルに `app = Flask(__name__)` が定義されている場合の起動方法：
+![](https://storage.googleapis.com/zenn-user-upload/fdfc7c464cb9-20250818.png)
 
-```bash
-gunicorn -w 4 -b 127.0.0.1:8000 app:app
-```
-
-Flaskアプリが create_app() という関数で返されるファクトリーパターンを採用している場合は、
-wsgi.py など別ファイルでアプリを生成して Gunicorn から読み込ませる必要がある：
-
-```python:wsgi.py
-from app import create_app
-app = create_app()
-```
-```bash:Flaskアプリ起動
-gunicorn -w 4 -b 127.0.0.1:8000 app:app
-```
-:::message
-`-w 4` → ワーカー数。基本の目安は `(2 × CPUコア数) + 1` だが、軽量なアプリなら 4〜6 でも十分。  
-過剰に増やすとメモリを圧迫するので、実行環境に応じて調整する。
-`b` → バインド先（Nginxからアクセスできるよう127.0.0.1推奨）
-:::
+![](https://storage.googleapis.com/zenn-user-upload/c553e2eeb87a-20250818.png)
 
 
-#### 2.2 VPS構築して動作確認可能にする
+![](https://storage.googleapis.com/zenn-user-upload/d0fd329fec7a-20250818.png)
 
-ここでは、VPS（仮想専用サーバー）上に Flask アプリを配置し、  
-Gunicorn + Nginx を使って IP アドレスで直接アクセスできる状態を構築する。
 
-##### ■ アプリ配置と依存パッケージのインストール
-
-```bash
-# Flaskアプリのクローン（またはSCPなどで転送）
-git clone https://github.com/Nickelth/Papyrus.git
-cd your-flask-app
-
-# 仮想環境を作成して依存関係をインストール
-sudo apt install python3-venv
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-```bash:Gunicornでアプリを起動
-# Gunicornを仮想環境内にインストール（未インストールの場合）
-pip install gunicorn
-
-# FlaskアプリをGunicornで起動
-gunicorn -w 4 -b 127.0.0.1:8000 app:app
-```
+![](https://storage.googleapis.com/zenn-user-upload/e1542f1227a2-20250818.png)
 
 
 
+![](https://storage.googleapis.com/zenn-user-upload/3f6c2859561e-20250818.png)
+![](https://storage.googleapis.com/zenn-user-upload/8a46ebfe6872-20250818.png)
 
-:::message alert
-- アプリを常時公開する必要はない。必要な期間だけポートを開ける。
-- 公開期間が終わったら `sudo ufw deny 80` や `sudo systemctl stop nginx` などで閉じる。
-- 公開用に限定パスワードを設けたり、Basic認証をつけるのも手。
-:::
 
-#### 2.3 Nginx設定ファイル
 
-```nginx
-# /etc/nginx/sites-available/papyrus（ファイル名は任意）
-server {
-    listen 80;
-    server_name example.com;  # IPでもOK、localhostならそれで
+![](https://storage.googleapis.com/zenn-user-upload/e0869363689f-20250818.png)
+![](https://storage.googleapis.com/zenn-user-upload/bae9c57422a0-20250818.png)
 
-    location / {
-        proxy_pass http://127.0.0.1:8000;  # Gunicornのバインド先
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
 
-    location /static/ {
-        alias /path/to/your/project/static/;
-    }
-}
-```
-```bash:シンボリックリンクで有効化
-sudo ln -s /etc/nginx/sites-available/papyrus /etc/nginx/sites-enabled/
-sudo nginx -t  # 構文チェック
-sudo systemctl restart nginx
-```
-`ln -s` は「シンボリックリンク（ショートカット的なもの）」を作成するコマンド。
+![](https://storage.googleapis.com/zenn-user-upload/c0a47c01827a-20250818.png)
+![](https://storage.googleapis.com/zenn-user-upload/300939be312a-20250818.png)
 
-Nginxでは `/etc/nginx/sites-available/` に構成ファイルを置き、  
-そのファイルを `/etc/nginx/sites-enabled/` にリンクすることで有効化する仕組みになっている。
 
-このコマンドで、作成した設定ファイル `papyrus` を Nginx に読み込ませるようにする。
-
-全て終了後、動作確認
-```bash
-curl http://localhost
-```
-Flaskのトップページが表示されればリバースプロキシ成功
-
-### 3. Gunicornで起動
-
-ここでは、Flaskアプリケーションを Gunicorn 経由で起動し、  
-アプリが正しく起動・応答するかどうかを確認する。
-
-#### 3.1 起動前の準備
-
-以下の前提条件を確認しておく：
-
-- Flaskアプリが `app.py` にあり、`create_app()` または `app` インスタンスが定義されている
-- 必要なパッケージがインストールされていること（`gunicorn`, `flask`, etc.）
-
-#### 3.2 Gunicorn 起動コマンド
-
-例：アプリインスタンスが `app.py` に定義されている場合
-
-```bash
-gunicorn -w 4 -b 127.0.0.1:8000 app:app
-```
-
-オプションの意味：
-
-* `-w 4`：4つのワーカープロセスで処理（CPUコア数に応じて調整）
-* `-b 127.0.0.1:8000`：ローカルホスト上で8000番ポートをバインド
-    → Nginxからアクセス可能になる
-
-※ `app:app` の左側はファイル名（拡張子なし）、右側はFlaskアプリのインスタンス名。
-
----
-
-#### 3.3 デーモンとしてバックグラウンド起動（任意）
-
-本番運用では、Gunicornをバックグラウンドで起動することが多い。
-
-```bash
-gunicorn -w 4 -b 127.0.0.1:8000 app:app --daemon
-```
-
-ログをファイルに出力したい場合：
-
-```bash
-gunicorn -w 4 -b 127.0.0.1:8000 app:app \
-  --daemon \
-  --access-logfile /var/log/gunicorn/access.log \
-  --error-logfile /var/log/gunicorn/error.log
-```
-
-#### 3.4 動作確認
-
-Gunicornが起動している状態で、以下のコマンドでアプリが応答しているかを確認：
-
-```bash
-curl http://127.0.0.1:8000
-```
-
-* 正常であれば、FlaskアプリのトップページのHTMLが返ってくる
-* 返ってこない場合は、ログやバインド設定を再確認すること
-
-#### 3.5 プロセスの停止
-
-Gunicorn を手動で停止したい場合は、`ps` コマンドで PID を確認して `kill`：
-
-```bash
-ps aux | grep gunicorn
-kill <PID>
-```
-
-または `pkill` を使ってまとめて終了：
-
-```bash
-pkill gunicorn
-```
-
+![](https://storage.googleapis.com/zenn-user-upload/a8aa2f93d031-20250818.png)
+![](https://storage.googleapis.com/zenn-user-upload/5fa1febabb10-20250818.png)
+![](https://storage.googleapis.com/zenn-user-upload/8e665f77d4c4-20250818.png)
 
 
 
