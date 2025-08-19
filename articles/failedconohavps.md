@@ -42,7 +42,7 @@ Flaskアプリで本番環境を構築中にVPSの設置が必要になった。
 
 ![](https://storage.googleapis.com/zenn-user-upload/ade100c010b4-20250818.png)
 
-
+:::details /var/log/auth.log
 ```plaintext
 $ tail -f /var/log/auth.log
 2025-07-27T19:17:01.160148+09:00 Ryot CRON[84257]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
@@ -56,6 +56,7 @@ $ tail -f /var/log/auth.log
 2025-07-27T19:55:01.049070+09:00 Ryot CRON[91506]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
 2025-07-27T19:55:01.051815+09:00 Ryot CRON[91506]: pam_unix(cron:session): session closed for user root
 ```
+:::
 
 ![](https://storage.googleapis.com/zenn-user-upload/fdfc7c464cb9-20250818.png)
 
