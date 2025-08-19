@@ -320,5 +320,18 @@ count=0（すぐ止める。請求ブレーキ）
 
 
 
+### 7. 関連記事
+
+#### AWS 関連
+
+@[card](https://zenn.dev/nickelth/articles/reportapp043ecs)
+@[card](https://zenn.dev/nickelth/articles/reportapp042aws)
+@[card](https://zenn.dev/nickelth/articles/reportapp041iam)
+
+#### 開発~本番まで
+
+@[card](https://zenn.dev/nickelth/articles/reportapp03docker)
+@[card](https://zenn.dev/nickelth/articles/reportapp02auth0)
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)
 
 
