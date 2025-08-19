@@ -12,14 +12,14 @@ published: false
 
 ### 1. CloudWatch Logs ロググループ作成
 
-#### コンソールで作成
+#### パターン1: コンソールで作成
 1. CloudWatch → ログ → ロググループ → Create log group
 
 2. Name: `/ecs/papyrus`、Region: `us-west-2`
 
 3. 保持期間: 1 day（デモ用途ならこれで十分）
 
-#### CLIで作成
+#### パターン2: CLIで作成
 
 ```bash
 LOG_GROUP=/ecs/papyrus

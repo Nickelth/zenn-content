@@ -50,11 +50,11 @@ IAM設定が異様に長いので、この記事ではIAMの設定のみを対�
     - 使⽤事例：Elastic Container Service → Elastic Container Service Task を選択
         - （これで信頼ポリシー Principal: ecs-tasks.amazonaws.com が自動セットされる）
 
-3. アクセス権限で AmazonECSTaskExecutionRolePolicy にチェック
+3. アクセス権限で `AmazonECSTaskExecutionRolePolicy` にチェック
 
-3. ロール名：ecsTaskExecutionRole→ 作成
+3. ロール名：`ecsTaskExecutionRole`→ 作成
 
-4. 作成後の画面で ARN をコピー → taskdef.json の executionRoleArn に貼る
+4. 作成後の画面で ARN をコピー → `taskdef.json` の `executionRoleArn` に貼る
 
 5. GitHubのOIDCロールの iam:PassRole の Resource にこのARNを必ず入れる（忘れるとまた怒られる）
 
@@ -149,10 +149,10 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 
 |変数名|コピペ元|
 |---|---|
-|<CLUSTER>|ECS → クラスター → 対象クラスターの名前|
-|<SERVICE>|ECS → クラスター → サービスタブ → 対象サービスの名前|
-|<TASK_FAMILY>|ECS → タスク定義 → 対象のファミリー名（:1みたいなリビジョン番号は不要）|
-|<TASK_EXECUTION_ROLE_ARN> / <TASK_ROLE_ARN>|ECS → タスク定義 → 対象リビジョンを開き、JSONタブの`executionRoleArn`（実行ロール）と `taskRoleArn`（アプリ用ロール）をそのままコピペ。|
+|`<CLUSTER>`|ECS → クラスター → 対象クラスターの名前|
+|`<SERVICE>`|ECS → クラスター → サービスタブ → 対象サービスの名前|
+|`<TASK_FAMILY>`|ECS → タスク定義 → 対象のファミリー名（:1みたいなリビジョン番号は不要）|
+|`<TASK_EXECUTION_ROLE_ARN>`|ECS → タスク定義 → 対象リビジョンを開き、JSONタブの`executionRoleArn`（実行ロール）と `taskRoleArn`（アプリ用ロール）をそのままコピペ。|
 
 :::details アクセス権限のJSON
 ```json

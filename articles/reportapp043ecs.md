@@ -47,7 +47,7 @@ published: false
 |変数名|値|
 |---|---|
 |`<TASK_FAMILY>`|好きにつけてOK(英数字,ハイフン,アンダースコア)|
-|`<TASK_EXECUTION_ROLE_ARN>` |arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole
+|`<TASK_EXECUTION_ROLE_ARN>` |`arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole`
 |`<CONTAINER_NAME>`|`app`|
 
 `environment`と`secrets`に`.env`ファイルで使用した環境変数を定義する。
@@ -94,6 +94,7 @@ published: false
   "tags": [{"key":"project","value":"portfolio"}]
 }
 ```
+:::
 
 ※awslogs の設定はそのまま（※ロググループは先に作っておくこと）
 
