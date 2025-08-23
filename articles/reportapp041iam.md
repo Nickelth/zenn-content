@@ -238,6 +238,25 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 
 ![ポリシーをアタッチ](https://storage.googleapis.com/zenn-user-upload/819c4a6676f1-20250812.png)
 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    { "Sid": "LogsCreateGroup",
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup","logs:DescribeLogGroups"],
+      "Resource": "*",
+      "Condition": { "StringEquals": { "aws:RequestedRegion": "us-west-2" } }
+    },
+    { "Sid": "LogsSetRetention",
+      "Effect": "Allow",
+      "Action": ["logs:PutRetentionPolicy","logs:TagLogGroup"],
+      "Resource": "arn:aws:logs:us-west-2:438336773404:log-group:/ecs/papyrus"
+    }
+  ]
+}
+```
+
 ### 7. チェックリスト（ここまでの出来上がり）
 
 

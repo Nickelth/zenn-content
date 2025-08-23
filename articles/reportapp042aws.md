@@ -119,7 +119,8 @@ aws secretsmanager create-secret \
   --secret-string '{"secret_key":"flask_secret_key"}'
 ```
 
-
+![Secret Managerにパラメータを格納完了](https://storage.googleapis.com/zenn-user-upload/6e419f17b98a-20250821.png)
+*格納完了*
 
 ### 3. ECR作成 & 手動Push
 
