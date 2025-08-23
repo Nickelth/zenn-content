@@ -208,9 +208,8 @@ createdb testdb -O postgres
 ### 6.	Python のインストール
 ``` bash
 sudo apt install -y python3 python3-pip python3-venv python3-dev build-essential libpq-dev
-# 仮想環境env作成（プロジェクトごとに）
-python3 -m venv env
-source env/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 ### 7. おわりに
