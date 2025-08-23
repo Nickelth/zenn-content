@@ -3,7 +3,7 @@ title: "中古PCのRAMを増設して32GBにする。"
 emoji: "💾"
 type: "tech"
 topics: ["Linux", "bash", "cli"]
-published: true
+published: false
 ---
 
 
