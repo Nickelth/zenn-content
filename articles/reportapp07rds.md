@@ -155,3 +155,9 @@ aws ecs run-task \
 
 * **ECS で “db” は勝手に出てこない**。RDS を作る or 何かを立てる必要がある。
 * 今日は **RDS 作る → Secret を RDS 値に更新 → `init.sql` を一度だけ流す → 再デプロイ**。
+
+<!--
+### 8. 次の記事
+
+@[card](https://zenn.dev/nickelth/articles/reportapp08cicd)
+-->

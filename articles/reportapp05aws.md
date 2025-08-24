@@ -156,5 +156,5 @@ Auth0の設定、及び`.env`ファイルの`AUTH0_CALLBACK_URL`を変更して�
 <!--
 ### 6. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp043ecs)
+@[card](https://zenn.dev/nickelth/articles/reportapp06ecs)
 -->

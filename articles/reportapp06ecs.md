@@ -128,5 +128,5 @@ published: false
 <!--
 ### 5. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp044cicd)
+@[card](https://zenn.dev/nickelth/articles/reportapp07rds)
 -->

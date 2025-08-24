@@ -267,5 +267,5 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 <!--
 ### 8. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp042aws)
+@[card](https://zenn.dev/nickelth/articles/reportapp05aws)
 -->
