@@ -64,15 +64,14 @@ SSM/Secrets は「実行時のアプリ用」、GitHub Variables/Secrets は「C
 
 ![Add Secrets](https://storage.googleapis.com/zenn-user-upload/6874b3b685d6-20250811.png)
 
-```plaintext
-AWS_ACCOUNT_ID
-
-AWS_REGION（us-west）
-
-ECR_REPOSITORY（例: papyrus）
-
-AWS_IAM_ROLE_ARN（GitHub OIDCを信頼するIAMロールのARN）
-```
+|env_variable|value|
+|---|---|
+|`AWS_REGION`|`us-west-2`|
+|`CONTAINER_NAME`|`app`|
+|`ECR_REPOSITORY`|例: papyrus|
+|`ECS_CLUSTER`|ECSクラスター名|
+|`ECS_SERVICE`|ECSサービス名|
+|`TASK_FAMILY`|タスク名
 
 ### 3. 実行用yamlの整備
 
@@ -219,10 +218,18 @@ jobs:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Ensure CloudWatch Log Group exists
+      # log group is pre-created; streams are created by ecsTaskExecutionRole
+
+      - name: Who am I
+        run: aws sts get-caller-identity
+
+      - name: Fetch current task definition from ECS
         run: |
-          aws logs create-log-group --log-group-name "/ecs/papyrus" --region "${{ env.AWS_REGION }}" 2>/dev/null || true
-          aws logs put-retention-policy --log-group-name "/ecs/papyrus" --retention-in-days 1 --region "${{ env.AWS_REGION }}"
+          aws ecs describe-task-definition --task-definition "${{ env.TASK_FAMILY }}" \
+            --query taskDefinition > taskdef.json
+          jq -r '.containerDefinitions[].name' taskdef.json  # デバッグ：存在確認
+
+      - run: ls -la; test -f taskdef.json && echo "found taskdef.json" || echo "missing"
 
       - name: Login to Amazon ECR (for registry URI)
         id: login-ecr
