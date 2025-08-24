@@ -8,6 +8,8 @@ published: false
 
 ## GitHub Actions編（OIDC → Build/Push → Deploy）
 
+※特に断りがない限り、リージョンは`us-west-2`とする。
+
 ### 0. はじめに
 
 1. **GitHub Actions設定**（ECR push + ECS更新までワンストップ）

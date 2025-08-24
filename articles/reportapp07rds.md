@@ -2,7 +2,7 @@
 title: "【#7】ECSとRDSを接続する"
 emoji: "🔁"
 type: "tech"
-topics: ["rds", "aws", "ecs", "ci/cd" ]
+topics: ["rds", "aws", "ecs"]
 published: false
 ---
 
@@ -11,8 +11,12 @@ published: false
 
 ### 0. はじめに
 
+※特に断りがない限り、リージョンは`us-west-2`とする。
 
 ### 1. RDS（PostgreSQL）を作る
+
+「Aurora and RDS」を開き、ダッシュボードで「データベースを作成する」をクリック
+![データベースを作成する](https://storage.googleapis.com/zenn-user-upload/3fd582f53ea7-20250824.png)
 
 コンソール派でOK（CLIでも可）。設定は“デモ最小構成”で十分。
 
@@ -26,7 +30,7 @@ published: false
 * **VPC**: いまの ECS と同じ
 * **Public access**: **No**（非公開推奨）
 * **Security group**: 新規 or 既存。**インバウンド5432**に**ECS タスクの SG (`sec-papyrus-prd-ecs-web`) をソース指定**
-  → “SG から SG を許可”が鉄板。0.0.0.0/0 は論外（君の面接も論外）。
+  → “SG から SG を許可”が鉄板。0.0.0.0/0 は論外
 * **DB name**: `papyrus`（Optional欄にあるやつ。作っとくと楽）
 * できたら **エンドポイント** を控える（例: `papyrus-db-prd.xxxxxx.us-west-2.rds.amazonaws.com`）
 
