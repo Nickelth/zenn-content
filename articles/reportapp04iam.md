@@ -1,5 +1,5 @@
 ---
-title: "【#4 1/4】アプリ本番環境公開に向けてAWS IAMを設定する"
+title: "【#4】アプリ本番環境公開に向けてAWS IAMを設定する"
 emoji: "🛡️"
 type: "tech"
 topics: ["iam", "aws"]

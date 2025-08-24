@@ -1,5 +1,5 @@
 ---
-title: "【#4 3/4】AWS基盤にECS/Fargateを構築する"
+title: "【#6】AWS基盤にECS/Fargateを構築する"
 emoji: "🚢"
 type: "tech"
 topics: ["ecs", "aws"]

@@ -1,5 +1,5 @@
 ---
-title: "【#4 2/4】アプリ本番環境公開に向けてAWS基盤を準備する"
+title: "【#5】アプリ本番環境公開に向けてAWS基盤を準備する"
 emoji: "🔑"
 type: "tech"
 topics: ["aws", "auth0"]
