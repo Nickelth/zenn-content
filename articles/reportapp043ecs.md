@@ -75,9 +75,7 @@ published: false
       ],
       "secrets": [
         { "name": "AUTH0_CLIENT_SECRET", "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_CLIENT_SECRET" },
-        { "name": "POSTGRES_USER",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_USER" },
-        { "name": "POSTGRES_PASSWORD",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_PASSWORD" },
-        { "name": "POSTGRES_DB",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_DB" },
+        { "name": "DATABASE_URL",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/DATABASE_URL" },
         { "name": "FLASK_SECRET_KEY",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/FLASK_SECRET_KEY" }
       ],
       "logConfiguration": {
