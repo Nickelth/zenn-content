@@ -3,7 +3,7 @@ title: "降りかかる説明責任をgit blameコマンドで回避する"
 emoji: "💨"
 type: "tech"
 topics: ["git", "cli", "bash"]
-published: true
+published: false
 ---
 
 ## git blame, git logコマンドの役割とそのバリエーション
