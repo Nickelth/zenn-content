@@ -190,18 +190,23 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
       }
     },
     {
-      "Sid": "ECSDescribe",
+      "Sid": "ECSDescribeClusterService",
       "Effect": "Allow",
       "Action": [
         "ecs:DescribeClusters",
-        "ecs:DescribeServices",
-        "ecs:DescribeTaskDefinition"
+        "ecs:DescribeServices"
       ],
       "Resource": [
         "arn:aws:ecs:<REGION>:<ACCOUNT_ID>:cluster/<CLUSTER>",
         "arn:aws:ecs:<REGION>:<ACCOUNT_ID>:service/<CLUSTER>/<SERVICE>",
-        "arn:aws:ecs:<REGION>:<ACCOUNT_ID>:task-definition/<TASK_FAMILY>*"
       ]
+    },
+    {
+      "Sid": "ECSDescribeTaskDefinitionAny",
+      "Effect": "Allow",
+      "Action": ["ecs:DescribeTaskDefinition"],
+      "Resource": "*",
+      "Condition": { "StringEquals": { "aws:RequestedRegion": "<REGION>" } }
     },
     {
       "Sid": "ECSRegisterTaskDef",
@@ -259,7 +264,8 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 
 ### 7. チェックリスト（ここまでの出来上がり）
 
-
+<!--
 ### 8. 次の記事
 
 @[card](https://zenn.dev/nickelth/articles/reportapp042aws)
+-->
