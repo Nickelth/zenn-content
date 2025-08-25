@@ -1,6 +1,6 @@
 ---
 title: "【#7】ECSとRDSを接続する"
-emoji: "🔁"
+emoji: "🛢️"
 type: "tech"
 topics: ["rds", "aws", "ecs"]
 published: false
