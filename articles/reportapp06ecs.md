@@ -1,5 +1,5 @@
 ---
-title: "【#4 3/4】AWS基盤にECS/Fargateを構築する"
+title: "【#6】AWS基盤にECS/Fargateを構築する"
 emoji: "🚢"
 type: "tech"
 topics: ["ecs", "aws"]
@@ -9,6 +9,8 @@ published: false
 ## ECS/Fargate構築編（クラスタ/タスク/サービス/ALB）
 
 ### 0. はじめに
+
+※特に断りがない限り、リージョンは`us-west-2`とする。
 
 **ECS Fargate構築**
 
@@ -75,7 +77,9 @@ published: false
       ],
       "secrets": [
         { "name": "AUTH0_CLIENT_SECRET", "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/AUTH0_CLIENT_SECRET" },
-        { "name": "DATABASE_URL",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/DATABASE_URL" },
+        { "name": "POSTGRES_USER",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_USER" },
+        { "name": "POSTGRES_PASSWORD",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_PASSWORD" },
+        { "name": "POSTGRES_DB",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/POSTGRES_DB" },
         { "name": "FLASK_SECRET_KEY",        "valueFrom": "arn:aws:ssm:<REGION>:<ACCOUNT_ID>:parameter/papyrus/prd/FLASK_SECRET_KEY" }
       ],
       "logConfiguration": {
@@ -126,5 +130,5 @@ published: false
 <!--
 ### 5. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp044cicd)
+@[card](https://zenn.dev/nickelth/articles/reportapp07rds)
 -->

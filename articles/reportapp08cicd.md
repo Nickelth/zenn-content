@@ -8,6 +8,8 @@ published: false
 
 ## GitHub Actions編（OIDC → Build/Push → Deploy）
 
+※特に断りがない限り、リージョンは`us-west-2`とする。
+
 ### 0. はじめに
 
 1. **GitHub Actions設定**（ECR push + ECS更新までワンストップ）
@@ -331,9 +333,10 @@ count=0（すぐ止める。請求ブレーキ）
 
 #### AWS 関連
 
-@[card](https://zenn.dev/nickelth/articles/reportapp043ecs)
-@[card](https://zenn.dev/nickelth/articles/reportapp042aws)
-@[card](https://zenn.dev/nickelth/articles/reportapp041iam)
+@[card](https://zenn.dev/nickelth/articles/reportapp07rds)
+@[card](https://zenn.dev/nickelth/articles/reportapp06ecs)
+@[card](https://zenn.dev/nickelth/articles/reportapp05aws)
+@[card](https://zenn.dev/nickelth/articles/reportapp04iam)
 
 #### 開発~本番まで
 

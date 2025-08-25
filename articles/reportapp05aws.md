@@ -1,5 +1,5 @@
 ---
-title: "【#4 2/4】アプリ本番環境公開に向けてAWS基盤を準備する"
+title: "【#5】アプリ本番環境公開に向けてAWS基盤を準備する"
 emoji: "🔑"
 type: "tech"
 topics: ["aws", "auth0"]
@@ -9,6 +9,8 @@ published: false
 ## AWS基盤を準備する（CloudWatch, SSM/Secrets, ECR, Auth0編）
 
 ### 0. はじめに
+
+※特に断りがない限り、リージョンは`us-west-2`とする。
 
 ### 1. CloudWatch Logs ロググループ作成
 
@@ -156,5 +158,5 @@ Auth0の設定、及び`.env`ファイルの`AUTH0_CALLBACK_URL`を変更して�
 <!--
 ### 6. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp043ecs)
+@[card](https://zenn.dev/nickelth/articles/reportapp06ecs)
 -->
