@@ -65,6 +65,53 @@ DB名: papyrus_db
 
 #### 2.2 RDS作成後に停止→再起動する手順
 
+##### GUIの場合
+
+1. AWS コンソール → RDS → Databases。
+
+2. 対象インスタンス（Single-AZ / 非リードレプリカ）を選択。
+※「Status: available」であることを確認。
+
+3. 右上 Actions → Stop temporarily（一時停止）をクリック。
+
+4. 確認ダイアログで Stop を実行。
+※RDSは最大7日で自動起動します（必要があれば再度停止可能）。
+
+##### CLIの場合
+
+```bash
+# 停止
+aws rds stop-db-instance \
+  --db-instance-identifier <DB_INSTANCE_ID> \
+  --region <your-region>
+
+# 停止完了まで待機（任意）
+aws rds wait db-instance-stopped \
+  --db-instance-identifier <DB_INSTANCE_ID> \
+  --region <your-region>
+
+# 起動（再開）
+aws rds start-db-instance \
+  --db-instance-identifier <DB_INSTANCE_ID> \
+  --region <your-region>
+
+# 起動完了まで待機（任意）
+aws rds wait db-instance-available \
+  --db-instance-identifier <DB_INSTANCE_ID> \
+  --region <your-region>
+
+# ステータス確認
+aws rds describe-db-instances \
+  --db-instance-identifier <DB_INSTANCE_ID> \
+  --query 'DBInstances[0].DBInstanceStatus' \
+  --output text \
+  --region <your-region>
+```
+
+##### 停止できない時は
+
+- Multi-AZ（2/3 AZ の DB クラスター）やリードレプリカは停止不可
+- すでに停止中 / 進行中のメンテナンス がある
 
 
 ### 3. Secrets Manager を RDS 値で更新
