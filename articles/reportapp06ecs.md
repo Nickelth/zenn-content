@@ -1,5 +1,5 @@
 ---
-title: "【#4 3/4】AWS基盤にECS/Fargateを構築する"
+title: "【#6】AWS基盤にECS/Fargateを構築する"
 emoji: "🚢"
 type: "tech"
 topics: ["ecs", "aws"]
@@ -9,6 +9,8 @@ published: false
 ## ECS/Fargate構築編（クラスタ/タスク/サービス/ALB）
 
 ### 0. はじめに
+
+※特に断りがない限り、リージョンは`us-west-2`とする。
 
 **ECS Fargate構築**
 
@@ -128,5 +130,5 @@ published: false
 <!--
 ### 5. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp044cicd)
+@[card](https://zenn.dev/nickelth/articles/reportapp07rds)
 -->

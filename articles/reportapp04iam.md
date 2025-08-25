@@ -1,5 +1,5 @@
 ---
-title: "【#4 1/4】アプリ本番環境公開に向けてAWS IAMを設定する"
+title: "【#4】アプリ本番環境公開に向けてAWS IAMを設定する"
 emoji: "🛡️"
 type: "tech"
 topics: ["iam", "aws"]
@@ -12,6 +12,8 @@ published: false
 
 前回の構築までは失敗談の体で記事を投稿していたが、今回からは本業ということもありまじめに記述する。
 Flaskアプリをネット上に公開し、アクセスできることを目標とする。
+
+※特に断りがない限り、リージョンは`us-west-2`とする。
 
 #### 要件定義
 
@@ -267,5 +269,5 @@ IAMのポリシーエディタは **「信頼ポリシー」と「アクセス�
 <!--
 ### 8. 次の記事
 
-@[card](https://zenn.dev/nickelth/articles/reportapp042aws)
+@[card](https://zenn.dev/nickelth/articles/reportapp05aws)
 -->
