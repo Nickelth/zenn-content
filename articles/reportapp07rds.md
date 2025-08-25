@@ -6,39 +6,70 @@ topics: ["rds", "aws", "ecs"]
 published: false
 ---
 
-##
+> RDS高すんぎ
 
+## コスト削減しつつ将来的なMulti-AZへの移行も容易にするRDS構築
 
 ### 0. はじめに
 
 ※特に断りがない限り、リージョンは`us-west-2`とする。
 
-### 1. RDS（PostgreSQL）を作る
+RDSをAWS構築に組み込み、より実践的なアーキテクチャ構築・運用に近づける。
+まずはSingle-AZで作成しコツとカットに努める。
+GitHub Actionsで起動/停止をCI/CDに組み込む（次章）。
+
+### 1. 要件定義
+
+- 動かしたい時だけ動かす従属課金運用に合わせる。
+- サンドボックス・Single-AZで作成する。
+- 将来的なMulti-AZ移行に備え、**同一VPC内で異なるAZのサブネットを2つ以上**入れておく
+- Multi-AZ移行は、インスタンスの昇格で対応する。
+- その他、課金要素はなるべく使用しない。
+
+### 2. RDS作成と運用
+
+#### 2.1 RDS（PostgreSQL）を作る
 
 「Aurora and RDS」を開き、ダッシュボードで「データベースを作成する」をクリック
 ![データベースを作成する](https://storage.googleapis.com/zenn-user-upload/3fd582f53ea7-20250824.png)
 
-コンソール派でOK（CLIでも可）。設定は“デモ最小構成”で十分。
+識別子: papyrus-db-sbx
+ユーザー名: papyrus
+DB名: papyrus_db
 
-* **Engine**: PostgreSQL 16
-* **Template**: Free tier / Dev
-* **DB instance class**: `db.t4g.micro`
-* **Storage**: gp3 20GB（自動拡張OFFでも可）
-* **DB instance identifier**: `papyrus-db-prd`
-* **Master username**: `papyrus`
-* **Master password**: 適当に強いやつ
-* **VPC**: いまの ECS と同じ
-* **Public access**: **No**（非公開推奨）
-* **Security group**: 新規 or 既存。**インバウンド5432**に**ECS タスクの SG (`sec-papyrus-prd-ecs-web`) をソース指定**
-  → “SG から SG を許可”が鉄板。0.0.0.0/0 は論外
-* **DB name**: `papyrus`（Optional欄にあるやつ。作っとくと楽）
-* できたら **エンドポイント** を控える（例: `papyrus-db-prd.xxxxxx.us-west-2.rds.amazonaws.com`）
+|項目|設定値|
+|---|---|
+|テンプレート|サンドボックス|
+|デプロイ| 1インスタンス (Single-AZ)|
+|識別子/ユーザー名|任意名|
+|認証情報管理|Secrets Manager（セルフより楽・安全）|
+|インスタンスクラス|db.t4g.micro|
+|ストレージ|gp3 / 20 GiB（追加IOPS/スループットは無指定）|
+|EC2コンピューティングリソース|接続しない|
+|パブリックアクセス|なし|
+|VPCセキュリティグループ|新規作成（インバウンド5432 = ECSタスクのSGのみを許可）|
+|データベース認証|パスワード認証|
+|Performance Insights|無効|
+|拡張モニタリング|無効|
+|ログエクスポート|無効|
+|DevOps Guru|無効|
+|自動バックアップ|有効 / 保持 1–3日 / ウィンドウ深夜帯|
+|スナップショットにタグコピー|任意（有効推奨）|
+|暗号化| 有効（aws/rds デフォルト）|
+|マイナー自動アップグレード|有効|
+|メンテナンスウィンドウ|深夜帯|
+|削除保護| 無効（検証なので消しやすく）|
+
 
 > もし一時的にローカルから直接 psql したいなら、**一瞬だけ Public access=Yes にして**、SG に**自宅IPだけ**開ける→終わったら閉じる。これでもOK（短時間で）。
 
-### 2. Secrets Manager を RDS 値で更新
+#### 2.2 RDS作成後に停止→再起動する手順
 
-君のアプリは Secrets から読む設計なので、**`papyrus/prd/db` の中身を書き換えるだけ**。
+
+
+### 3. Secrets Manager を RDS 値で更新
+
+`papyrus/prd/db` の中身を書き換える
 
 ```bash
 aws secretsmanager put-secret-value \
@@ -55,7 +86,7 @@ aws secretsmanager put-secret-value \
 
 > 既に `DB_SECRET_ID=papyrus/prd/db` はタスクに入ってるから、**アプリ側のコード変更は不要**。
 
-### 3. `init.sql` を一度だけ実行（安全なやり方を2通り）
+### 4. `init.sql` を一度だけ実行（安全なやり方を2通り）
 
 #### 方法A-1：ローカルから psql（最短）
 
@@ -71,6 +102,7 @@ aws secretsmanager put-secret-value \
 
 RDSは非公開のまま、**Fargate 上で `postgres:16-alpine` を1回だけ走らせて流す**。
 
+:::detail CLIでinit.sqlを実行する
 ```bash
 # ① 一時タスク定義を登録（postgresクライアントでSQLを流す）
 cat > db-init-task.json <<'JSON'
@@ -127,17 +159,18 @@ aws ecs run-task \
   --count 1 \
   --network-configuration "awsvpcConfiguration={subnets=[<SUBNET1>,<SUBNET2>],securityGroups=[<ECS_TASK_SG>],assignPublicIp=DISABLED}"
 ```
+:::
 
 > 秘密をCLIに直書きしたくないなら、上のコンテナ `environment` を削って、`secrets` フィールドで **Secrets Manager のキー**から注入でもOK。
 > 今回は「速さ優先」で見せてます。終わったらこのタスク定義は**削除**してよし。
 
-### 4. アプリを再デプロイ → 動作確認
+### 5. アプリを再デプロイ → 動作確認
 
 * **サービスを Force new deployment**（Desired=1 で）
 * CloudWatch Logs に `db.host=<RDSエンドポイント>` みたいなデバッグを一行出しとくと秒で判断できる
 * `curl http://<PublicIP>:5000/index`（面接用の“動いてる風”動画を撮るならここ）
 
-### 5. よくあるハマり所
+### 6. よくあるハマり所
 
 * **RDS SG** が **ECS タスク SG** を許可していない
   → `could not translate host name` じゃなくても結局つながらない。**必ず SG→SG 許可**。
@@ -147,7 +180,7 @@ aws ecs run-task \
   クエリで `papyrus_schema.products` と**スキーマ付き**で書いてないなら、
   `ALTER ROLE papyrus SET search_path TO papyrus_schema, public;` を `init.sql` 末尾に足すと幸せ（任意）。
 
-### 6. 片付け（課金＆衛生）
+### 7. 片付け（課金＆衛生）
 
 * 本番デモが終わったら **Desired=0**、RDS は **停止できない**ので**スナップショット取って削除**が最安。
 * Secrets/SSM は残しても微課金。気になるなら **タグ `project=portfolio`** でまとめて削除候補に。
@@ -155,7 +188,7 @@ aws ecs run-task \
 
 ---
 
-### 7. まとめ（君向け翻訳）
+### 8. おわりに
 
 * **ECS で “db” は勝手に出てこない**。RDS を作る or 何かを立てる必要がある。
 * 今日は **RDS 作る → Secret を RDS 値に更新 → `init.sql` を一度だけ流す → 再デプロイ**。
