@@ -1,6 +1,6 @@
 ---
-title: "【#4 番外編】GithubActions実行時エラーと対処例・デバッグ用YAML集"
-emoji: "🔧"
+title: "【#9】GithubActions実行時エラーと対処例・デバッグ用YAML集"
+emoji: "💥"
 type: "tech"
 topics: ["githubactions", "yaml", "cicd" ]
 published: false
