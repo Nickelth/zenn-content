@@ -1,10 +1,36 @@
 ---
-title: "【#4 4/4】GitHubActionsとECS/Fargateを連携、CI/CD環境を構築する"
+title: "鍵は渡さない、ログは残す｜GitHub OIDCとCI/CDの最小権限設計"
 emoji: "🔁"
 type: "tech"
 topics: ["ecs", "aws", "githubactions", "ci/cd" ]
 published: false
 ---
+
+## ADR: <決定名>
+
+- 状況: <前提/制約/対象>
+- 選択肢: <A/B/C>（比較軸: 可用性/運用/コスト/セキュリティ）
+- 決定: <採用案>
+- 根拠: <採用理由3点>
+- 反証/却下理由: <採用しなかった案の弱点>
+- リスクと対策: <検知/回復/フォールバック>
+- 影響: <影響範囲/トレードオフ>
+
+### 見出しテンプレ
+
+- 背景と前提（非機能要件・制約）
+- 設計の決定（ADRミニ：選択肢/決定/却下理由/リスク）
+- 設定抜粋（JSON/YAMLは芯だけ、ダミー化。全文は付録）
+- 検証と証拠（plan/ドライラン、イベント履歴、メトリクス）
+- 運用シナリオ（正常系、失敗時、切り戻し、所要時間）
+- コストとセキュリティの影響
+- 学びと代替案（やらなかったこと・次にやること）
+
+### 証跡
+
+- ポリシー抜粋とdiff（Action/Resource/Conditionの芯）
+- Access Analyzer or Configの是正前後1枚
+- CloudTrailでロール更新の記録
 
 ## GitHub Actions編（OIDC → Build/Push → Deploy）
 
