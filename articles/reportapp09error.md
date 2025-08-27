@@ -1,5 +1,5 @@
 ---
-title: "【#9】GithubActions実行時エラーと対処例・デバッグ用YAML集"
+title: "AWS構築 | 全体アーキテクチャ、SLO、コスト戦略の総まとめ"
 emoji: "💥"
 type: "tech"
 topics: ["githubactions", "yaml", "cicd" ]
