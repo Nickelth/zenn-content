@@ -6,6 +6,8 @@ topics: ["git", "cli", "bash"]
 published: false
 ---
 
+※実務で得た知見を個人環境で再現したもので構成しています。
+
 ## git blame, git logコマンドの役割とそのバリエーション
 
 ### 0. はじめに

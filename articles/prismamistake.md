@@ -6,6 +6,8 @@ topics: ["aws"]
 published: false
 ---
 
+※実務で得た知見を個人環境で再現したもので構成しています。
+
 ## 🧩 再構成：**"Prisma VS 闇のRDS" ～夜間に消えるDBと戦う物語～**
 
 ### 第1章：Prisma、泣く
