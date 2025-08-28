@@ -3,7 +3,7 @@ title: "【AWS】Amazon Inspector 対応パターン集【Debian】"
 emoji: "⚠️"
 type: "tech"
 topics: ["AWS", "Docker", "Linux", "Debian", "npm", "セキュリティ"]
-published: true
+published: false
 ---
 
 すべての「Amazon Inspectorの警告は絶対に消せ」という上司を持った方へ
