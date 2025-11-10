@@ -13,6 +13,6 @@ chapters:
   - papyrus_07_infra-rds
   - papyrus_08_infra-alb
   - papyrus_09_infra-monitor
-  - papyrus_10_ADR_ALB
-  - papyrus_11_ADR_Taskdef
-  - papyrus_12_ADR_Audit
+  - papyrus_10_adr_alb
+  - papyrus_11_adr_taskdef
+  - papyrus_12_adr_audit
