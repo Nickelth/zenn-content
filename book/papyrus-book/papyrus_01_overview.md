@@ -1,9 +1,5 @@
 ---
-title: "AWS ポートフォリオ - Papyrus Invoice 全体概要"
-emoji: "📄"
-type: "tech"
-topics: ["rds", "postgresql", "ecs", "aws", "terraform", "githubactions", "cloudwatch", "devops", "portfolio"]
-published: false
+title: "帳票アプリ Papyrus Invoice 全体概要"
 ---
 
 ## Papyrus Invoice リポジトリ
@@ -81,7 +77,7 @@ published: false
 
 #### 証跡運用（docs/evidence）
 
-- **タイムスタンプ**：`YYYYMMDD_HHMMSS`（例: `20251105_063210`）
+- **タイムスタンプ**：`YYYYMMDD_HHMMSS`（例: `20260101_012345`）
 - **種別（例）**：
 
     - `healthz.log` / `dbcheck.log`（HTTP生ログ）
@@ -91,9 +87,9 @@ published: false
     - `alb_plan.log` / `alb_apply.log` / `alb_destroy.log`（Terraformログ）
 - **例**：
 
-    - `20251105_063210_healthz.log`
-    - `20251105_063213_cloudwatch_dbcheck.json`
-    - `20251105_063215_dbcheck_json_line.log`
+    - `20260101_012345_healthz.log`
+    - `20260102_231010_cloudwatch_dbcheck.json`
+    - `20260103_070809_dbcheck_json_line.log`
 
 - **PRブランチ名**：
     - `evidence/smoke-<YYYYMMDD-HHMMSSZ>`（例：`evidence/smoke-20251105-063210Z`）
