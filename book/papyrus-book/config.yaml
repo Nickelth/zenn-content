@@ -1,0 +1,18 @@
+title: "AWS ポートフォリオ - 帳票出力アプリ"
+summary: "Flask × ECS Fargate × RDS(PostgreSQL) の疎通・運用最小実装済み納品書出力アプリ"
+topics: ["rds", "postgresql", "ecs", "aws", "terraform", "githubactions", "cloudwatch", "devops", "portfolio"]
+published: false
+price: 0
+chapters:
+  - papyrus_01_overview
+  - papyrus_02_ecr-push
+  - papyrus_03_ecs-deploy
+  - papyrus_04_ecs-scale
+  - papyrus_05_alb-smoke
+  - papyrus_06_audit-evidence
+  - papyrus_07_infra-rds
+  - papyrus_08_infra-alb
+  - papyrus_09_infra-monitor
+  - papyrus_10_ADR_ALB
+  - papyrus_11_ADR_Taskdef
+  - papyrus_12_ADR_Audit
