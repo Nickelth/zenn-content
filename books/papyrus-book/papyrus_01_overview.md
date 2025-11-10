@@ -129,9 +129,31 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 
 - GitHub Actions 
     - Secrets
+        - `AWS_ACCOUNT_ID`
+        - `AWS_IAM_ROLE_ARN`  (例: `arn:aws:iam::<acct>:role/ECRPowerUser`)
+        - `ECS_TASK_SG_ID`    (例: `sg-xxxxxxxxxxxxxxxxx`)
+        - `PUBLIC_SUBNET_IDS` (例: `["subnet-aaa","subnet-bbb","subnet-ccc"]`)
+        - `VPC_ID`            (例: `vpc-xxxxxxxxxxxx`)
     - Vars
-- 開発PC要件：＜Python, awscli＞
-- CloudShell: jq, rsync, terraform
+        - `AWS_REGION`=`us-west-2`
+        - `CONTAINER_NAME`=`papyrus-app`
+        - `CONTAINER_PORT`=`5000`
+        - `ECR_REPOSITORY`=`nickelth/papyrus-invoice`
+        - `ECS_CLUSTER`=`papyrus-ecs-prd`
+        - `ECS_SERVICE`=`papyrus-task-service`
+        - `TASK_FAMILY`=`papyrus-task`
+    - Permissions
+        - `permissions: { id-token: write, contents: write, pull-requests: write }`
+
+- 開発PC要件：
+  - Python 3.12.3+
+  - jq 1.7+
+  - Git 2.43.0+
+- CloudShell: 
+  - jq 1.7+ 
+  - rsync 3.4.0+ 
+  - terraform 1.13.2+
+  - awscli 2.31.0+
 
 ### リポジトリ構成
 
@@ -153,3 +175,48 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 ### 付録：用語集
 
 * ECS/Fargate、TaskDef、TargetGroup、Digest固定、観測の入口…を一行定義
+
+```mermaid
+flowchart TB
+  %% peripherals
+  ECR[(ECR nickelth/papyrus-invoice)]
+  CW[CloudWatch Logs /ecs/papyrus]
+  SM[(Secrets Manager papyrus/prd/db)]
+  SSM[(SSM Parameter /papyrus/prd/auth0/callback_url)]
+
+  %% VPC
+  subgraph VPC["VPC us-west-2"]
+    direction TB
+
+    subgraph PUB["Public Subnets 2a/2b/2c"]
+      direction LR
+      subgraph ALBBOX["ALB Smoke (ephemeral)"]
+        ALB[[ALB HTTP:80]]
+        TG[[Target Group ip:5000]]
+      end
+      ALB -->|forward| TG
+      ALB -. health check: GET /healthz (200-399) .-> TG
+    end
+
+    subgraph APP["Private App Subnets 2a/2b/2c"]
+      ECSsvc["ECS Service (Fargate)\npapyrus-task-service\ndesired=1"]
+    end
+
+    subgraph DB["Private RDS Subnets 2a/2b"]
+      RDS[(RDS PostgreSQL 16)]
+      PG[(Parameter Group rds.force_ssl=1)]
+      PG -.-> RDS
+    end
+  end
+
+  %% flows
+  ECR -->|image digest sha256| ECSsvc
+  SM -->|GetSecretValue| ECSsvc
+  SSM -->|GetParameter| ECSsvc
+  ECSsvc -. PutLogEvents .-> CW
+
+  TG -->|targets ip:5000| ECSsvc
+  ALB -->|/healthz| ECSsvc
+  ALB -->|/dbcheck| ECSsvc
+  ECSsvc -->|TLS 5432| RDS
+```
