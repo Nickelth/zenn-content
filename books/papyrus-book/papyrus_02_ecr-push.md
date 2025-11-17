@@ -28,10 +28,10 @@ title: "CI: ECR Push（ビルド→ECR）"
 #### トリガー
 
 - `on.push.branches: [master]`
-  リリース運用を “master = 可動” に固定。Git フローの宗教戦争はここでは無視。
-  
+  リリース運用を “master = 可動” に固定
+
 - `on.push.tags: [ 'v*.*.*' ]`
-  タグ push でも同じ処理。タグ名は CHANGELOG のアンカーにも使う。
+  タグ push でも同じ処理。タグ名は CHANGELOG のアンカーにも使用。
 
 #### キャッシュ/タグ設計（digest固定）
 
