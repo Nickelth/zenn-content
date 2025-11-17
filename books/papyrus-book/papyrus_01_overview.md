@@ -104,7 +104,7 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 
 - AWSリージョン: `us-west-2`
 - 必要IAMロール 
-    - GitHub OIDC 実行ロール（例: ECRPowerUser）
+    - GitHub OIDC 実行ロール
     - 目的: CI/CD（ECR push, ECS deploy, 一時ALB/TG, CloudWatch/CloudTrail読取）
     - 主要権限:
         - ECR: ecr:BatchGetImage, ecr:PutImage, ecr:GetAuthorizationToken
