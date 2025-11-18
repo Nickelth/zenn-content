@@ -6,32 +6,20 @@ title: "CI: ECR Push（ビルド→ECR）"
 
 ### 目的
 
-- 何を自動化し、何を保証するか：＜再現性・digest固定・脆弱性配慮＞
+- デプロイ時に ECR イメージを自動ビルド & プッシュする
 
-### 前提（リポ/Secrets/権限）
+### 前提
 
-- 必要なIAM権限：
-    - GitHub OIDC 実行ロール
-    - 目的: CI/CD（ECR push, ECS deploy, 一時ALB/TG, CloudWatch/CloudTrail読取）
-    - 主要権限:
-        - "ecr:BatchCheckLayerAvailability",
-        - "ecr:InitiateLayerUpload",
-        - "ecr:UploadLayerPart",
-        - "ecr:CompleteLayerUpload",
-        - "ecr:PutImage",
-        - "ecr:BatchGetImage",
-        - "ecr:DescribeRepositories",
-        - "ecr:ListImages"
+- CI 用 IAM ロールは GitHub OIDC 専用に分離。
+- ECR push / ECS deploy / 監視読み取りでロールを分割。
+- 必要な API のみ許可したカスタムポリシーを付与し、最小権限になるよう設計。
 
 ### ワークフロー設計
 
 #### トリガー
 
-- `on.push.branches: [master]`
-  リリース運用を “master = 可動” に固定
-
-- `on.push.tags: [ 'v*.*.*' ]`
-  タグ push でも同じ処理。タグ名は CHANGELOG のアンカーにも使用。
+- `main` ブランチへの push
+- `v*.*.*` タグの push で本番向けイメージ作成
 
 #### キャッシュ/タグ設計（digest固定）
 
@@ -44,24 +32,14 @@ title: "CI: ECR Push（ビルド→ECR）"
 
 ### 実装ポイント
 
-#### Docker build/push ステップ（要点）
+#### Docker build/push ステップ
 
 - **マルチステージ**でビルドとランタイムを分離。`RUN apt-get ...` はビルド段のみ。
 - **.dockerignore** は`docs/`, `.git/`, `node_modules` 等を必ず除外。
 - **build args** は非機密のバージョン番号だけ。秘密は **BuildKit secrets** を使う（`RUN --mount=type=secret`）。
 - **出力**は `docker/build-push-action` の `outputs.digest` を使う。
 
-#### 成果物・メタデータ（imageDigest を残す）
-
-- 例: ECR に push 後、以下を evidence に書き出す。
-  - `repository`, `imageTag`, **`imageDigest`**, `build args`, `base image@digest`
-
-- 取得例（どれか一つやれば十分）
-  - `steps.build.outputs.digest`
-  - `aws ecr batch-get-image --repository-name ... --image-ids imageTag=$TAG --query images[0].imageId.imageDigest`
-  - `docker inspect --format='{{index .RepoDigests 0}}' <image:tag>`
-
-### 失敗例と対策（テンプレ）
+### 失敗例と対策
 
 - **OIDCロールに Assume 権限なし**
 
@@ -73,6 +51,7 @@ title: "CI: ECR Push（ビルド→ECR）"
       `token.actions.githubusercontent.com:aud = sts.amazonaws.com`
     - `Condition.StringLike` に
       `token.actions.githubusercontent.com:sub = repo:<OWNER>/<REPO>:ref:refs/heads/master`（ブランチ/タグに合わせて増やす）
+    - CIジョブ内でOIDCの`sub`/`aud`をログ確認
 
 ### セキュリティ注意
 

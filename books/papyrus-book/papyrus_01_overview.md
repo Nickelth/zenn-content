@@ -8,21 +8,21 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 
 ### はじめに（Purpose）
 
-**PJの目的**: RDSのマスターデータから納品書をPDF出力する最小B2Bワークフローの構築
-**評価点**: IaC/観測/証跡/CI
-**スコープ内・外**: 含む：ECS/Fargate, RDS, 一時ALBスモーク｜含まない：恒久ALB, 本番SLA
+RDS 上のマスターデータを元に納品書 PDF を生成する、最小構成の B2B ワークフローを構築。
+本プロジェクトでは、インフラのコード化（IaC）、可観測性、証跡運用、CI 連携を重視。
+スコープは「ECS/Fargate + RDS + 検証用の一時 ALB」までとし、本番相当の恒久 ALB や SLA 設計は対象外とする。
 
 ### システム構成（Architecture）
 
 #### コンポーネント一覧
 
 - ECS(Fargate) アプリ
-  - 用途: Flaskアプリ（/healthz, /dbcheck）
-  - 画像: ECR `nickelth/papyrus-invoice@sha256:…`（digest固定）
-  - ポート: 5000/tcp
-  - ログ: CloudWatch Logs `/ecs/papyrus`
-  - Env/Secret: `PGSSLMODE=require`, SecretsManager `papyrus/prd/db`, SSM `/papyrus/prd/auth0/callback_url`
-  - 通信: → RDS(PostgreSQL) 5432/TLS、← ALB(一時) HTTP:80
+  - 用途: Flask 製のバックエンド API。RDS から商品マスタを取得し、納品書 PDF を生成する。
+  - 特徴:
+    - Immutable な Docker イメージ（ECR の digest 固定）をデプロイ
+    - `/healthz` `/dbcheck` エンドポイントで ALB / RDS の疎通を確認
+    - CloudWatch Logs に JSON 1 行形式でアプリログを出力
+    - DB 接続情報や外部サービスの設定は Secrets Manager / SSM から参照
 
 - RDS (PostgreSQL 16)
   - 用途: 商品マスタ
@@ -67,97 +67,38 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 
 - CloudWatch Logs に構造化ログを出力（JSON1行）
 
-- IaC 薄切り (RDS/SG/ParameterGroup だけTerraform化。完全Importは後回し)
+- RDS / SG / Parameter Group など影響範囲を限定した IaC からTerraformを導入
+ - 既存リソースの完全 Import は段階的に進める方針
 
-- 証跡：`psql` 接続ログ、SG設定SS、アプリログに接続成功 
+- 疎通確認・パラメータ反映・ログ出力が揃い、証跡が docs/evidence に残っていること
 
 - Parameter Group反映
 
-- CLI履歴の証跡化
-
 #### 証跡運用（docs/evidence）
 
-- **タイムスタンプ**：`YYYYMMDD_HHMMSS`（例: `20260101_012345`）
-- **種別（例）**：
+監査や振り返りに備え、疎通確認・Terraform 実行ログ・ALB/TG 設定・CloudWatch ログなどを docs/evidence 配下にタイムスタンプ付きで保存。
 
-    - `healthz.log` / `dbcheck.log`（HTTP生ログ）
-    - `cloudwatch_healthz.json` / `cloudwatch_dbcheck.json`（AWS CLI生JSON）
-    - `healthz_json_line.log` / `dbcheck_json_line.log`（JSON 1行だけ抜粋）
-    - `listeners.json` / `tg_health.json`（ALB配線ダンプ）
-    - `alb_plan.log` / `alb_apply.log` / `alb_destroy.log`（Terraformログ）
-- **例**：
-
-    - `20260101_012345_healthz.log`
-    - `20260102_231010_cloudwatch_dbcheck.json`
-    - `20260103_070809_dbcheck_json_line.log`
-
-- **PRブランチ名**：
-    - `evidence/smoke-<YYYYMMDD-HHMMSSZ>`（例：`evidence/smoke-20251105-063210Z`）
-
-- **マスク指針**（自動 or 手動で置換）：
-
-    - RDSエンドポイント：`****.****.us-west-2.rds.amazonaws.com`
-    - アカウントID：`************`
-    - シークレット値：出さない（値は出力しない設計に）
+RDS エンドポイントやアカウント ID、シークレット値などを、マスクルールを決めて自動・手動で匿名化してからコミット。
 
 ### 依存関係と前提
 
 - AWSリージョン: `us-west-2`
 - 必要IAMロール 
-    - GitHub OIDC 実行ロール
-    - 目的: CI/CD（ECR push, ECS deploy, 一時ALB/TG, CloudWatch/CloudTrail読取）
-    - 主要権限:
-        - ECR: ecr:BatchGetImage, ecr:PutImage, ecr:GetAuthorizationToken
-        - ECS/ELBv2/EC2(Describe系): ecs:*, elasticloadbalancing:*, ec2:Describe*
-        - CloudWatch Logs(読取): logs:FilterLogEvents, logs:Describe*
-        - CloudTrail(読取/監査WF用): cloudtrail:LookupEvents
-        - Terraform適用で必要な create/update/delete（20-alb スコープ）※最小に絞る
+  - ECS/ALB: サービス更新・ターゲットグループ操作など、デプロイに必要なアクションに限定
+  - EC2: Describe 系のみ
 
-    - ECS Execution Role
-    - 目的: タスク起動時に**イメージ取得・ログ出力・Secrets取得**
-    - 主要権限:
-        - ECR 読取: ecr:GetAuthorizationToken, ecr:BatchGetImage
-        - CW Logs 書込: logs:CreateLogStream, logs:PutLogEvents
-        - Secrets 読取: secretsmanager:GetSecretValue（`papyrus/prd/db` 限定）
-        - KMS 復号（必要なら）: kms:Decrypt（SecretsのKMSキー限定）
+- GitHub Actions：
+  - AWS アカウント情報・VPC/サブネット/SG ID は Secrets / Vars で管理
+  - 環境依存の値（リージョン、ECS クラスタ名、ECR リポジトリ名など）はすべて Vars に集約
 
-    - ECS Task Role
-    - 目的: アプリ実行時に外部サービスへアクセス
-    - 主要権限:
-        - SSM パラメータ読取: ssm:GetParameter（`/papyrus/prd/*` 限定）
-        - ※RDSは**SGで許可**するのでIAM権限は不要
-
-- GitHub Actions 
-    - Secrets
-        - `AWS_ACCOUNT_ID`
-        - `AWS_IAM_ROLE_ARN`  (例: `arn:aws:iam::<acct>:role/ECRPowerUser`)
-        - `ECS_TASK_SG_ID`    (例: `sg-xxxxxxxxxxxxxxxxx`)
-        - `PUBLIC_SUBNET_IDS` (例: `["subnet-aaa","subnet-bbb","subnet-ccc"]`)
-        - `VPC_ID`            (例: `vpc-xxxxxxxxxxxx`)
-    - Vars
-        - `AWS_REGION`=`us-west-2`
-        - `CONTAINER_NAME`=`papyrus-app`
-        - `CONTAINER_PORT`=`5000`
-        - `ECR_REPOSITORY`=`nickelth/papyrus-invoice`
-        - `ECS_CLUSTER`=`papyrus-ecs-prd`
-        - `ECS_SERVICE`=`papyrus-task-service`
-        - `TASK_FAMILY`=`papyrus-task`
-    - Permissions
-        - `permissions: { id-token: write, contents: write, pull-requests: write }`
-
-- 開発PC要件：
-  - Python 3.12.3+
-  - jq 1.7+
-  - Git 2.43.0+
-- CloudShell: 
-  - jq 1.7+ 
-  - rsync 3.4.0+ 
-  - terraform 1.13.2+
-  - awscli 2.31.0+
+- CloudShell に AWS CLI / Terraform / jq 等を入れて作業
 
 ### リポジトリ構成
 
 **主要ディレクトリの役割**
+- infra 以下: 
+  - 目的ごとに薄切りでディレクトリ分割。
+  - RDS / 一時 ALB / 監視の IaC を独立して管理。
 
 - `infra/10-rds`: RDS構築用IaC (Terraform)
 - `infra/20-alb`: 一時ALB用IaC (Terraform)
