@@ -115,4 +115,4 @@ RDS エンドポイントやアカウント ID、シークレット値などを�
 
 ### 付録・アーキテクチャ構成図
 
-![AWSアーキテクチャ構成図](../../invoice-aws-architect.drawio.svg)
+![AWSアーキテクチャ構成図](/images/invoice-aws-architect.drawio.png)
