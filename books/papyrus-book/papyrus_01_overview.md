@@ -8,8 +8,8 @@ title: "帳票アプリ Papyrus Invoice 全体概要"
 
 ### はじめに（Purpose）
 
-RDS 上のマスターデータを元に納品書 PDF を生成する、最小構成の B2B ワークフローを構築。
-本プロジェクトでは、インフラのコード化（IaC）、可観測性、証跡運用、CI 連携を重視。
+RDS 上のマスターデータを元に納品書 PDF を生成する、最小構成の B2B ワークフローを構築した。
+本プロジェクトでは、インフラのコード化（IaC）、可観測性、証跡運用、CI 連携を重視する。
 スコープは「ECS/Fargate + RDS + 検証用の一時 ALB」までとし、本番相当の恒久 ALB や SLA 設計は対象外とする。
 
 ### システム構成（Architecture）
@@ -109,55 +109,10 @@ RDS エンドポイントやアカウント ID、シークレット値などを�
 
 ### 今後の拡張方針
 
-* 恒久ALB化の判断基準
-* sslrootcert厳格化
-* 本番SLAとスケール戦略
+- 恒久ALB化の判断基準
+- sslrootcert厳格化
+- 本番SLAとスケール戦略
 
-### 付録：用語集
+### 付録・アーキテクチャ構成図
 
-* ECS/Fargate、TaskDef、TargetGroup、Digest固定、観測の入口…を一行定義
-
-```mermaid
-flowchart TB
-  %% peripherals
-  ECR[(ECR nickelth/papyrus-invoice)]
-  CW[CloudWatch Logs /ecs/papyrus]
-  SM[(Secrets Manager papyrus/prd/db)]
-  SSM[(SSM Parameter /papyrus/prd/auth0/callback_url)]
-
-  %% VPC
-  subgraph VPC["VPC us-west-2"]
-    direction TB
-
-    subgraph PUB["Public Subnets 2a/2b/2c"]
-      direction LR
-      subgraph ALBBOX["ALB Smoke (ephemeral)"]
-        ALB[[ALB HTTP:80]]
-        TG[[Target Group ip:5000]]
-      end
-      ALB -->|forward| TG
-      ALB -. health check: GET /healthz (200-399) .-> TG
-    end
-
-    subgraph APP["Private App Subnets 2a/2b/2c"]
-      ECSsvc["ECS Service (Fargate)\npapyrus-task-service\ndesired=1"]
-    end
-
-    subgraph DB["Private RDS Subnets 2a/2b"]
-      RDS[(RDS PostgreSQL 16)]
-      PG[(Parameter Group rds.force_ssl=1)]
-      PG -.-> RDS
-    end
-  end
-
-  %% flows
-  ECR -->|image digest sha256| ECSsvc
-  SM -->|GetSecretValue| ECSsvc
-  SSM -->|GetParameter| ECSsvc
-  ECSsvc -. PutLogEvents .-> CW
-
-  TG -->|targets ip:5000| ECSsvc
-  ALB -->|/healthz| ECSsvc
-  ALB -->|/dbcheck| ECSsvc
-  ECSsvc -->|TLS 5432| RDS
-```
+![AWSアーキテクチャ構成図](../../invoice-aws-architect.drawio.svg)
