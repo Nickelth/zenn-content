@@ -10,6 +10,8 @@ title: "CI: ECS Deploy（TaskDef更新 → DesiredCount制御）"
 - `desired_count` を入力として受け取り、**タスク数を CI から制御**できるようにする
 - `force-new-deployment` を使い、**ロールバックしやすい単純なローリングデプロイ**に統一する  
   （※Strict な「完全無停止」ではなく、DesiredCount/デプロイ設定に依存）
+- 起動は本ワークフロー（`ecs-deploy.yml`）で `desired-count=1` にして新イメージをデプロイ  
+  停止は別ワークフロー（`ecs-scale.yml`）で `desired-count=0` にしてタスクを全停止
 
 ### 前提（クラスター / サービス）
 
