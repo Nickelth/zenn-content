@@ -1,6 +1,6 @@
 ```mermaid
 flowchart LR
-    Client[利用者] --|HTTP :80|--> ALB[ALB (mlops-api-alb)]
+    Client[利用者] --|"HTTP :80"|--> ALB[ALB (mlops-api-alb)]
     ALB --> TG[Target Group (mlops-api-tg :8000)]
     TG --|:8000|--> ECSsvc[ECS Service (mlops-api-svc)]
     ECSsvc --> Task[TaskDef (Fargate 256/512, FastAPI)]
@@ -81,6 +81,9 @@ flowchart TB
     SVC -->|network_configuration| SUB
     SVC -->|security_groups| TSG
 
+```
+
+```mermaid
 flowchart LR
     S3["aws_s3_bucket.artifacts<br/>bucket = var.bucket_name"]
     V[Versioning: Enabled]
