@@ -1,8 +1,8 @@
 ```mermaid
 flowchart LR
-    Client[利用者] -- "HTTP :80" --> ALB[ALB (mlops-api-alb)]
+    Client[利用者] --|HTTP :80|--> ALB[ALB (mlops-api-alb)]
     ALB --> TG[Target Group (mlops-api-tg :8000)]
-    TG -- ":8000" --> ECSsvc[ECS Service (mlops-api-svc)]
+    TG --|:8000|--> ECSsvc[ECS Service (mlops-api-svc)]
     ECSsvc --> Task[TaskDef (Fargate 256/512, FastAPI)]
     Task -- "pull image" --> ECR[(ECR: <account>.dkr.ecr.<region>.amazonaws.com/<repo>:<tag>)]
     Task -- "read model (optional)" --> S3[(S3 artifacts bucket)]
@@ -33,7 +33,7 @@ flowchart TB
     CID --> ECSMOD
 
     NET -->|alb_sg_id, tasks_sg_id, tg_arn,<br/>public_subnet_ids, log_group_name| ECSMOD
-    ECRMOD -->|bucket_name/arn (出力)| Infra
+    ECRMOD -->|"bucket_name/arn (出力)"| Infra
     ECSMOD -->|cluster/taskdef/service/image_uri| Infra
 ```
 
@@ -68,7 +68,7 @@ flowchart TB
     SUB[data.aws_subnets.default.ids]
     TSG[var.tasks_sg_id]
     CN["container 'api'<br/>port 8000<br/>LOG_JSON=1<br/>MODEL_PATH=/app/models/..."]
-    ECR[ecr repo uri (local.ecr_repo_uri)]
+    ECR["ecr repo uri (local.ecr_repo_uri)"]
     IMG["image = <repo>:<tag>"]
 
     CL --> SVC
