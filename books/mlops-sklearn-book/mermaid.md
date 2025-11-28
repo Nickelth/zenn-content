@@ -1,20 +1,21 @@
 ```mermaid
 flowchart LR
-    Client[利用者] -- "HTTP port 80" --> ALB[ALB (mlops-api-alb)]
-    ALB --> TG[Target Group (mlops-api-tg :8000)]
-    TG --|:8000|--> ECSsvc[ECS Service (mlops-api-svc)]
-    ECSsvc --> Task[TaskDef (Fargate 256/512, FastAPI)]
-    Task -- "pull image" --> ECR[(ECR: <account>.dkr.ecr.<region>.amazonaws.com/<repo>:<tag>)]
-    Task -- "read model (optional)" --> S3[(S3 artifacts bucket)]
+    Client["利用者"] --|HTTP port 80|--> ALB["ALB (mlops-api-alb)"]
+    ALB --> TG["Target Group (mlops-api-tg :8000)"]
+    TG --|:8000|--> ECSsvc["ECS Service (mlops-api-svc)"]
+    ECSsvc --> Task["TaskDef (Fargate 256/512, FastAPI)"]
+    Task --|pull image|--> ECR[(ECR: <account>.dkr.ecr.<region>.amazonaws.com/<repo>:<tag>)]
+    Task --|read model (optional)|--> S3[(S3 artifacts bucket)]
     Task --> CWL[(CloudWatch Logs /mlops/api)]
-    Task -- "egress 0.0.0.0/0" --> Internet[(Internet)]
+    Task --|egress 0.0.0.0/0|--> Internet[(Internet)]
 
-    subgraph AWS[VPC (default)]
-      ALB
-      TG
-      ECSsvc
-      Task
+    subgraph AWS["VPC (default)"]
+        ALB
+        TG
+        ECSsvc
+        Task
     end
+
 ```
 
 ```mermaid
