@@ -1,0 +1,7 @@
+title: "AWS ポートフォリオ - MLOps Sci-kit Learn"
+summary: "Tabular MLをFastAPI+ECS(Fargate)で運用。Terraform/IaC・ヘルスチェック・証跡＆ロールバック付き"
+topics: ["s3", "postgresql", "ecs", "aws", "terraform", "githubactions", "cloudwatch", "devops", "portfolio"]
+published: false
+price: 0
+chapters:
+  - mlops_01_overview.md
