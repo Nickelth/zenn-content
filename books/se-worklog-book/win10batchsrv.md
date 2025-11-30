@@ -1,12 +1,8 @@
 ---
 title: "【業務紹介】Windowsバッチ運用PJ"
-emoji: "🧭"
-type: "idea"
-topics: ["powershell","windows","cli","batch"]
-published: false
 ---
 
-## ③Windowsバッチサーバー運用記事
+## Windowsバッチサーバー運用記事
 
 ### 抄録（150–200字）
 
