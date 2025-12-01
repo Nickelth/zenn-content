@@ -1,9 +1,5 @@
 ---
-title: "【業務紹介】PHPサイト/Ubuntuサーバー保守PJ"
-emoji: "🧭"
-type: "idea"
-topics: ["ubuntu","bash","postgresql","linux","php","apache","cli"]
-published: false
+title: "PHPサイト/Ubuntuサーバー保守PJ"
 ---
 
 ## 社内向けPHPサイト/Ubuntuサーバ運用記事
