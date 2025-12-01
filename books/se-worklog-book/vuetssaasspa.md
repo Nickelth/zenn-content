@@ -1,12 +1,8 @@
 ---
-title: "【業務紹介】Saas SPA 保守PJ"
-emoji: "🧭"
-type: "idea"
-topics: ["typescript","aws","vue","docker","ecs","postgresql","rds"]
-published: false
+title: "製造業向けSaas SPA 保守PJ"
 ---
 
-## 製造業向けSaas SPA
+## 製造業向けSaas SPA 保守PJ
 
 ### 抄録
 
