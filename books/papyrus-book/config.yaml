@@ -10,6 +10,7 @@ chapters:
   - papyrus_04_ecs-scale
   - papyrus_05_alb-smoke
   - papyrus_06_audit-evidence
+  - papyrus_14_rds_snapshot
   - papyrus_07_infra-rds
   - papyrus_08_infra-alb
   - papyrus_09_infra-monitor
