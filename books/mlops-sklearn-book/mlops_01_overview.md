@@ -1,6 +1,7 @@
 ---
 title: "MLOps Sci-kit Learn 全体概要"
 ---
+
 ## MLOps scikit-learn リポジトリ
 
 @[card](https://github.com/Nickelth/mlops-sklearn-portfolio)
@@ -52,3 +53,12 @@ CI で学習・評価・配布（S3/ECR）を自動化し、ダイジェスト�
 - AWS 上は既定の VPC/サブネットを利用し、最小構成で開始する。
 
 ### リポジトリ構成
+
+```
+api/  src/  models/  artifacts/  logs/  tests/  docs/
+```
+
+### 今後の拡張方針
+- Terraform を CI に組み込み、**構築 → 疎通 → 破壊** を自動で回す。  
+- 負荷試験（k6）を追加し、p90/p95・RPS・エラー率を evidence に残す。  
+- `/reload` の切替時間を可視化し、workers 数の違いを短評で記録する。
