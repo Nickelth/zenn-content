@@ -43,8 +43,8 @@ AWSを使用したポートフォリオ用アプリケーションの構想を�
 
 ### 関連記事 / Articles
 
-@[card](https://zenn.dev/books/papyrus-book)
-@[card](https://zenn.dev/articles/reportapp03docker)
-@[card](https://zenn.dev/articles/reportapp02auth0)
-@[card](https://zenn.dev/articles/reportapp01flask)
+@[card](https://zenn.dev/nickelth/books/papyrus-book)
+@[card](https://zenn.dev/nickelth/articles/reportapp03docker)
+@[card](https://zenn.dev/nickelth/articles/reportapp02auth0)
+@[card](https://zenn.dev/nickelth/articles/reportapp01flask)
 
