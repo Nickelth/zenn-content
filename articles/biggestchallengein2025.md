@@ -1,17 +1,22 @@
 ---
 title: "AWSアーキテクチャ作成振り返り"
-emoji: "⌨"
+emoji: "💭"
 type: "idea"
-topics: ["aws", "terraform", "ecs", "rds", "s3"]
-published: false
+topics: ["aws", "terraform", "ecs", "rds", "githubactions"]
+published: true
 ---
 
 ## 帳票出力アプリ
+
+@[card](https://github.com/Nickelth/papyrus-invoice)
 
 ### 目的 / Purpose
 
 過去に業務で携わった「帳票出力アプリ」について、
 資材モダナイズ+継続保守・監視を目標にリメイクした。
+
+![帳票出力画面.gif](https://storage.googleapis.com/zenn-user-upload/9d9814f572f3-20250724.gif)
+*動作イメージ*
 
 ### 背景 / Context
 
@@ -32,7 +37,9 @@ AWSを使用したポートフォリオ用アプリケーションの構想を�
 
 ### 拡張可能性 / Expandable
 
-- ALBが高価である都合上、本番環境でアプリ起動・動作確認は実行しなかった。経済的余裕が出たのちに実践してみたい。
+- ALBが高価である都合上、疎通テストはTerraformによる一時ALB作成→疎通→破壊にとどめた。
+    本PJではAWSアーキテクチャ構築・監査をメインとしているため、
+    フロントエンドの本番環境でアプリ起動・動作確認は割愛した。
 
 ### 関連記事 / Articles
 
