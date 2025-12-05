@@ -36,7 +36,7 @@ Microsoft の公式ガイドや技術ブログでは、サービスを停止・�
 
 画像は、`Stop-Service -Name Schedule -Force`を実行してコマンドでタスクスケジューラを止めようとしたもの。
 
-<画像>
+![Stop-Service -Name Schedule -Force](/images/Stop-Service%20-Name%20Schedule%20-Force.png)
 
 以下は、公式ドキュメントや主要なブログから抜粋した情報。
 
