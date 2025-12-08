@@ -2,7 +2,7 @@
 title: "帳票出力Webアプリケーション開発/保守PJ"
 ---
 
-## 製造業向け帳票出力Webアプリケーション
+## 製造業向け製版システムWebアプリケーション
 
 ### 概要
 
@@ -12,26 +12,21 @@ title: "帳票出力Webアプリケーション開発/保守PJ"
 
 #### 目的
 
-
+生産管理・各種帳票作成のワークフローのデジタル化
 
 #### 構成
 
-
-
+Java ＋ JavaScript ＋ MySQL ＋ MyBatis ＋ AWS EC2 ＋ AWS RDS ＋ AWS S3
 
 ### 案件情報
 
 期間： 2023/08 〜 2024/11
 
-体制： PM 1名、PL2名、SE 3~4名で構成された4〜7名の受託開発チーム。
+体制： PM 1名、PL2名、SE 3~4名で構成された4〜7名の受託開発チーム。(時期により変動)
 
 自分の役割： 詳細設計 / 実装 / 運用保守 など
 
 ### 担当業務
-
-箇条書きで3〜7個くらい
-
-「何をやったか」が一目で分かるレベルで具体的に書く
 
 - Java（JDK17）を用いた帳票出力機能の新規開発（PDF発注書）
   - Service層／Repository層の実装、画面連携、SQL処理の開発
@@ -41,14 +36,11 @@ title: "帳票出力Webアプリケーション開発/保守PJ"
 
 ### 技術スタック
 
-言語・FW
+**言語・FW:** Java, JavaScript, MySQL, XML, MyBatis
 
-インフラ（AWSならサービス名レベル）
+**インフラ:** AWS EC2, RDS, S3
 
-ツール（CI/CD、監視など）
-
-- **言語・DB等**：Java (JDK17), JavaScript, MySQL 8, XML
-- **ツール類**：A5:SQL Mk-2, TortoiseSVN, WinMerge, LibreOffice, STS4, Redmine, Everything
+**ツール類:** A5:SQL Mk-2, TortoiseSVN, WinMerge, LibreOffice, STS4, Redmine, Everything
 
 ### Key ADR（重要な意思決定）2〜3個
 
