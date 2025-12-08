@@ -1,8 +1,64 @@
 ---
-title: "製造業向けSaas SPA 保守PJ"
+title: "製造現場向け業務効率化SaaSプラットフォーム 運用保守PJ"
 ---
 
-## 製造業向けSaas SPA 保守PJ
+## 製造現場向け業務効率化SaaS SPA
+
+### 概要
+
+#### ドメイン
+
+製造現場向け業務効率化SaaSプラットフォーム（設備管理・図面管理・不良記録・日報管理・作業報告書 等）
+
+#### 目的
+
+生産管理・各種帳票作成のワークフローのデジタル化
+
+#### 構成
+
+TypeScript ＋ Vue.js ＋ Node.js ＋ Nest.js ＋ Rest API ＋ Prisma ＋ Aurora(PostgreSQL) ＋ ECS Fargate ＋ ECR ＋ Code Pipeline / Code Commit / Code Build ＋ S3 ＋ Docker Desktop
+
+### 案件情報
+
+期間： 2024/08 〜 現在
+
+体制： PM 1名、PL2名、SE 3~4名で構成された4〜7名の受託開発チーム。(時期により変動)
+
+自分の役割： 詳細設計 / 実装 / 運用保守 など
+
+### 担当業務
+
+- フロントエンド／バックエンドの改修（`Vue.js` / `Nest.js` / `TypeScript`）
+- Nest.jsの脆弱性対応（v10 → v11）に伴う依存パッケージの更新、および破壊的変更点への対応（DI構成、Decoratorなど）
+- CI/CDパイプライン（CodeBuild / CodeDeploy / CodePipeline）の保守・改修
+  - `buildspec.yaml`の修正、Dockerビルド最適化、Node.jsの依存関係管理
+- 開発/本番DB方向へのリモートポートフォワーディング用の`PowerShell`の改修
+- AWS環境での運用・保守対応
+  - S3, CloudFrontによるログ監視、静的コンテンツ管理
+  - CloudWatch Logsを用いたFargate上のDockerログ監視
+  - Amazon Inspectorによるセキュリティチェックおよび修正対応
+  - ECRのイメージ管理、CodePipeline連携による自動デプロイの運用
+  - 障害時のDB復旧対応（Aurora + CloudFront + EventBridge）
+  - タスク定義の更新(`taskdef.json.tpl`)
+
+- その他業務
+  - 顧客データの復元・物理削除対応（S3 / PostgreSQL）
+  - Auth0を利用した認証処理に関するパフォーマンス改善対応
+  - Prisma バージョンアップ（v6 → v7）に伴う不整合エラー解消対応
+  - フロントエンドのレスポンシブデザイン含むUI修正（CSS / Vue.js）
+
+### 技術スタック
+
+**言語・FW:** TypeScript, PostgreSQL, Vue.js, PowerShell, CSS
+
+**インフラ:** AWS ECS Fargate, ECR, Code Pipeline / Code Commit / Code Build, Aurora, S3
+
+**ツール類:** VSCode, Docker Desktop, A5:SQL Mk-2, Git, WinMerge, Redmine
+
+
+
+
+### Key ADR（重要な意思決定）2〜3個
 
 ### 概要
 

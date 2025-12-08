@@ -26,9 +26,9 @@ Windows Server ＋ タスク スケジューラ ＋ バッチスクリプト（`
 
 期間：2024/12 〜 現在  
 
-体制：PM 1名、SE 1〜3名からなる 2〜4名の受託開発チーム。  
+体制：PM 1名、SE 1〜3名からなる 2〜4名の受託開発チーム。(時期により変動)
 
-役割：Windows バッチ／PowerShell の改修・調査・日次運用、障害対応など、バッチサーバの運用保守全般を担当。  
+自分の役割：Windows バッチ／PowerShell の改修・調査・日次運用、障害対応など、バッチサーバの運用保守全般を担当。  
 ※ Ruby 部分は保守契約の対象外のため、調査・影響範囲の把握のみにとどめた。
 
 ### 担当業務
@@ -39,11 +39,11 @@ Windows Server ＋ タスク スケジューラ ＋ バッチスクリプト（`
 
 ### 技術スタック
 
-**言語・スクリプト:** Windows バッチ, PowerShell  
+**言語・スクリプト:** Windows バッチ, PowerShell
 
-**OS:** Windows Server  
+**OS:** Windows Server
 
-**ツール:** VS Code, タスク スケジューラ, Windows Virtual Desktop
+**ツール:** VS Code, サクラエディタ, タスク スケジューラ, Windows Virtual Desktop
 
 ### Key ADR
 
