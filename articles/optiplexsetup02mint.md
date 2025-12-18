@@ -45,7 +45,8 @@ sudo powertop --auto-tune
 sudo reboot
 ```
 
-### 2. 画面比を1920x1980(FullHD)にする
+### 2. 画面比を1920x1080(FHD)にする
+
 再起動時も引き継ぐ設定にするために、`.xprofile`に書き込む。
 
 ```bash
