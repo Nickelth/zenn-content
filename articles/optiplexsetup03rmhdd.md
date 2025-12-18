@@ -74,15 +74,15 @@ dmesg | grep -i 'nvme\|ssd\|sda'
 ### 2. 取り外し方法（画像付き）
 
 箱のフタを開ける
-![](https://storage.googleapis.com/zenn-user-upload/263730c2bd46-20250808.jpg)
+![Open the Box](https://storage.googleapis.com/zenn-user-upload/263730c2bd46-20250808.jpg)
 
 HDDのロックを解除する
-![](https://storage.googleapis.com/zenn-user-upload/72238ced4ce9-20250808.png)
+![Unlock HDD](https://storage.googleapis.com/zenn-user-upload/72238ced4ce9-20250808.png)
 
 プラグをHDDから抜く
 
 取り外しが終わった様子
-![](https://storage.googleapis.com/zenn-user-upload/2f6423d7f905-20250809.jpg)
+![Removed](https://storage.googleapis.com/zenn-user-upload/2f6423d7f905-20250809.jpg)
 
 #### 参考にした動画
 

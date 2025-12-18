@@ -12,7 +12,7 @@ published: true
 
 昔SIerにて、以下の構築の案件に関わったことがある。
 
-![](https://storage.googleapis.com/zenn-user-upload/5ed119463edb-20250722.png)
+![Legacy Architecture](https://storage.googleapis.com/zenn-user-upload/5ed119463edb-20250722.png)
 
 この帳票出力アプリの構築では、
 ユーザがJavaScript UIの画面に入力した値をバックエンド側で処理し,
@@ -32,7 +32,7 @@ Python + Postgres の開発環境を作成済み
 
 また、WSL上でVSCodeを起動できるようにしている。
 
-![](https://storage.googleapis.com/zenn-user-upload/7a496e42cdd7-20250724.png)
+![Modern Architecture](https://storage.googleapis.com/zenn-user-upload/7a496e42cdd7-20250724.png)
 
 - アプリ側は　Python + Flask + Jinja2 + PostgreSQL（※ORMはSQLAlchemyでもいいし、生でもいい）
 - 帳票生成ロジックは　入力HTML → Flask（処理&テンプレート）→ HTML（Jinja2） → weasyprint → PDF

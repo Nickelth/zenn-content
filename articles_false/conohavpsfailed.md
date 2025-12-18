@@ -50,8 +50,8 @@ iptables/nftablesやufwの設定差分とログ抜粋
 
 #### VPSでの失敗談
 
-![](https://storage.googleapis.com/zenn-user-upload/e1a701a3b638-20250727.png)
-![](https://storage.googleapis.com/zenn-user-upload/9d45585892e0-20250727.png)
+![1](https://storage.googleapis.com/zenn-user-upload/e1a701a3b638-20250727.png)
+![2](https://storage.googleapis.com/zenn-user-upload/9d45585892e0-20250727.png)
 「毎時1.9円」「シャットダウン中は課金されない」「UIが日本語」という魅力的な内容だったため契約して本番環境にしようとした結果
 
 - 「ConoHa」で検索した結果、VPSではなく「WING」という全く別のものを契約してしまった
@@ -64,11 +64,11 @@ iptables/nftablesやufwの設定差分とログ抜粋
 
 ### 1
 
-![](https://storage.googleapis.com/zenn-user-upload/ee2d5819bc12-20250818.png)
+![3](https://storage.googleapis.com/zenn-user-upload/ee2d5819bc12-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/93b8c26916ac-20250818.png)
+![4](https://storage.googleapis.com/zenn-user-upload/93b8c26916ac-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/ade100c010b4-20250818.png)
+!5[](https://storage.googleapis.com/zenn-user-upload/ade100c010b4-20250818.png)
 
 :::details /var/log/auth.log
 
@@ -88,26 +88,26 @@ $ tail -f /var/log/auth.log
 
 :::
 
-![](https://storage.googleapis.com/zenn-user-upload/fdfc7c464cb9-20250818.png)
+![6](https://storage.googleapis.com/zenn-user-upload/fdfc7c464cb9-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/c553e2eeb87a-20250818.png)
+![7](https://storage.googleapis.com/zenn-user-upload/c553e2eeb87a-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/d0fd329fec7a-20250818.png)
+![8](https://storage.googleapis.com/zenn-user-upload/d0fd329fec7a-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/e1542f1227a2-20250818.png)
+![9](https://storage.googleapis.com/zenn-user-upload/e1542f1227a2-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/3f6c2859561e-20250818.png)
-![](https://storage.googleapis.com/zenn-user-upload/8a46ebfe6872-20250818.png)
+![10](https://storage.googleapis.com/zenn-user-upload/3f6c2859561e-20250818.png)
+![11](https://storage.googleapis.com/zenn-user-upload/8a46ebfe6872-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/e0869363689f-20250818.png)
-![](https://storage.googleapis.com/zenn-user-upload/bae9c57422a0-20250818.png)
+![12](https://storage.googleapis.com/zenn-user-upload/e0869363689f-20250818.png)
+![13](https://storage.googleapis.com/zenn-user-upload/bae9c57422a0-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/c0a47c01827a-20250818.png)
-![](https://storage.googleapis.com/zenn-user-upload/300939be312a-20250818.png)
+![14](https://storage.googleapis.com/zenn-user-upload/c0a47c01827a-20250818.png)
+![15](https://storage.googleapis.com/zenn-user-upload/300939be312a-20250818.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/a8aa2f93d031-20250818.png)
-![](https://storage.googleapis.com/zenn-user-upload/5fa1febabb10-20250818.png)
-![](https://storage.googleapis.com/zenn-user-upload/8e665f77d4c4-20250818.png)
+![16](https://storage.googleapis.com/zenn-user-upload/a8aa2f93d031-20250818.png)
+![17](https://storage.googleapis.com/zenn-user-upload/5fa1febabb10-20250818.png)
+![18](https://storage.googleapis.com/zenn-user-upload/8e665f77d4c4-20250818.png)
 
 ## 0. まず結論（TL;DR）
 
@@ -267,7 +267,7 @@ tcpdump -i eth0 port 22
 
 ---
 
-# メタ（執筆メモ）
+## メタ（執筆メモ）
 
 - スクショ差し込み位置：各セクション末に「※ここに〇〇のスクショ」コメントを入れておくと編集が楽。
 - コードブロックは**すべてコピペで動く形**に統一。

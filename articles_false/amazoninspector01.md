@@ -23,7 +23,7 @@ published: false
 ### A. package.jsonいじれば治るパターン
 
 一番オーソドックスなパターン<br>
-![](https://storage.googleapis.com/zenn-user-upload/30d537ea8e95-20250715.png)
+![対処パターンA](https://storage.googleapis.com/zenn-user-upload/30d537ea8e95-20250715.png)
 
 - `npm outdated`で該当パッケージ調査
 - `npm list`で依存関係チェック
@@ -42,7 +42,7 @@ published: false
 ### B. まぎらわしいパターン
 
 執筆時点ではおそらく`cross-spawn`のみ該当<br>
-![](https://storage.googleapis.com/zenn-user-upload/4072e373672e-20250715.png)
+![対処パターンB](https://storage.googleapis.com/zenn-user-upload/4072e373672e-20250715.png)
 
 Aと同種かと思いきや**AWSのサーバーにプリインストールされているパッケージをスキャン**してそいつに対して怒っています。<br>
 どこ見とんねん
@@ -66,7 +66,7 @@ RUN npm install npm@9 cross-spawn@7.0.5 -y
 
 ### C. OSをアップデートすれば治るパターン
 
-![](https://storage.googleapis.com/zenn-user-upload/2edd19b09cb9-20250715.png)<br>
+![対処パターンC](https://storage.googleapis.com/zenn-user-upload/2edd19b09cb9-20250715.png)<br>
 Bと同じくDockerfileにコマンドを記述してからデプロイ
 
 ```bash: Dockerfile
@@ -82,8 +82,11 @@ RUN apt-get update && apt-get upgrade -y
 
 ### D. 対策？ そんなものはない　震えて眠れ
 
-パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
-![](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
+~~パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ~~
+
+当該修正パッチはリリースされました。
+
+![Debian](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
 
 ......一応パターンCに`apt list --upgradable`を差し込んであげる方法がある
 

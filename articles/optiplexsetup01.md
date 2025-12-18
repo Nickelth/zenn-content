@@ -39,21 +39,21 @@ published: true
 背面に青色のレバーがあるのでスライド
 
 開けた状態
-![](https://storage.googleapis.com/zenn-user-upload/263730c2bd46-20250808.jpg)
+![Open the Box](https://storage.googleapis.com/zenn-user-upload/263730c2bd46-20250808.jpg)
 
 HDDのロックを解除する
-![](https://storage.googleapis.com/zenn-user-upload/72238ced4ce9-20250808.png)
+![Unlock HDD](https://storage.googleapis.com/zenn-user-upload/72238ced4ce9-20250808.png)
 
 慎重に外す。プラグが戻せるなら外したほうがいい
-![](https://storage.googleapis.com/zenn-user-upload/186a7f3a5674-20250808.jpg)
+![Remove Plug](https://storage.googleapis.com/zenn-user-upload/186a7f3a5674-20250808.jpg)
 
 SSD挿込口が見えている状態
-![](https://storage.googleapis.com/zenn-user-upload/98e7bd3bb161-20250808.jpg)
+![SSD Insertion](https://storage.googleapis.com/zenn-user-upload/98e7bd3bb161-20250808.jpg)
 
 SSDを挿す。斜め45度に挿してカチッと音がするまで押し込む
 
 M.2ネジと元々合ったネジでSSDを挟むようにしてM.2ネジを挿す
-![](https://storage.googleapis.com/zenn-user-upload/0bd15f3835ea-20250808.jpg)
+![M.2](https://storage.googleapis.com/zenn-user-upload/0bd15f3835ea-20250808.jpg)
 
 SSDを挿し終わったのでPCを組み立て戻す
 

@@ -1,0 +1,20 @@
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD024": false,
+    "MD033": false,
+    "MD034": true,
+    "MD060": false
+  },
+  "ignores": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/articles/setvarvariable.md",
+    "**/papyrus_mermaid.md",
+    "**/books/se-worklog-book/README.md",
+    "**/articles_false/**"
+  ]
+}

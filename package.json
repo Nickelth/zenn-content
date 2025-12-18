@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "lint:md": "markdownlint-cli2 \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/build/**\"",
-    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/build/**\"",
+    "lint:md": "markdownlint-cli2 \"**/*.md\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\"",
     "format:md": "prettier -w \"**/*.md\""
   },
   "dependencies": {

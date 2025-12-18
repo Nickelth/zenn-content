@@ -8,7 +8,7 @@ published: true
 
 > Flaskは1ファイルで済むって言ったやつ出てこい
 
-### 0. はじめに
+## はじめに
 
 本番環境に公開するためにAuth0入れてみたけどapp.pyが肥大化して詰んだ。
 当初はAuth0をapp.pyに直接投入していたが、ルーティングぐちゃぐちゃになってページが開けなくなったので泣く泣く分割。
@@ -124,22 +124,22 @@ def create_app():
 
 Auth0にログインする。アカウントがなければ作る。
 「使用を開始」>「アプリケーションの開始」をクリック
-![](https://storage.googleapis.com/zenn-user-upload/95ffc2ebc0ed-20250728.png)
+![Login Auth0](https://storage.googleapis.com/zenn-user-upload/95ffc2ebc0ed-20250728.png)
 
 「一般的なWebアプリケーション」を選択する。
-![](https://storage.googleapis.com/zenn-user-upload/d02f2823ef98-20250728.png)
+![General Web App](https://storage.googleapis.com/zenn-user-upload/d02f2823ef98-20250728.png)
 
 `Python`を選択
-![](https://storage.googleapis.com/zenn-user-upload/cc0a2b8b8fbd-20250728.png)
+![Select "Python"](https://storage.googleapis.com/zenn-user-upload/cc0a2b8b8fbd-20250728.png)
 
 「クイックスタート」を選び下へスクロール
-![](https://storage.googleapis.com/zenn-user-upload/ac855e86959c-20250728.png)
+![Quick Start](https://storage.googleapis.com/zenn-user-upload/ac855e86959c-20250728.png)
 
 「Configure your`.env` file」をコピーして`APP_SECRET_KEY`以外を`.env`に貼りつけ
-![](https://storage.googleapis.com/zenn-user-upload/d1e36c993fb8-20250728.png)
+![Configure Your ENV File](https://storage.googleapis.com/zenn-user-upload/d1e36c993fb8-20250728.png)
 
 「設定」>「アプリケーションのURI」欄に入力
-![](https://storage.googleapis.com/zenn-user-upload/5734ab0c2e3d-20250730.png)
+![Preference -> AppURI](https://storage.googleapis.com/zenn-user-upload/5734ab0c2e3d-20250730.png)
 
 ```plaintext:Configuration URI
 # 許可するコールバックURL
@@ -151,9 +151,9 @@ http://localhost:5000/logout
 ```
 
 そして...Auth0と連携成功
-![](https://storage.googleapis.com/zenn-user-upload/3a379312c7f3-20250730.png)
+![Connecting to Auth0](https://storage.googleapis.com/zenn-user-upload/3a379312c7f3-20250730.png)
 
-![](https://storage.googleapis.com/zenn-user-upload/270816d67e11-20250729.png)
+![Warning About Connecting to Google Account](https://storage.googleapis.com/zenn-user-upload/270816d67e11-20250729.png)
 _Googleアカウントと連携していると警告が出る(本番up禁止!)_
 
 ターミナルで`python3 -c 'import secrets; print(secrets.token_urlsafe(32))'`を実行し、その結果を`.env`の`FLASK_SECRET_KEY=`に貼りつけ

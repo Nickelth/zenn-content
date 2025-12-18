@@ -6,12 +6,15 @@ topics: ["cmd", "windows", "cli"]
 published: true
 ---
 
-### 0. はじめに
+## はじめに
 
 業務で普段使いするバッチプログラムをまとめて書いてみた。
+
 `AND`と`OR`と`break`と`continue`できないので不満が多い言語
 
-#### 10分後の時刻を取得する処理
+`AND`
+
+### 10分後の時刻を取得する処理
 
 現在時刻を分に直し、10分足して剰余演算する処理
 バッチは言語仕様によりif文が煩雑になりがち
@@ -37,7 +40,7 @@ set starttime=!hh!:!mm!
 echo %starttime%
 ```
 
-#### タスクスケジューラに新規タスクを登録する処理
+### タスクスケジューラに新規タスクを登録する処理
 
 `schtasks /create`コマンド
 これ自体は普通の処理
@@ -57,7 +60,7 @@ schtasks /create /tn "MyTask" ^
 
 ↑`/tr`の解釈をコマンドラインに任せることで安定して動作できる
 
-#### コマンド実行時にエラーメッセージがでる場合はスルーする
+### コマンド実行時にエラーメッセージがでる場合はスルーする
 
 ```bat:batchfile
 @echo off
@@ -75,7 +78,7 @@ if !errorlevel! equ 0 (
 
 `1>nul`にすると成功メッセージをスルーできる。
 
-#### FOR文の書き方 + if文
+### FOR文の書き方 + if文
 
 残念ながらJavaのstreamやforEach,拡張for文に当たるものはない。
 基本for文のみ解説する。
@@ -96,7 +99,54 @@ for /f "usebackq tokens=*" %%f in ("C:\User\sample.csv") do (
 `"C:\User\result.csv"`にコピーする処理。
 `%%f`は変数。
 
-#### おわり
+### if-else文をスマートに記述する
+
+```bat:batchfile
+@echo off
+setlocal enabledelayedexpansion
+
+cmd "dummy" &&  (
+    // process A
+    ver >nul
+) || (
+    // process B
+)
+```
+
+`cmd "dummy"`が成功 ⇒ `process A` が走る
+`cmd "dummy"`が失敗 ⇒ `process B` が走る
+
+:::message
+`A && B`: A が成功（ERRORLEVEL 0）なら B を実行
+`A || B`: A が失敗（ERRORLEVEL 0以外）なら B を実行
+:::
+
+`ver >nul`は**必ず成功するダミーコマンド**
+
+> ver: Windowsのバージョン表示コマンド / 通常、ERRORLEVEL 0
+> ver >nulで「必ず成功するコマンドの表示を捨てる」
+
+`ver >nul`がない場合
+
+```bat:batchfile
+@echo off
+setlocal enabledelayedexpansion
+
+cmd "dummy" &&  (
+    // process A
+) || (
+    // process B
+)
+```
+
+:::message
+`cmd "dummy"`が失敗⇒`process A`が失敗⇒`process B`を実行
+:::
+
+このように、
+`process A`の成否にかかわらず`process B`が実行されてしまう。
+
+### おわり
 
 ```bat
 cipher /w:C:\
@@ -104,6 +154,6 @@ cipher /w:C:\
 
 ドライブ上の未使用領域（削除済みファイルの断片が残る可能性のある領域）を、00→FF→ランダムの順で3回上書き
 
-#### Windowsバッチの記事
+### Windowsバッチの記事
 
 @[card](https://zenn.dev/nickelth/articles/setvarvariable)

@@ -344,7 +344,7 @@ Gunicornの起動パラメータは `docker-compose.yml` の `command:` もし�
 
 [^1]: 長時間処理ならジョブキューやLambda化も検討
 
-**.envファイルの例（Gunicorn部分）**
+#### 3.3 .envファイルの例（Gunicorn部分）
 
 ```env
 GUNICORN_WORKERS=2
