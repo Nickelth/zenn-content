@@ -19,21 +19,25 @@ published: true
 その後、`ffmpeg`コマンドの存在を知り利用。うまくgif変換ができた。
 
 ### 1. ffmpegコマンド使用方法
+
 ```bash
 sudo apt install ffmpeg -y
 ```
 
 Zennに今すぐ載せる用(変換したい動画の名前を`input.mp4`にする)
+
 ```bash:高画質版
 ffmpeg -i input.mp4 -vf "fps=15,scale=800:-1:flags=lanczos,palettegen" -y palette.png
 ffmpeg -i input.mp4 -i palette.png -filter_complex "fps=15,scale=800:-1:flags=lanczos[x];[x][1:v]paletteuse" -y output.gif
 ```
+
 `mp4→png→gif`というように2段階工程(パレット生成＆適用方式)にすることで高画質を実現している。
 `flags=lanczos,palettegen`のフラグを立てて高画質を担保している(らしい)
 
 ```bash:軽量版
 ffmpeg -i input.mp4 -vf "fps=15,scale=800:-1:flags=lanczos" output.gif
 ```
+
 `scale`で画面縦幅(px)を調整できる。縦横比維持で横幅は自動調整される。
 
 ### 2.補足:PDF関係の変換コマンド
@@ -55,8 +59,10 @@ convert *.jpg output.pdf
 `convert`を`PDF→PNG`に使用することもできるが、処理速度やページ指定などの便利機能の面で`pdfppm`に軍配が上がる。
 
 ### 3. おわりに
+
 オフライン環境で変換ツールが使用できる`Linux`はまだまだ奥が深いと感じた。オンラインにアップロードしないのでセキュリティにも優しい。PDFが絡むものは使用頻度が高いので家族にもお勧めしたい。
 
 ### 4.参考文献
+
 @[card](https://namileriblog.com/mac/ffmpeg)
 @[card](https://qiita.com/saka212/items/fae883a4030857f41c1c)

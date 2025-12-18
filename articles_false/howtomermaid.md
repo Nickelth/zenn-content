@@ -8,10 +8,10 @@ published: false
 
 ## Mermaid 使い方の超要約
 
-* 3バッククオートでコードブロック、言語は `mermaid`。
-* 最初の行が図の種類（`flowchart` とか `sequenceDiagram`）。
-* 方向は `flowchart TD` みたいに指定（TB/TD/LR/RL/BT）。
-* オンラインの Mermaid Live Editor で即実行。 ([mermaid.js.org][1])
+- 3バッククオートでコードブロック、言語は `mermaid`。
+- 最初の行が図の種類（`flowchart` とか `sequenceDiagram`）。
+- 方向は `flowchart TD` みたいに指定（TB/TD/LR/RL/BT）。
+- オンラインの Mermaid Live Editor で即実行。 ([mermaid.js.org][1])
 
 ### 0) ローカルクイックスタート
 
@@ -19,13 +19,13 @@ published: false
 
 1. VSCodeで拡張機能を3つ導入。
 
-https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid
-https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting
-https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced
+<https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid>
+<https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting>
+<https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced>
 
-2. ファイルの拡張子を`.md`にする。
+1. ファイルの拡張子を`.md`にする。
 
-3. ファイルをVSCodeで開き、 Ctrl+Shift+Vでダイアグラムがプレビューされる。
+2. ファイルをVSCodeで開き、 Ctrl+Shift+Vでダイアグラムがプレビューされる。
 
 ---
 
@@ -46,9 +46,9 @@ flowchart TD
   C -->|SQL| X
 ```
 
-* 角括弧で形変わる：`[長方形]`、`(丸)`、`{ひし形}`、`((円))`、`[(シリンダー=DB)]` など。
-* サブグラフは `subgraph ... end`。
-* エッジラベルは `-- 文言 -->`。 ([docs.mermaidchart.com][2])
+- 角括弧で形変わる：`[長方形]`、`(丸)`、`{ひし形}`、`((円))`、`[(シリンダー=DB)]` など。
+- サブグラフは `subgraph ... end`。
+- エッジラベルは `-- 文言 -->`。 ([docs.mermaidchart.com][2])
 
 ---
 
@@ -76,8 +76,8 @@ sequenceDiagram
   end
 ```
 
-* `actor/participant`、`alt/else/end`、`rect`、`note`、`loop` などが使える。
-* `end` という単語は一部環境で衝突するので必要なら括弧などで囲え、という注意がある。 ([docs.mermaidchart.com][3])
+- `actor/participant`、`alt/else/end`、`rect`、`note`、`loop` などが使える。
+- `end` という単語は一部環境で衝突するので必要なら括弧などで囲え、という注意がある。 ([docs.mermaidchart.com][3])
 
 ---
 
@@ -99,7 +99,7 @@ classDiagram
   User "1" --> "*" Session : owns
 ```
 
-* 可視性 `+/-/#`、関連 `"1" -- "*"`, 継承 `--|>`、実装 `..|>` などが基本。 ([mermaid.js.org][4])
+- 可視性 `+/-/#`、関連 `"1" -- "*"`, 継承 `--|>`、実装 `..|>` などが基本。 ([mermaid.js.org][4])
 
 ---
 
@@ -116,7 +116,7 @@ stateDiagram
   Error --> Idle : reset
 ```
 
-* 初期 `[∗]`、終端 `[∗]`。サブ状態も書ける。 ([mermaid.js.org][4])
+- 初期 `[∗]`、終端 `[∗]`。サブ状態も書ける。 ([mermaid.js.org][4])
 
 ---
 
@@ -138,7 +138,7 @@ erDiagram
   }
 ```
 
-* 関連の多重度 `||--o{` など。テーブル定義風の属性記述ができる。 ([mermaid.js.org][4])
+- 関連の多重度 `||--o{` など。テーブル定義風の属性記述ができる。 ([mermaid.js.org][4])
 
 ---
 
@@ -157,7 +157,7 @@ gantt
   IaC整備        :b1, 2025-10-03, 5d
 ```
 
-* `dateFormat`、`after` 参照が便利。 ([mermaid.js.org][4])
+- `dateFormat`、`after` 参照が便利。 ([mermaid.js.org][4])
 
 ---
 
@@ -174,7 +174,7 @@ journey
     ダッシュボード表示: 4: ユーザー
 ```
 
-* 数字は満足度。プレゼン用の即席図に良い。 ([mermaid.js.org][4])
+- 数字は満足度。プレゼン用の即席図に良い。 ([mermaid.js.org][4])
 
 ---
 
@@ -249,9 +249,9 @@ gitGraph
 
 ### 12) 要件図・クアドラントなど（requirementDiagram / quadrantChart ほか）
 
-* 要件図は `requirementDiagram`、優先度と検証手段を整理するのに使える。
-* クアドラントは `quadrantChart`。2軸マトリックスを一撃で描ける。
-* ただし対応状況はレンダラやバージョン依存あり。使う前に公式の「Diagram Syntax」一覧で生存確認してから突撃。C4やSankey等は注意書き付き。 ([mermaid.js.org][4])
+- 要件図は `requirementDiagram`、優先度と検証手段を整理するのに使える。
+- クアドラントは `quadrantChart`。2軸マトリックスを一撃で描ける。
+- ただし対応状況はレンダラやバージョン依存あり。使う前に公式の「Diagram Syntax」一覧で生存確認してから突撃。C4やSankey等は注意書き付き。 ([mermaid.js.org][4])
 
 ---
 
@@ -262,8 +262,8 @@ gitGraph
 %%{init: {'theme': 'forest'}}%%  %% エディタや埋め込みで初期設定
 ```
 
-* `%%{init: ...}%%` でテーマや設定を上書き。
-* ノードやエッジのスタイル変更は `style id fill:#eee,stroke:#333` みたいに書く。細かいスタイルは SVG 寄りの指定。 ([mermaid.js.org][5])
+- `%%{init: ...}%%` でテーマや設定を上書き。
+- ノードやエッジのスタイル変更は `style id fill:#eee,stroke:#333` みたいに書く。細かいスタイルは SVG 寄りの指定。 ([mermaid.js.org][5])
 
 ---
 
@@ -275,7 +275,7 @@ gitGraph
 
 ## 参考（公式ドキュメント）
 
-* Diagram Syntax（総合リファレンス）と各ページ（Flowchart, Sequence, Class…）を叩け。 ([mermaid.js.org][5])
+- Diagram Syntax（総合リファレンス）と各ページ（Flowchart, Sequence, Class…）を叩け。 ([mermaid.js.org][5])
 
 [1]: https://mermaid.live/edit#pako:eNpVjcFOg0AQhl9lMydNaENbCLAHE0u1lyZ66EnoYQIDSyy7ZFlSK_DuLjTGOqeZfN__Tw-Zygk4FGd1yQRqw467VDI7z0ksdNWaGtsTWyyehj0ZVitJ14FtH_aKtUI1TSXLx5u_nSQW94dJI2ZEJT_HG4rn_Jukge2SAzZGNad7cryogb0k1buw9f-J0GRTr0mBvMBFhprFqGcFHCh1lQM3uiMHatI1Tif0E03BCKopBW7XnArsziaFVI421qD8UKr-TWrVlQJs_bm1V9fkaGhXYanxTyGZk45VJw1wf24A3sMX8M0mXPrBOopCz_V91w8DB67WcZdrL4oCb7XaeJElowPf8093GQa-ezer8QfIaHaP "Mermaid | Diagramming and charting tool"
 [2]: https://docs.mermaidchart.com/mermaid-oss/syntax/flowchart.html "Flowcharts – Basic Syntax"

@@ -6,13 +6,13 @@ topics: ["powershell", "windows", "cli"]
 published: true
 ---
 
-## 停止ダメ。ゼッタイ。
+## 停止ダメ。ゼッタイ
 
 ### 0. はじめに
 
 業務中、
 
->「タスクスケジューラ、全体停止してね」
+> 「タスクスケジューラ、全体停止してね」
 
 とか言って**「タスクスケジューラのサービスごと止めよう」とする輩**が出てくる。
 
@@ -42,7 +42,7 @@ Microsoft の公式ガイドや技術ブログでは、サービスを停止・�
 
 > Lets users configure and schedule automated tasks on this computer. The service also hosts multiple Windows system-critical tasks. If you stop or disable this service, these tasks don't run at their scheduled times, and any services that explicitly depend on it become unable to start.
 > このサービスを使用すると、ユーザーはこのコンピューター上で自動化されたタスクを構成およびスケジュールできます。また、このサービスは複数の Windows のシステムにとって重要なタスクをホストしています。このサービスを停止または無効にすると、これらのタスクは予定された時刻に実行されず、このサービスに明示的に依存している他のサービスは起動できなくなります。
-@[card](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server)
+> @[card](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server)
 
 ### 2. 回避策：バックアップ → 無効化 → 再有効化（PowerShell）
 
@@ -52,25 +52,28 @@ Microsoft の公式ガイドや技術ブログでは、サービスを停止・�
 どうせタスクスケジューラは止まらないので外部ツールを使って自動実行予約する必要はない。
 
 #### タスクスケジューラ登録の際の注意事項
+
 :::message alert
 必ずStop→Restartの順に実行すること
 メンテ時間中に実行されることのないよう実行時刻を調整すること
 :::
 
 :::message
-- 「全般」での入力事項
-    - **「最上位の特権で実行する」にチェックを入れる**
-:::
+
+- 「全般」での入力事項 - **「最上位の特権で実行する」にチェックを入れる**
+
+  :::
 
 ※チェックしないとタスクの有効/無効化、Cドライブ以下のディレクトリ操作ができなくなる
 
 - 「操作」での入力事項
-    - プログラム/スクリプト(P): `powershell.exe`
-    - 引数の追加(オプション)(A): `-ExecutionPolicy Bypass -File "C:\YOUR_PATH\Stop_SchdTasks.ps1"`
+  - プログラム/スクリプト(P): `powershell.exe`
+  - 引数の追加(オプション)(A): `-ExecutionPolicy Bypass -File "C:\YOUR_PATH\Stop_SchdTasks.ps1"`
 
 上記をヒントに、AIなどでPowerShellコーディングを試してほしい。
 
 ### 3. おわり
+
 タスクスケジューラは「止められない」という事実を知っておくだけでも、トラブルシューティングやメンテナンス時の判断に差が出る。
 本記事が、実運用での混乱や「止まると思って止まらなかった問題」の予防に役立てば幸いだ。
 また、上司が「サービスごと止めればいいのでは？」と言い出す前に、この記事をそっと差し出して思いとどまらせてほしい。

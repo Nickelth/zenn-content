@@ -15,6 +15,7 @@ Flaskアプリを公開するために本番環境が必要になった。
 価格相応のトラブルが出たことと、実務経験を活かしたいことが理由。
 
 ### 1. 選定理由
+
 - **Docker**: 開発環境と本番環境をコンテナで統一し、依存関係や環境差異による不具合を防ぐために採用。
 - **Gunicorn**: PythonのWSGIサーバーとして、Flaskアプリを効率よく動作させるために選定。
 
@@ -30,6 +31,7 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 ---
 
 ラーメンに例えると：
+
 - **Docker**：ラーメン屋ごとキッチンカーにして、どこに行っても同じ味を再現できる仕組み
 - **Gunicorn**：厨房の責任者。Flaskアプリに仕事を渡して、結果をNginxに返す。
 - **Flaskアプリ**：実際にラーメンを作る人
@@ -40,19 +42,24 @@ GunicornはそのWSGI仕様に則った、**高性能かつシンプルなWSGI�
 ---
 
 ### 2. 動作用ファイルのサンプル
+
 `Flask` + `Docker` + `Gunicorn` + `docker-compose`の構成で動かすためのファイルを公開する。
 
 #### 2-1. Dockerfile
 
 `ENV DEBIAN_FRONTEND=noninteractive`
+
 - 「`apt`が途中で`[Y/n]`を聞いてくる地獄」を回避できる。
 
 `PYTHONDONTWRITEBYTECODE=1`
+
 - Dockerコンテナ内ではほぼ不要な`.pyc`(`__pycache__` ディレクトリにできる)を作らなくなる
 
 `PYTHONUNBUFFERED=1`
+
 - `Python`の標準出力・標準エラーを即時出力する⇒遅延なしでログが見れてデバッグしやすい
-:::details Dockerfile
+  :::details Dockerfile
+
 ```Dockerfile
 # ベースイメージ
 FROM python:3.11-slim
@@ -107,11 +114,13 @@ EXPOSE 5000
 
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
 ```
+
 :::
 
 #### 2-2. docker-compose.yml
 
 :::details docker-compose.yml
+
 ```yaml
 services:
   web:
@@ -167,25 +176,31 @@ services:
 volumes:
   postgres_data:
 ```
+
 :::
 
 `Error: address already in use` が出た場合、ホストで既に同じポートが使われている。別ポートに割り当てるか、使用中のプロセスを停止する。
 
 #### 2-3. その他
+
 :::message
 `requirements.txt`は初回のみ`venv`環境内で`pip freeze > requirements.txt`で作成する。それ以降は固定にし、Docker内で使いまわす。
 ホストのグローバル`Python`から`freeze`するとゴミが混ざるので注意。
 :::
+
 ```bash
 pip freeze > requirements.txt
 ```
+
 仮想環境`venv`を閉じたあと
-```bash 
+
+```bash
 sudo apt update
 sudo apt install -y docker.io docker-compose-plugin
 ```
 
 `Ubuntu 24.04 Noble`など、標準APTで docker-compose-plugin が見つからない場合は、以下の公式手順へ
+
 ```bash:docker-compose-pluginの公式インストール手順
 # 2. 公式Dockerリポジトリを追加してインストール
 sudo apt remove docker docker-engine docker.io containerd runc -y
@@ -211,12 +226,15 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 ```
 
 インストール完了後
+
 ```bash:動作確認/権限グループ追加
 docker --version
 docker compose version
 sudo usermod -aG docker $USER
 ```
+
 `usermod -aG`でグループに追加後、
+
 - SSH環境：exit → 再接続が一番安全
 - 開発PC＋VSCode：VSCodeを再起動（Docker拡張も含めて権限が反映される）
 - すぐ試したいとき：`newgrp docker`コマンドで一時的に反映
@@ -237,6 +255,7 @@ docker compose --env-file .env.prd build --no-cache --progress=plain
 :::
 
 アクセス → `http://localhost:5000`
+
 - .envファイル、Auth0のコールバックURL、ブラウザでアクセスするURLがすべて`localhost:5000`に統一する。
 
 #### 2-4. 環境変数（.env）について
@@ -244,6 +263,7 @@ docker compose --env-file .env.prd build --no-cache --progress=plain
 `Flask`アプリや`Docker Compose`では、接続情報や起動時の設定値を.env`ファイルにまとめることで、ソースコードや構成ファイルにパスワード等を直書きせずに管理できる。
 
 :::details `.env`記載内容のサンプル
+
 ```.env.sample:.env.sample
 # DB接続情報
 DB_NAME=db_name
@@ -272,6 +292,7 @@ GUNICORN_TIMEOUT=60
 GUNICORN_MAX_REQUESTS=200
 GUNICORN_MAX_REQUESTS_JITTER=50
 ```
+
 :::
 
 :::message alert
@@ -315,16 +336,16 @@ Gunicornの起動パラメータは `docker-compose.yml` の `command:` もし�
 
 #### 3.2 メモリ / スレッド数の調整
 
-|構成|カスタム|
-|---|---|
-|小規模構成（Fargate 0.25〜0.5 vCPU / 512MB〜1GB）|`workers=1〜2`、`threads=2〜4`|
-|PDF生成が軽い（`weasyprint`で変換 / 既存ファイル返す / S3配信）|`workers=1〜2`、`threads=2〜4`|
-|PDF生成が重い（`wkhtmltopdf`等で変換）|CPU型、`workers=2〜3`・`threads=1〜2`[^1]|
+| 構成                                                            | カスタム                                  |
+| --------------------------------------------------------------- | ----------------------------------------- |
+| 小規模構成（Fargate 0.25〜0.5 vCPU / 512MB〜1GB）               | `workers=1〜2`、`threads=2〜4`            |
+| PDF生成が軽い（`weasyprint`で変換 / 既存ファイル返す / S3配信） | `workers=1〜2`、`threads=2〜4`            |
+| PDF生成が重い（`wkhtmltopdf`等で変換）                          | CPU型、`workers=2〜3`・`threads=1〜2`[^1] |
 
-[^1]:長時間処理ならジョブキューやLambda化も検討
+[^1]: 長時間処理ならジョブキューやLambda化も検討
 
+#### 3.3 .envファイルの例（Gunicorn部分）
 
-**.envファイルの例（Gunicorn部分）**
 ```env
 GUNICORN_WORKERS=2
 GUNICORN_THREADS=2
@@ -332,9 +353,11 @@ GUNICORN_TIMEOUT=60
 GUNICORN_MAX_REQUESTS=200
 GUNICORN_MAX_REQUESTS_JITTER=50
 ```
+
 > 2-2 の `docker-compose.yml` の `command:` 部分で `.env` から読み込んで適用
 
 ### 4. おわりに
+
 これで、FlaskアプリをDocker Compose + Gunicornで起動できるようになった。  
 次は、より高性能な環境への移植や、本番環境へのデプロイを試してみる予定。
 :::message alert

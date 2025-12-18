@@ -1,0 +1,16 @@
+name: Lint
+on:
+  push:
+    branches: [ dev ]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '24'
+      - run: npm ci
+      - run: npm run lint:md
+      - run: npm run lint:md:fix
+      - run: npm run format:md

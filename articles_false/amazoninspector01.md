@@ -23,12 +23,13 @@ published: false
 ### A. package.jsonいじれば治るパターン
 
 一番オーソドックスなパターン<br>
-![](https://storage.googleapis.com/zenn-user-upload/30d537ea8e95-20250715.png)
-- ```npm outdated```で該当パッケージ調査
-- ```npm list```で依存関係チェック
-- 治らなければ```overrides```に追記してバージョンを強制上書き
+![対処パターンA](https://storage.googleapis.com/zenn-user-upload/30d537ea8e95-20250715.png)
 
-``` json: package.json
+- `npm outdated`で該当パッケージ調査
+- `npm list`で依存関係チェック
+- 治らなければ`overrides`に追記してバージョンを強制上書き
+
+```json: package.json
 "dependencies": {
   "axios": "^1.8.2"
 },
@@ -40,83 +41,95 @@ published: false
 
 ### B. まぎらわしいパターン
 
-執筆時点ではおそらく```cross-spawn```のみ該当<br>
-![](https://storage.googleapis.com/zenn-user-upload/4072e373672e-20250715.png)
+執筆時点ではおそらく`cross-spawn`のみ該当<br>
+![対処パターンB](https://storage.googleapis.com/zenn-user-upload/4072e373672e-20250715.png)
 
 Aと同種かと思いきや**AWSのサーバーにプリインストールされているパッケージをスキャン**してそいつに対して怒っています。<br>
 どこ見とんねん
 
 ::: message
-目印はパス名が```/usr/local/```になっていること
+目印はパス名が`/usr/local/`になっていること
 
-普通なら```/usr/src/```と表示される
+普通なら`/usr/src/`と表示される
 :::
 
 この場合はDockerfileにコマンドを記述してデプロイ走らせます。
-``` bash: Dockerfile
+
+```bash: Dockerfile
 RUN npm install npm@9 cross-spawn@7.0.5 -y
 ```
-```npm@10```以降は```cross-spawn@7.0.5```以降(脆弱性クリア済み)とは依存関係がないのでこのような対応とする
+
+`npm@10`以降は`cross-spawn@7.0.5`以降(脆弱性クリア済み)とは依存関係がないのでこのような対応とする
 ::: message
-```-y```オプションを外すと更新が止まるので外さないように
+`-y`オプションを外すと更新が止まるので外さないように
 :::
 
 ### C. OSをアップデートすれば治るパターン
-![](https://storage.googleapis.com/zenn-user-upload/2edd19b09cb9-20250715.png)<br>
+
+![対処パターンC](https://storage.googleapis.com/zenn-user-upload/2edd19b09cb9-20250715.png)<br>
 Bと同じくDockerfileにコマンドを記述してからデプロイ
 
-``` bash: Dockerfile
+```bash: Dockerfile
 RUN apt-get update && apt-get upgrade -y
 ```
+
 -yは外しちゃダメ
 
 ::: message
-```Dockerfile```に```npm```系コマンドを書いている場合はそれよりも前に書く
-```apt```系→```npm```系の順番で
+`Dockerfile`に`npm`系コマンドを書いている場合はそれよりも前に書く
+`apt`系→`npm`系の順番で
 :::
 
 ### D. 対策？ そんなものはない　震えて眠れ
-  パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ<br>
-![](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
 
-   ......一応パターンCに```apt list --upgradable```を差し込んであげる方法がある
+~~パターンDebian。まさかの対策方法なし。さっさと修正パッチ出せ~~
 
-   ``` bash: Dockerfile
-   RUN apt-get update && apt list --upgradable && apt-get upgrade -y
-   ```
+当該修正パッチはリリースされました。
 
-   これで解決するといいね
+![Debian](https://storage.googleapis.com/zenn-user-upload/a28eb84d194c-20250715.png)
+
+......一応パターンCに`apt list --upgradable`を差し込んであげる方法がある
+
+```bash: Dockerfile
+RUN apt-get update && apt list --upgradable && apt-get upgrade -y
+```
+
+これで解決するといいね
 
 ### E. FWが古いのでソースごと改修するパターン
-  Nest.jsやNode.jsなどが絡むと一気にややこしくなる
 
-  特にNest.jsバージョン10を使ってる場合は要注意<br>
-  - Nest.js@10依存パッケージに固める
-  - Nest.js@11にアップデートする
+Nest.jsやNode.jsなどが絡むと一気にややこしくなる
+
+特にNest.jsバージョン10を使ってる場合は要注意<br>
+
+- Nest.js@10依存パッケージに固める
+- Nest.js@11にアップデートする
   の2択を迫られます
 
-  Nest.js@11にアップデートする場合は、
-  npm公式が仕事してないのでそのまま```npm i```すると怒られます
+Nest.js@11にアップデートする場合は、
+npm公式が仕事してないのでそのまま`npm i`すると怒られます
 
-  ```npm install --legacy-peer-deps```してあげると依存関係チェックを無視してくれるのでアップデートできます。
+`npm install --legacy-peer-deps`してあげると依存関係チェックを無視してくれるのでアップデートできます。
 
-  若干ヤバい気がしますがnpmが悪いので問題なし
-  
-  というかnpm公式がNest.js@11構成を推奨している（後日執筆予定）
+若干ヤバい気がしますがnpmが悪いので問題なし
+
+というかnpm公式がNest.js@11構成を推奨している（後日執筆予定）
 
 ### F. ウラワザ的回避
-  本番環境に上がることでInspectorが怒りだすので、<br>
-  ```--omit=dev```オプションを使用してパッケージを開発環境に封印する
 
-  ``` bash: Dockerfile
-  RUN npm install --legacy-peer-deps --omit=dev
-  ```
+本番環境に上がることでInspectorが怒りだすので、<br>
+`--omit=dev`オプションを使用してパッケージを開発環境に封印する
 
-  こうすることでCode Buildは```dependencies```のみを見て```npm install```する (```devDependencies```は見ない)
+```bash: Dockerfile
+RUN npm install --legacy-peer-deps --omit=dev
+```
 
-  ```eslint```などに効果的
+こうすることでCode Buildは`dependencies`のみを見て`npm install`する (`devDependencies`は見ない)
+
+`eslint`などに効果的
 
 ### 総括
+
 Amazon Inspectorは、まるで「自分でやれ」と言わんばかりに通知だけ送ってきます。<br>
 でも、それを全部真に受けて修正してたら、こっちのサービスが死にます。
 

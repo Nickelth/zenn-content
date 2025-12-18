@@ -42,10 +42,8 @@ title: "CI: ECR Push（ビルド→ECR）"
 ### 失敗例と対策
 
 - **OIDCロールに Assume 権限なし**
-
   - 症状: `Not authorized to perform sts:AssumeRoleWithWebIdentity`
   - 対策: 対象ロールの**信頼ポリシー**で
-
     - `Principal.Federated` に `arn:aws:iam::<acct>:oidc-provider/token.actions.githubusercontent.com`
     - `Condition.StringEquals` に
       `token.actions.githubusercontent.com:aud = sts.amazonaws.com`
