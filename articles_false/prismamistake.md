@@ -48,14 +48,13 @@ fields @timestamp, @message
 
 バックオフ: 一時的な起動中をやり過ごすため指数バックオフ＋ジッタを最大数回。
 
-
 ### 4. 結果
 
-| 指標 | 修正前 | 修正後 | 備考 |
-| --- | --- | --- | --- |
-| 深夜帯失敗率  100% |  0% | 4月以降のログ集計 |
-| 夜間アラート件数/月 | N | 0 | 通知疲れ解消 |
-| 実行所要時間中央値  | X分 | X分 | 変化なし（設計のみ変更）|
+| 指標                | 修正前 | 修正後            | 備考                     |
+| ------------------- | ------ | ----------------- | ------------------------ |
+| 深夜帯失敗率 100%   | 0%     | 4月以降のログ集計 |
+| 夜間アラート件数/月 | N      | 0                 | 通知疲れ解消             |
+| 実行所要時間中央値  | X分    | X分               | 変化なし（設計のみ変更） |
 
 ### 5. 考察
 
@@ -80,12 +79,12 @@ fields @timestamp, @message
 
 ```ts
 // run-job.ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const maxRetries = 3;
 
-const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const jitter = (n: number) => Math.floor(Math.random() * n);
 
 async function canConnect(): Promise<boolean> {
@@ -109,7 +108,7 @@ async function main() {
   }
   // ここまで来たらDB到達不可。失敗ではなく「スキップ」で正常終了扱いにする。
   // 観測のために "skipped_due_to_db_down" をログ出力。
-  console.log('skipped_due_to_db_down');
+  console.log("skipped_due_to_db_down");
   process.exit(0);
 }
 

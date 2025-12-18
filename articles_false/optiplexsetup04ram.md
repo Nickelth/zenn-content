@@ -53,8 +53,6 @@ published: false
 
 ### 3. RAMを本体基盤に挿入
 
-
-
 ### 4. 中古PCシリーズ
 
 @[card](https://zenn.dev/nickelth/articles/optiplexsetup01)

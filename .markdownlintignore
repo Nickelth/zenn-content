@@ -1,0 +1,8 @@
+**/node_modules/**
+**/dist/**
+**/build/**
+**/coverage/**
+
+**/articles/setvarvariable.md
+**/books/se-worklog-book/README.md
+**/articles_false/**
