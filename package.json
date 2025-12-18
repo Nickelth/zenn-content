@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "openssl": "^2.0.0",
+    "zenn-cli": "^0.2.11"
+  }
+}
