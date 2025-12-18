@@ -1,0 +1,10 @@
+title: "ポートフォリオ - 家庭用Proxmoxサーバー要件定義書"
+summary: "家庭用Proxmoxサーバー + Windows11VM 構築"
+topics: ["proxmox", "linux", "windows", "portfolio"]
+published: false
+price: 0
+chapters:
+  - reqdefdocsproxmox.md
+  - nonfuncreqdefdoc.md
+  - basicdesigndoc.md
+  - accepttestpers.md
