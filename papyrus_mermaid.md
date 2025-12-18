@@ -1,7 +1,6 @@
-
 ### 付録：用語集
 
-* ECS/Fargate、TaskDef、TargetGroup、Digest固定、観測の入口…を一行定義
+- ECS/Fargate、TaskDef、TargetGroup、Digest固定、観測の入口…を一行定義
 
 ```mermaid
 flowchart TB

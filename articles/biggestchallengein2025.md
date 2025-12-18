@@ -16,7 +16,7 @@ published: true
 資材モダナイズ+継続保守・監視を目標にリメイクした。
 
 ![帳票出力画面.gif](https://storage.googleapis.com/zenn-user-upload/9d9814f572f3-20250724.gif)
-*動作イメージ*
+_動作イメージ_
 
 ### 背景 / Context
 
@@ -33,15 +33,15 @@ AWSを使用したポートフォリオ用アプリケーションの構想を�
 - IAMロール、ポリシーとOIDCの連携に苦慮
 - 「後追いTerraform」実装によるアプリ全体のIaC移行の難航
 - CloudShell内のホームディレクトリの容量が1GBと低用量なため、Terraform構築の際に容量オーバーになる点
-    (`/tmp`に展開することで解決した)
+  (`/tmp`に展開することで解決した)
 - 監査内容の膨大化とCI実装
 - 完成定義の設定
 
 ### 拡張可能性 / Expandable
 
 - ALBが高価である都合上、疎通テストはTerraformによる一時ALB作成→疎通→破壊にとどめた。
-    本PJではAWSアーキテクチャ構築・監査をメインとしているため、
-    フロントエンドの本番環境でアプリ起動・動作確認は割愛した。
+  本PJではAWSアーキテクチャ構築・監査をメインとしているため、
+  フロントエンドの本番環境でアプリ起動・動作確認は割愛した。
 
 ### 関連記事 / Articles
 
@@ -49,4 +49,3 @@ AWSを使用したポートフォリオ用アプリケーションの構想を�
 @[card](https://zenn.dev/nickelth/articles/reportapp03docker)
 @[card](https://zenn.dev/nickelth/articles/reportapp02auth0)
 @[card](https://zenn.dev/nickelth/articles/reportapp01flask)
-

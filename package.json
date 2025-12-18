@@ -1,6 +1,15 @@
 {
+  "scripts": {
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/build/**\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/build/**\"",
+    "format:md": "prettier -w \"**/*.md\""
+  },
   "dependencies": {
     "openssl": "^2.0.0",
     "zenn-cli": "^0.2.11"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.20.0",
+    "prettier": "^3.7.4"
   }
 }

@@ -48,14 +48,14 @@ RDS 上のマスターデータを元に納品書 PDF を生成する、最小�
 
 - Web→ALB→TG→ECS→RDS の順で、主要リクエスト：`/healthz` `/dbcheck`
 - 出力（PDF/ログ/証跡）の流れ：
-    - PDF: ブラウザのPDF保存画面に遷移するためローカル保存
-    - ログ/証跡: CIで自動コミット / CloudShellで手入力
+  - PDF: ブラウザのPDF保存画面に遷移するためローカル保存
+  - ログ/証跡: CIで自動コミット / CloudShellで手入力
 
 #### セキュリティ境界
 
-* VPCセグメント／プライベートサブネット
-* SGルール（ECS→RDSのみ許可、CIDR解放なし）
-* `rds.force_ssl=1`/`PGSSLMODE=require`
+- VPCセグメント／プライベートサブネット
+- SGルール（ECS→RDSのみ許可、CIDR解放なし）
+- `rds.force_ssl=1`/`PGSSLMODE=require`
 
 ### 開発・運用ポリシー
 
@@ -68,7 +68,7 @@ RDS 上のマスターデータを元に納品書 PDF を生成する、最小�
 - CloudWatch Logs に構造化ログを出力（JSON1行）
 
 - RDS / SG / Parameter Group など影響範囲を限定した IaC からTerraformを導入
- - 既存リソースの完全 Import は段階的に進める方針
+- 既存リソースの完全 Import は段階的に進める方針
 
 - 疎通確認・パラメータ反映・ログ出力が揃い、証跡が docs/evidence に残っていること
 
@@ -83,7 +83,7 @@ RDS エンドポイントやアカウント ID、シークレット値などを�
 ### 依存関係と前提
 
 - AWSリージョン: `us-west-2`
-- 必要IAMロール 
+- 必要IAMロール
   - ECS/ALB: サービス更新・ターゲットグループ操作など、デプロイに必要なアクションに限定
   - EC2: Describe 系のみ
 
@@ -96,7 +96,8 @@ RDS エンドポイントやアカウント ID、シークレット値などを�
 ### リポジトリ構成
 
 **主要ディレクトリの役割**
-- infra 以下: 
+
+- infra 以下:
   - 目的ごとに薄切りでディレクトリ分割。
   - RDS / 一時 ALB / 監視の IaC を独立して管理。
 

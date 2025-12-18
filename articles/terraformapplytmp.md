@@ -2,13 +2,13 @@
 title: "CloudShellの$HOMEでTerraformすると容量が足りないので /tmp 配下で展開して回す"
 emoji: "🧯"
 type: "tech"
-topics: ["aws","cloudshell","terraform","iac"]
+topics: ["aws", "cloudshell", "terraform", "iac"]
 published: true
 ---
 
 AWS CloudShell は便利です。ブラウザでサクッと AWS CLI / Terraform を叩けるので、検証や“薄切り”の IaC と好相性。
 
-ただし、**CloudShell の $HOME は 1GB**です。Terraform は init しただけで `.terraform/` が太りやすく、気づくと **`No space left on device`** で詰みます。 
+ただし、**CloudShell の $HOME は 1GB**です。Terraform は init しただけで `.terraform/` が太りやすく、気づくと **`No space left on device`** で詰みます。
 
 以前ポートフォリオ作成用にTerraformを展開しようとしましたが、これが原因で詰んでしまいました。
 
@@ -16,14 +16,14 @@ AWS CloudShell は便利です。ブラウザでサクッと AWS CLI / Terraform
 
 ## 何が起きるのか（なぜ $HOME が死ぬのか）
 
-CloudShell の永続ストレージは **$HOME 配下 1GB**で、増やせません。   
+CloudShell の永続ストレージは **$HOME 配下 1GB**で、増やせません。  
 Terraform は `terraform init` で provider を取得し、作業ディレクトリ配下に `.terraform/` を作ります。
 
 - provider バイナリはそこそこ大きい
 - 構成が分割されている（ディレクトリが複数）と、`init` のたびに各ディレクトリに `.terraform/` ができる
 - module が多いほど「気づいたら増えてる」
 
-実際、Terraform 側でも「provider が各ディレクトリに展開されてディスクを食う」系の話は昔から出ています。 
+実際、Terraform 側でも「provider が各ディレクトリに展開されてディスクを食う」系の話は昔から出ています。
 
 ## 現状確認
 
@@ -41,8 +41,8 @@ du -hs .terraform 2>/dev/null || true
 
 狙いはシンプルです。
 
-* **作業ツリー（= .terraform が増える場所）を /tmp に置く**
-* 逆に、残したいもの（証跡ログなど）は $HOME 側へ戻す（もしくは S3）
+- **作業ツリー（= .terraform が増える場所）を /tmp に置く**
+- 逆に、残したいもの（証跡ログなど）は $HOME 側へ戻す（もしくは S3）
 
 CloudShell の制限は “$HOME の永続 1GB” が本体なので、ここを温存します。 ([AWS ドキュメント][1])
 
@@ -114,35 +114,35 @@ mkdir -p /tmp/terraform-plugin-cache
 
 自分のケースでは、以下の整理をして `-target` で段階適用できる状態にしました。
 
-* ディレクトリ分割：`infra/00-network`, `20-ecr`, `30-ecs-alb-mlops`
-* `00-network`
+- ディレクトリ分割：`infra/00-network`, `20-ecr`, `30-ecs-alb-mlops`
+- `00-network`
+  - ALB / Listener(80) / TargetGroup(`/health`) / Logs / SG(Alb↔Tasks:8000)
+  - outputs: `alb_dns`, `tg_arn`, `tasks_security_group_id`, `log_group_name`
 
-  * ALB / Listener(80) / TargetGroup(`/health`) / Logs / SG(Alb↔Tasks:8000)
-  * outputs: `alb_dns`, `tg_arn`, `tasks_security_group_id`, `log_group_name`
-* `30-ecs-alb-mlops`
+- `30-ecs-alb-mlops`
+  - ECS Cluster / Service(回路遮断 + HCG=60s) / TaskDefinition
+  - TaskRole を作り、S3 `GetObject`（モデル取得）を付与
 
-  * ECS Cluster / Service(回路遮断 + HCG=60s) / TaskDefinition
-  * TaskRole を作り、S3 `GetObject`（モデル取得）を付与
-* `terraform plan -target=module.network → apply`
-* `terraform plan -target=module.ecs → apply`
+- `terraform plan -target=module.network → apply`
+- `terraform plan -target=module.ecs → apply`
 
 apply 後に `alb_dns` を outputs から引いて、ALB/TG が Healthy であることを確認（`/health`）まで到達できました。
 
 ## よくある落とし穴
 
-* **/tmp は永続ではない**
+- **/tmp は永続ではない**
   セッション次第で消える前提にして、残したい証跡は $HOME か S3 に逃がします。CloudShell の永続ストレージは 1GB で固定です。 ([AWS ドキュメント][1])
-* **“$HOME で init した残骸”が残っている**
+- **“$HOME で init した残骸”が残っている**
   `.terraform/` を消すだけで復活することも多いです。
-* **何が太っているか見ずに悩む**
+- **何が太っているか見ずに悩む**
   `df -h` と `du` を叩くのが最短です。
 
 ## まとめ
 
-* CloudShell の $HOME は **1GB 固定**で、Terraform を素直に回すと詰みやすい。 ([AWS ドキュメント][1])
-* 対策はシンプルで、**/tmp 配下に作業ディレクトリを展開して Terraform を実行する**
-* 証跡や残したいものだけ $HOME（または S3）に回収する
-* 余裕があれば `plugin_cache_dir` で provider の取得を軽くする ([HashiCorp Developer][2])
+- CloudShell の $HOME は **1GB 固定**で、Terraform を素直に回すと詰みやすい。 ([AWS ドキュメント][1])
+- 対策はシンプルで、**/tmp 配下に作業ディレクトリを展開して Terraform を実行する**
+- 証跡や残したいものだけ $HOME（または S3）に回収する
+- 余裕があれば `plugin_cache_dir` で provider の取得を軽くする ([HashiCorp Developer][2])
 
 [1]: https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/limits.html "のサービスクォータと制限 AWS CloudShell"
 [2]: https://developer.hashicorp.com/terraform/cli/config/config-file "Create a Terraform CLI configuration file"

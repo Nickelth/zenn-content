@@ -70,8 +70,8 @@ Papyrus の疎通検証で使用する「一時的な ALB / ターゲットグ�
 
 #### 設計上のポイント
 
-- **state の扱い**  
-  - backend を `local` にしておき、state ファイルの保存先を `/tmp` に固定している。  
+- **state の扱い**
+  - backend を `local` にしておき、state ファイルの保存先を `/tmp` に固定している。
   - これにより、スモークテスト CI から一時的に `terraform apply` / `destroy` を実行しても、  
     既存の Terraform プロジェクトやリモートバックエンドと干渉しない構成になる。
 

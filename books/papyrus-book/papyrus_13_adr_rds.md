@@ -63,7 +63,7 @@ title: "ADR: RDS は当面 Single-AZ とする"
 - `docs/evidence` 配下の JSON と evidence PR を見れば、
   - どのくらいの時間で復旧しているか（RTO の実測値）
   - どの CA / パラメータグループで立ち上がっているか  
-  を第三者（採用・面接担当者）が確認できる。
+    を第三者（採用・面接担当者）が確認できる。
 - 採用の場では、次のような説明がしやすい。
   - 「Multi-AZ ではなく Single-AZ を選択したコスト・要件上の理由」
   - 「そのうえで、具体的な DR プロセスを CI と Evidence で補完している」という設計判断。
@@ -76,7 +76,7 @@ title: "ADR: RDS は当面 Single-AZ とする"
   - クロスリージョン DR
   - KMS キーの切り替え
   - 大量接続時の挙動  
-  などは別途設計・検証が必要。
+    などは別途設計・検証が必要。
 
 ### 記録（Decision Record）
 
@@ -89,15 +89,15 @@ title: "ADR: RDS は当面 Single-AZ とする"
   - RDS / アプリ関連のアラーム定義: `infra/30-monitor`（Terraform モジュール）
 
 - CI による実際の証跡（2025-12-01 実行分の例）
-  - `docs/evidence/20251201_075653_rds_snapshot_start.json`  
+  - `docs/evidence/20251201_075653_rds_snapshot_start.json`
     - 手動スナップショット作成リクエストのレスポンス
-  - `docs/evidence/20251201_075929_rds_snapshot_facts.json`  
+  - `docs/evidence/20251201_075929_rds_snapshot_facts.json`
     - 作成されたスナップショットの詳細情報
-  - `docs/evidence/20251201_075934_rds_restore_start.json`  
+  - `docs/evidence/20251201_075934_rds_restore_start.json`
     - 一時インスタンス復元リクエストのレスポンス
-  - `docs/evidence/20251201_080815_rds_pg_applied.json`  
+  - `docs/evidence/20251201_080815_rds_pg_applied.json`
     - 一時インスタンスに適用されたパラメータグループ情報
-  - `docs/evidence/20251201_080815_rds_restore_facts.json`  
+  - `docs/evidence/20251201_080815_rds_restore_facts.json`
     - 一時インスタンスのエンドポイント・ポート・CA 証明書 ID・RTO 秒数
-  - `docs/evidence/20251201_080816_rds_restore_delete.json`  
+  - `docs/evidence/20251201_080816_rds_restore_delete.json`
     - 一時インスタンス削除リクエストのレスポンス
